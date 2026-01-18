@@ -21,7 +21,7 @@ fun App() {
                 exitTransition = { slideOutHorizontally(targetOffsetX = { -it }) },
             ) {
                 composable("home") {Home(navController)}
-                composable("innerPage") {InnerPage(navController)}
+                composable("innerPage") {ImageGrid()}
             }
         }
     }
