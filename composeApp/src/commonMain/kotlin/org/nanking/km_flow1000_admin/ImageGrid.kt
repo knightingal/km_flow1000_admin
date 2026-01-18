@@ -18,6 +18,10 @@ fun ImageGrid() {
     val randomSizedPhotos = listOf(
         "your", "photos", "list"
     )
+    /*
+     This `LazyVerticalStaggeredGrid` is not as good as expected by my test.
+     I don't think this implement is better than mine in flutter.
+     */
     LazyVerticalStaggeredGrid(
         columns = StaggeredGridCells.Fixed(2),
         verticalItemSpacing = 4.dp,
