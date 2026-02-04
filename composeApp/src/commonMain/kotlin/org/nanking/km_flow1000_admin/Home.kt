@@ -20,9 +20,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import km_flow1000_admin.composeapp.generated.resources.Res
-import km_flow1000_admin.composeapp.generated.resources.compose_multiplatform
 import org.jetbrains.compose.resources.painterResource
+import org.nanking.km_flow1000_admin.resources.Res
+import org.nanking.km_flow1000_admin.resources.compose_multiplatform
 
 @Composable
 fun Home(navController: NavHostController) {

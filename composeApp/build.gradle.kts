@@ -1,3 +1,4 @@
+import org.gradle.kotlin.dsl.implementation
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
@@ -46,6 +47,7 @@ kotlin {
             implementation(libs.androidx.navigation.navigationCompose)
             implementation("io.coil-kt.coil3:coil-compose:3.3.0")
             implementation("io.coil-kt.coil3:coil-network-okhttp:3.3.0")
+            implementation(compose.components.resources)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -98,4 +100,9 @@ compose.desktop {
             packageVersion = "1.0.0"
         }
     }
+}
+compose.resources {
+    publicResClass = false
+    packageOfResClass = "org.nanking.km_flow1000_admin.resources"
+    generateResClass = auto
 }
