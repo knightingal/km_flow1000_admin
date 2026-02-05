@@ -1,11 +1,23 @@
 package org.nanking.km_flow1000_admin
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.paddingFromBaseline
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.input.key.Key.Companion.R
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.codelab.basiclayouts.ui.theme.MySootheTheme
@@ -22,8 +34,11 @@ import km_flow1000_admin.composeapp.generated.resources.fc3_stress_and_anxiety
 import km_flow1000_admin.composeapp.generated.resources.fc4_self_massage
 import km_flow1000_admin.composeapp.generated.resources.fc5_overwhelmed
 import km_flow1000_admin.composeapp.generated.resources.fc6_nightly_wind_down
+import km_flow1000_admin.composeapp.generated.resources.placeholder_search
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 
 // Step: Search bar - Modifiers
 @Composable
@@ -34,6 +49,13 @@ fun SearchBar(
     TextField(
         value = "",
         onValueChange = {},
+        colors = TextFieldDefaults.colors(
+            unfocusedContainerColor = MaterialTheme.colorScheme.surface,
+            focusedContainerColor = MaterialTheme.colorScheme.surface
+        ),
+        placeholder = {
+            Text(stringResource(Res.string.placeholder_search))
+        },
         modifier = modifier
             .fillMaxWidth()
             .heightIn(min = 56.dp)
@@ -43,9 +65,29 @@ fun SearchBar(
 // Step: Align your body - Alignment
 @Composable
 fun AlignYourBodyElement(
+    drawable: DrawableResource,
+    text: StringResource,
     modifier: Modifier = Modifier
 ) {
-    // Implement composable here
+    Column(
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Image(
+            painter = painterResource(Res.drawable.ab1_inversions),
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .size(88.dp)
+                .clip(CircleShape)
+        )
+        Text(
+            text = stringResource(Res.string.ab1_inversions),
+            modifier = Modifier.paddingFromBaseline(top = 24.dp, bottom = 8.dp),
+            style = MaterialTheme.typography.bodyMedium
+        )
+    }
+
 }
 
 // Step: Favorite collection card - Material Surface
@@ -149,6 +191,8 @@ fun SearchBarPreview() {
 fun AlignYourBodyElementPreview() {
     MySootheTheme {
         AlignYourBodyElement(
+            text = Res.string.ab1_inversions,
+            drawable = Res.drawable.fc1_short_mantras,
             modifier = Modifier.padding(8.dp)
         )
     }
