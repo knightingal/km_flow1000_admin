@@ -3,29 +3,27 @@ package org.nanking.km_flow1000_admin
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Icon
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.codelab.basiclayouts.ui.theme.MySootheTheme
+import km_flow1000_admin.composeapp.generated.resources.Res
+import km_flow1000_admin.composeapp.generated.resources.ab1_inversions
+import km_flow1000_admin.composeapp.generated.resources.ab2_quick_yoga
+import km_flow1000_admin.composeapp.generated.resources.ab3_stretching
+import km_flow1000_admin.composeapp.generated.resources.ab4_tabata
+import km_flow1000_admin.composeapp.generated.resources.ab5_hiit
+import km_flow1000_admin.composeapp.generated.resources.ab6_pre_natal_yoga
+import km_flow1000_admin.composeapp.generated.resources.fc1_short_mantras
+import km_flow1000_admin.composeapp.generated.resources.fc2_nature_meditations
+import km_flow1000_admin.composeapp.generated.resources.fc3_stress_and_anxiety
+import km_flow1000_admin.composeapp.generated.resources.fc4_self_massage
+import km_flow1000_admin.composeapp.generated.resources.fc5_overwhelmed
+import km_flow1000_admin.composeapp.generated.resources.fc6_nightly_wind_down
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource
-import org.nanking.km_flow1000_admin.resources.Res
-import org.nanking.km_flow1000_admin.resources.Res.drawable
-import org.nanking.km_flow1000_admin.resources.ab1_inversions
-import org.nanking.km_flow1000_admin.resources.ab2_quick_yoga
-import org.nanking.km_flow1000_admin.resources.ab3_stretching
-import org.nanking.km_flow1000_admin.resources.ab4_tabata
-import org.nanking.km_flow1000_admin.resources.ab5_hiit
-import org.nanking.km_flow1000_admin.resources.ab6_pre_natal_yoga
-import org.nanking.km_flow1000_admin.resources.fc1_short_mantras
-import org.nanking.km_flow1000_admin.resources.fc2_nature_meditations
-import org.nanking.km_flow1000_admin.resources.fc3_stress_and_anxiety
-import org.nanking.km_flow1000_admin.resources.fc4_self_massage
-import org.nanking.km_flow1000_admin.resources.fc5_overwhelmed
-import org.nanking.km_flow1000_admin.resources.fc6_nightly_wind_down
 
 // Step: Search bar - Modifiers
 @Composable
@@ -118,22 +116,22 @@ fun MySootheApp() {
 }
 
 private val alignYourBodyData = listOf(
-    drawable.ab1_inversions to Res.string.ab1_inversions,
-    drawable.ab2_quick_yoga to Res.string.ab2_quick_yoga,
-    drawable.ab3_stretching to Res.string.ab3_stretching,
-    drawable.ab4_tabata to Res.string.ab4_tabata,
-    drawable.ab5_hiit to Res.string.ab5_hiit,
-    drawable.ab6_pre_natal_yoga to Res.string.ab6_pre_natal_yoga
+    Res.drawable.ab1_inversions to Res.string.ab1_inversions,
+    Res.drawable.ab2_quick_yoga to Res.string.ab2_quick_yoga,
+    Res.drawable.ab3_stretching to Res.string.ab3_stretching,
+    Res.drawable.ab4_tabata to Res.string.ab4_tabata,
+    Res.drawable.ab5_hiit to Res.string.ab5_hiit,
+    Res.drawable.ab6_pre_natal_yoga to Res.string.ab6_pre_natal_yoga
 ).map { DrawableStringPair(it.first, it.second) }
 
 
 private val favoriteCollectionsData = listOf(
-    drawable.fc1_short_mantras to Res.string.fc1_short_mantras,
-    drawable.fc2_nature_meditations to Res.string.fc2_nature_meditations,
-    drawable.fc3_stress_and_anxiety to Res.string.fc3_stress_and_anxiety,
-    drawable.fc4_self_massage to Res.string.fc4_self_massage,
-    drawable.fc5_overwhelmed to Res.string.fc5_overwhelmed,
-    drawable.fc6_nightly_wind_down to Res.string.fc6_nightly_wind_down
+    Res.drawable.fc1_short_mantras to Res.string.fc1_short_mantras,
+    Res.drawable.fc2_nature_meditations to Res.string.fc2_nature_meditations,
+    Res.drawable.fc3_stress_and_anxiety to Res.string.fc3_stress_and_anxiety,
+    Res.drawable.fc4_self_massage to Res.string.fc4_self_massage,
+    Res.drawable.fc5_overwhelmed to Res.string.fc5_overwhelmed,
+    Res.drawable.fc6_nightly_wind_down to Res.string.fc6_nightly_wind_down
 ).map { DrawableStringPair(it.first, it.second) }
 
 private data class DrawableStringPair(
