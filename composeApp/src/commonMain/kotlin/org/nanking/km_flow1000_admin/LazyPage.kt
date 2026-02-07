@@ -1,0 +1,37 @@
+package org.nanking.km_flow1000_admin
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
+import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+
+val colors = listOf(Color.Red, Color.Blue, Color.Green, Color.Yellow)
+
+fun colorByIndex(index: Int): Color {
+    return colors[index % colors.size]
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFF)
+@Composable
+fun LazyPage() {
+    LazyVerticalStaggeredGrid(
+        columns = StaggeredGridCells.Fixed(3),
+        verticalItemSpacing = 4.dp,
+        horizontalArrangement = Arrangement.spacedBy(4.dp),
+        content = {
+            items(600) { it ->
+                Box(Modifier.height((100 + it % 5 * 5).dp ).background(colorByIndex(it)))
+            }
+        },
+        modifier = Modifier.fillMaxSize()
+    )
+
+}

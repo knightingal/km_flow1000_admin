@@ -31,7 +31,7 @@ fun App() {
 //                composable("innerPage") {InnerPage(navController)}
 //            }
 //        }
-        HomeScreen()
+        LazyPage()
     }
 
 }
