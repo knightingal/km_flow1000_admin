@@ -31,11 +31,7 @@ fun App() {
 //                composable("innerPage") {InnerPage(navController)}
 //            }
 //        }
-        AlignYourBodyElement(
-            text = Res.string.ab1_inversions,
-            drawable = Res.drawable.fc1_short_mantras,
-            modifier = Modifier.padding(8.dp)
-        )
+        HomeScreen()
     }
 
 }

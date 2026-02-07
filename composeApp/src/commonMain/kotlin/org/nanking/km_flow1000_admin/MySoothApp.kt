@@ -1,14 +1,23 @@
 package org.nanking.km_flow1000_admin
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -19,7 +28,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.input.key.Key.Companion.R
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -31,6 +39,8 @@ import km_flow1000_admin.composeapp.generated.resources.ab3_stretching
 import km_flow1000_admin.composeapp.generated.resources.ab4_tabata
 import km_flow1000_admin.composeapp.generated.resources.ab5_hiit
 import km_flow1000_admin.composeapp.generated.resources.ab6_pre_natal_yoga
+import km_flow1000_admin.composeapp.generated.resources.align_your_body
+import km_flow1000_admin.composeapp.generated.resources.favorite_collections
 import km_flow1000_admin.composeapp.generated.resources.fc1_short_mantras
 import km_flow1000_admin.composeapp.generated.resources.fc2_nature_meditations
 import km_flow1000_admin.composeapp.generated.resources.fc3_stress_and_anxiety
@@ -77,7 +87,7 @@ fun AlignYourBodyElement(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
-            painter = painterResource(Res.drawable.ab1_inversions),
+            painter = painterResource(drawable),
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier
@@ -85,7 +95,7 @@ fun AlignYourBodyElement(
                 .clip(CircleShape)
         )
         Text(
-            text = stringResource(Res.string.ab1_inversions),
+            text = stringResource(text),
             modifier = Modifier.paddingFromBaseline(top = 24.dp, bottom = 8.dp),
             style = MaterialTheme.typography.bodyMedium
         )
@@ -129,7 +139,15 @@ fun FavoriteCollectionCard(
 fun AlignYourBodyRow(
     modifier: Modifier = Modifier
 ) {
-    // Implement composable here
+    LazyRow(
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        contentPadding = PaddingValues(horizontal = 16.dp),
+        modifier = modifier,
+    ) {
+        items(alignYourBodyData) { item ->
+            AlignYourBodyElement(item.drawable, item.text)
+        }
+    }
 }
 
 // Step: Favorite collections grid - LazyGrid
@@ -138,20 +156,52 @@ fun FavoriteCollectionsGrid(
     modifier: Modifier = Modifier
 ) {
     // Implement composable here
+    LazyHorizontalGrid(
+        rows = GridCells.Fixed(2),
+        contentPadding = PaddingValues(horizontal = 16.dp),
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+        modifier = modifier.height(168.dp)
+    ) {
+        items(favoriteCollectionsData) { item ->
+            FavoriteCollectionCard(item.drawable, item.text)
+        }
+    }
 }
 
 // Step: Home section - Slot APIs
 @Composable
 fun HomeSection(
-    modifier: Modifier = Modifier
+    title: StringResource,
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit
 ) {
-    // Implement composable here
+    Column(modifier) {
+        Text(
+            text = stringResource(title),
+            style = MaterialTheme.typography.titleMedium,
+            modifier = Modifier
+                .paddingFromBaseline(top = 40.dp, bottom = 16.dp)
+                .padding(horizontal = 16.dp)
+        )
+        content()
+    }
 }
 
 // Step: Home screen - Scrolling
 @Composable
 fun HomeScreen(modifier: Modifier = Modifier) {
-    // Implement composable here
+    Column(modifier) {
+        Spacer(Modifier.height(16.dp))
+        SearchBar(Modifier.padding(horizontal = 16.dp))
+        HomeSection(title = Res.string.align_your_body) {
+            AlignYourBodyRow()
+        }
+        HomeSection(title = Res.string.favorite_collections) {
+            FavoriteCollectionsGrid()
+        }
+        Spacer(Modifier.height(16.dp))
+    }
 }
 
 // Step: Bottom navigation - Material
@@ -251,7 +301,11 @@ fun AlignYourBodyRowPreview() {
 @Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
 @Composable
 fun HomeSectionPreview() {
-    MySootheTheme { HomeSection() }
+    MySootheTheme {
+        HomeSection(Res.string.align_your_body) {
+            AlignYourBodyRow()
+        }
+    }
 }
 
 @Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
