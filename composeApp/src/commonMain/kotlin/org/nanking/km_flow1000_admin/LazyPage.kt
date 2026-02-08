@@ -3,8 +3,8 @@ package org.nanking.km_flow1000_admin
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.runtime.Composable
@@ -27,8 +27,10 @@ fun LazyPage() {
         verticalItemSpacing = 4.dp,
         horizontalArrangement = Arrangement.spacedBy(4.dp),
         content = {
-            items(600) { it ->
-                Box(Modifier.height((100 + it % 5 * 5).dp ).background(colorByIndex(it)))
+            items(600) {
+                Box(Modifier
+                    .aspectRatio(ratio = (1.0 + 0.2 * (it % 4).toFloat()).toFloat())
+                    .background(colorByIndex(it)))
             }
         },
         modifier = Modifier.fillMaxSize()
