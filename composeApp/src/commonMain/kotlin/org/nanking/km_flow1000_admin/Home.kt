@@ -34,7 +34,7 @@ fun Home(navController: NavHostController) {
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Button(onClick = { navController.navigate("innerPage") }) {
+        Button(onClick = { navController.navigate("lazyPage") }) {
             Text("Click me!")
         }
         AnimatedVisibility(showContent) {

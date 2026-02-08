@@ -21,17 +21,17 @@ import km_flow1000_admin.composeapp.generated.resources.fc1_short_mantras
 @Preview
 fun App() {
     MaterialTheme {
-//        val navController = rememberNavController()
-//        Scaffold {
-//            NavHost(navController, startDestination = "home",
-//                enterTransition = { slideInHorizontally() },
-//                exitTransition = { slideOutHorizontally(targetOffsetX = { -it }) },
-//            ) {
-//                composable("home") {Home(navController)}
-//                composable("innerPage") {InnerPage(navController)}
-//            }
-//        }
-        LazyPage()
+        val navController = rememberNavController()
+        Scaffold {
+            NavHost(navController, startDestination = "home",
+                enterTransition = { slideInHorizontally() },
+                exitTransition = { slideOutHorizontally(targetOffsetX = { -it }) },
+            ) {
+                composable("home") {Home(navController)}
+                composable("lazyPage") {LazyPage(navController)}
+            }
+        }
+//        LazyPage()
     }
 
 }
