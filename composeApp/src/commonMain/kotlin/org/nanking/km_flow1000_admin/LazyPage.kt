@@ -17,6 +17,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
@@ -49,7 +51,13 @@ fun LazyPage(
                 items(600) {
                     Box(Modifier
                         .aspectRatio(ratio = (1.0 + 0.2 * (it % 4).toFloat()).toFloat())
-                        .background(colorByIndex(it)))
+                        .background(colorByIndex(it))) {
+                        Text("Item $it",
+                            Modifier.align(Alignment.Center),
+                            fontSize = TextUnit(25f, TextUnitType.Sp),
+                            color = colorByIndex(it + 1)
+                        )
+                    }
                 }
             },
             modifier = Modifier.fillMaxSize()
