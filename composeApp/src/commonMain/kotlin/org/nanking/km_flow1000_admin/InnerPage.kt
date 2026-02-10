@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.safeContentPadding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
@@ -24,7 +24,7 @@ fun InnerPage(navController: NavHostController) {
     Column (
         modifier = Modifier
             .background(color = MaterialTheme.colorScheme.primaryContainer)
-            .safeContentPadding()
+            .systemBarsPadding()
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {

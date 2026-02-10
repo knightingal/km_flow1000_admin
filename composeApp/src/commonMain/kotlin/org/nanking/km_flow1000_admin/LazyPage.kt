@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.safeContentPadding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.material3.Button
@@ -36,7 +37,7 @@ fun LazyPage(
     Column(
         modifier = Modifier
             .background(MaterialTheme.colorScheme.primaryContainer)
-            .safeContentPadding()
+            .systemBarsPadding()
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
