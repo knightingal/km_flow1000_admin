@@ -23,12 +23,13 @@ fun App() {
     MaterialTheme {
         val navController = rememberNavController()
         Scaffold {
-            NavHost(navController, startDestination = "home",
+            NavHost(navController, startDestination = "greeting",
                 enterTransition = { slideInHorizontally() },
                 exitTransition = { slideOutHorizontally(targetOffsetX = { -it }) },
             ) {
                 composable("home") {Home(navController)}
                 composable("lazyPage") {LazyPage(navController)}
+                composable ("greeting") {GreetingApp()}
             }
         }
 //        LazyPage()

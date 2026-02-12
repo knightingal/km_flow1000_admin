@@ -8,26 +8,40 @@ import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlin.random.Random
+import kotlin.time.Duration.Companion.seconds
 
 class Greeting {
     private val platform = getPlatform()
 
-    fun greet(): List<String> = buildList {
-        add(if (Random.nextBoolean()) "Hi!" else "Hello!")
-        add("Guess what this is! > ${platform.name.reversed()}!")
+//    fun greet(): List<String> = buildList {
+//        add(if (Random.nextBoolean()) "Hi!" else "Hello!")
+//        add("Guess what this is! > ${platform.name.reversed()}!")
+//    }
+    private val rocketComponent = RocketComponent()
+    fun greet(): Flow<String> = flow {
+        emit(if (Random.nextBoolean()) "Hi!" else "Hello")
+        delay(1.seconds)
+        emit("Guess what this is! > ${platform.name.reversed()}")
+        delay(1.seconds)
+        emit(rocketComponent.launchPhrase())
     }
 }
 
 @Composable
 @Preview
-fun GreeingApp() {
+fun GreetingApp(mainViewModel: MainViewModel = viewModel()) {
 
-    val greeting = remember { Greeting().greet() }
+//    val greeting by mainViewModel.greetingList.collectAsStateWithLifecycle()
 
     Column(
         modifier = Modifier
@@ -36,9 +50,9 @@ fun GreeingApp() {
             .fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        greeting.forEach { greeting ->
-            Text(greeting)
-            HorizontalDivider()
-        }
+//        greeting.forEach { greeting ->
+//            Text(greeting)
+//            HorizontalDivider()
+//        }
     }
 }
