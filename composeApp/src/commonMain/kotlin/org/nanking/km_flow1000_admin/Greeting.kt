@@ -41,7 +41,7 @@ class Greeting {
 @Preview
 fun GreetingApp(mainViewModel: MainViewModel = viewModel()) {
 
-//    val greeting by mainViewModel.greetingList.collectAsStateWithLifecycle()
+    val greeting by mainViewModel.greetingList.collectAsStateWithLifecycle()
 
     Column(
         modifier = Modifier
