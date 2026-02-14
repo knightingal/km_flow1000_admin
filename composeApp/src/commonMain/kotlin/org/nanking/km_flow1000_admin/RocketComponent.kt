@@ -11,9 +11,11 @@ import kotlin.time.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import kotlin.time.ExperimentalTime
+import io.ktor.client.engine.okhttp.*
+
 
 class RocketComponent {
-    private val httpClient = HttpClient {
+    private val httpClient = HttpClient(OkHttp) {
         install(ContentNegotiation) {
             json(Json {
                 prettyPrint = true
