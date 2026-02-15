@@ -26,7 +26,7 @@ class RocketComponent {
     }
 
     @OptIn(ExperimentalTime::class)
-    private suspend fun getDateOfLastSuccessfulLaunch(): String? {
+    private suspend fun getDateOfLastSuccessfulLaunch(): String {
         val rockets: List<RocketLaunch> = httpClient.get("https://api.spacexdata.com/v4/launches").body()
         val lastSuccessfulLaunch = rockets.last {
             it.launchSuccess == true

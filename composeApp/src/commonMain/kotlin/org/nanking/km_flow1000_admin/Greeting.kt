@@ -11,7 +11,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -45,9 +47,10 @@ class Greeting {
 fun GreetingApp() {
 
 //    val greeting by mainViewModel.greetingList.collectAsStateWithLifecycle()
+    var text by remember { mutableStateOf("Loading") }
 
     val rocketComponent = RocketComponent()
-    LaunchedEffect(true) { rocketComponent.launchPhrase() }
+    LaunchedEffect(true) { text = rocketComponent.launchPhrase() }
 
     Column(
         modifier = Modifier
@@ -56,9 +59,7 @@ fun GreetingApp() {
             .fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-//        greeting.forEach { greeting ->
-//            Text(greeting)
-//            HorizontalDivider()
-//        }
+        Text(text = text)
+        HorizontalDivider()
     }
 }
