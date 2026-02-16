@@ -4,7 +4,7 @@ import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -17,13 +17,14 @@ fun App() {
         val navController = rememberNavController()
         Scaffold { it ->
             it.hashCode()
-            NavHost(navController, startDestination = "greeting",
+            NavHost(
+                navController, startDestination = "lazyPage",
                 enterTransition = { slideInHorizontally() },
                 exitTransition = { slideOutHorizontally(targetOffsetX = { -it }) },
             ) {
-                composable("home") {Home(navController)}
-                composable("lazyPage") {LazyPage(navController)}
-                composable ("greeting") {GreetingApp()}
+                composable("home") { Home(navController) }
+                composable("lazyPage") { LazyPage(navController) }
+                composable("greeting") { GreetingApp() }
             }
         }
 //        LazyPage(navController)
