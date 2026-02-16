@@ -15,6 +15,13 @@ import io.ktor.client.engine.okhttp.*
 
 
 class RocketComponent {
+
+
+    companion object {
+        val flow1000IndexUrl = "http://192.168.2.12:8000/local1000/picIndexAjax?album=1000"
+        val json = Json { ignoreUnknownKeys = true }
+    }
+
     private val httpClient = HttpClient(OkHttp) {
         install(ContentNegotiation) {
             json(Json {
@@ -23,6 +30,13 @@ class RocketComponent {
                 ignoreUnknownKeys = true
             })
         }
+    }
+
+    suspend fun fetchPicIndex(): List<PicIndexItem> {
+        println("fetchPicIndex")
+        val responseBody: String = httpClient.get(flow1000IndexUrl).body()
+        println(responseBody)
+        return json.decodeFromString<List<PicIndexItem>>(responseBody)
     }
 
     @OptIn(ExperimentalTime::class)
