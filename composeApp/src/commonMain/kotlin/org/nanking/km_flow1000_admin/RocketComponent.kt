@@ -20,6 +20,7 @@ class RocketComponent {
     companion object {
         val flow1000IndexUrl = "http://192.168.2.12:8000/local1000/picIndexAjax?album=1000"
         val json = Json { ignoreUnknownKeys = true }
+        val logger = getLogger()
     }
 
     private val httpClient = HttpClient(OkHttp) {
@@ -33,9 +34,9 @@ class RocketComponent {
     }
 
     suspend fun fetchPicIndex(): List<PicIndexItem> {
-        println("fetchPicIndex")
+        logger.d("RocketComponent") { "Fetching picIndex" }
         val responseBody: String = httpClient.get(flow1000IndexUrl).body()
-        println(responseBody)
+        logger.d("RocketComponent") { responseBody }
         return json.decodeFromString<List<PicIndexItem>>(responseBody)
     }
 
