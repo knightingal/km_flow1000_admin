@@ -6,12 +6,13 @@ interface Platform {
 
 expect fun getPlatform(): Platform
 
-expect fun getLogger(): Logger
+expect fun getLogger(clazz: Class<*>): Logger
+expect fun getLogger(name: String): Logger
 
 interface Logger {
-    fun d(tag: String, message: () -> String)
-    fun w(tag: String, message: () -> String)
-    fun i(tag: String, message: () -> String)
-    fun e(tag: String, message: () -> String)
-    fun e(tag: String, message: () -> String, error: Throwable)
+    fun d(message: () -> String)
+    fun w(message: () -> String)
+    fun i(message: () -> String)
+    fun e(message: () -> String)
+    fun e(message: () -> String, error: Throwable)
 }

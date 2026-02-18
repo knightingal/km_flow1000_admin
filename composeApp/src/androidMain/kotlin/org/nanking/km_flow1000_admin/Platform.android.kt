@@ -9,26 +9,28 @@ class AndroidPlatform : Platform {
 
 actual fun getPlatform(): Platform = AndroidPlatform()
 
-actual fun getLogger(): Logger = AndroidLogger()
+actual fun getLogger(name: String): Logger = AndroidLogger(name)
+actual fun getLogger(clazz: Class<*>): Logger = AndroidLogger(clazz.simpleName)
 
-class AndroidLogger : Logger {
-    override fun d(tag: String, message: () -> String) {
+class AndroidLogger(val tag: String) : Logger {
+
+    override fun d(message: () -> String) {
         Log.d(tag, message())
     }
 
-    override fun w(tag: String, message: () -> String) {
+    override fun w(message: () -> String) {
         Log.w(tag, message())
     }
 
-    override fun i(tag: String, message: () -> String) {
+    override fun i(message: () -> String) {
         Log.i(tag, message())
     }
 
-    override fun e(tag: String, message: () -> String) {
+    override fun e(message: () -> String) {
         Log.e(tag, message())
     }
 
-    override fun e(tag: String, message: () -> String, error: Throwable) {
+    override fun e(message: () -> String, error: Throwable) {
         Log.e(tag, message(), error)
     }
 

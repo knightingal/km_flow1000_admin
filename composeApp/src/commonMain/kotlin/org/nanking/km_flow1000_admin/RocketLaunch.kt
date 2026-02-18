@@ -22,5 +22,5 @@ class PicIndexItem(
     val coverHeight: Int,
     val cover: String,
 ){
-    fun coverUrl(): String = "http://192.168.2.12:3002/linux1000/source/$name/${cover.replace(".bin", "")}"
+    fun coverUrl(): String = "http://127.0.0.1:3002/linux1000/source/$name/${cover.replace(".bin", "")}"
 }

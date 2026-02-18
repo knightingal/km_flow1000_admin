@@ -8,32 +8,35 @@ class JVMPlatform : Platform {
 
 actual fun getPlatform(): Platform = JVMPlatform()
 
-actual fun getLogger(): Logger = JVMLogger()
+actual fun getLogger(name: String): Logger = JVMLogger(name)
+actual fun getLogger(clazz: Class<*>): Logger = JVMLogger(clazz.simpleName)
 
-class JVMLogger: Logger {
+class JVMLogger(name: String): Logger {
+    val logger = LoggerFactory.getLogger(name)
 
-    override fun d(tag: String, message: () -> String) {
-        val logger = LoggerFactory.getLogger(tag)
-        logger.debug(message())
+    override fun d(message: () -> String) {
+        if (logger.isDebugEnabled) {
+            logger.debug(message())
+        }
     }
 
-    override fun w(tag: String, message: () -> String) {
-        val logger = LoggerFactory.getLogger(tag)
-        logger.warn(message())
+    override fun w(message: () -> String) {
+        if (logger.isWarnEnabled) {
+            logger.warn(message())
+        }
     }
 
-    override fun i(tag: String, message: () -> String) {
-        val logger = LoggerFactory.getLogger(tag)
-        logger.info(message())
+    override fun i(message: () -> String) {
+        if (logger.isInfoEnabled) {
+            logger.info(message())
+        }
     }
 
-    override fun e(tag: String, message: () -> String) {
-        val logger = LoggerFactory.getLogger(tag)
+    override fun e(message: () -> String) {
         logger.error(message())
     }
 
-    override fun e(tag: String, message: () -> String, error: Throwable) {
-        val logger = LoggerFactory.getLogger(tag)
+    override fun e(message: () -> String, error: Throwable) {
         logger.error(message(), error)
     }
 
