@@ -27,7 +27,6 @@ fun App() {
                 composable("greeting") { GreetingApp() }
             }
         }
-//        LazyPage(navController)
     }
 
 }
