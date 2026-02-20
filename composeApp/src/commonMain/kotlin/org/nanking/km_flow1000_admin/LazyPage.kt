@@ -13,6 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import coil3.compose.AsyncImage
@@ -22,10 +24,13 @@ val colors = listOf(Color.Red, Color.Blue, Color.Green, Color.Yellow)
 fun colorByIndex(index: Int): Color {
     return colors[index % colors.size]
 }
+class LazyViewModel : ViewModel() {
+}
 
 @Composable
 fun LazyPage(
-    navController: NavHostController
+    navController: NavHostController,
+    viewModel: LazyViewModel = viewModel { LazyViewModel() }
 ) {
     val rocketComponent = RocketComponent()
     var picIndexList by remember { mutableStateOf(listOf<PicIndexItem>()) }
