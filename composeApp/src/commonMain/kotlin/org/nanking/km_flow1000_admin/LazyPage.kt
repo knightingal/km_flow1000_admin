@@ -1,9 +1,14 @@
 package org.nanking.km_flow1000_admin
 
+import androidx.compose.foundation.VerticalScrollbar
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
+import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
+import androidx.compose.foundation.rememberScrollbarAdapter
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -48,24 +53,26 @@ fun LazyPage(
         Button(onClick = { navController.popBackStack() }) {
             Text("back!")
         }
-        LazyVerticalStaggeredGrid(
-            columns = StaggeredGridCells.Fixed(3),
-            verticalItemSpacing = 4.dp,
-            horizontalArrangement = Arrangement.spacedBy(4.dp),
-            content = {
-                items(picIndexList.size) { index ->
-                    Box(
-                        Modifier
-                            .aspectRatio(ratio = picIndexList[index].coverWidth.toFloat() / picIndexList[index].coverHeight.toFloat())
-                    ) {
-                        AsyncImage(
-                            model = picIndexList[index].coverUrl(), contentDescription = null,
-                        )
+        Box(modifier = Modifier.fillMaxSize()) {
+            LazyVerticalStaggeredGrid(
+                columns = StaggeredGridCells.Fixed(3),
+                verticalItemSpacing = 4.dp,
+                horizontalArrangement = Arrangement.spacedBy(4.dp),
+                content = {
+                    items(picIndexList.size) { index ->
+                        Box(
+                            Modifier
+                                .aspectRatio(ratio = picIndexList[index].coverWidth.toFloat() / picIndexList[index].coverHeight.toFloat())
+                        ) {
+                            AsyncImage(
+                                model = picIndexList[index].coverUrl(), contentDescription = null,
+                            )
+                        }
                     }
-                }
-            },
-            modifier = Modifier.fillMaxSize()
-        )
+                },
+                modifier = Modifier.fillMaxSize()
+            )
+        }
     }
 }
 
