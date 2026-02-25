@@ -54,24 +54,33 @@ fun LazyPage(
             Text("back!")
         }
         Box(modifier = Modifier.fillMaxSize()) {
+            val state = rememberLazyStaggeredGridState()
             LazyVerticalStaggeredGrid(
+                state = state,
                 columns = StaggeredGridCells.Fixed(3),
                 verticalItemSpacing = 4.dp,
                 horizontalArrangement = Arrangement.spacedBy(4.dp),
-                content = {
-                    items(picIndexList.size) { index ->
-                        Box(
-                            Modifier
-                                .aspectRatio(ratio = picIndexList[index].coverWidth.toFloat() / picIndexList[index].coverHeight.toFloat())
-                        ) {
-                            AsyncImage(
-                                model = picIndexList[index].coverUrl(), contentDescription = null,
-                            )
-                        }
-                    }
-                },
                 modifier = Modifier.fillMaxSize()
-            )
+            ) {
+                items(picIndexList.size) { index ->
+                    Box(
+                        Modifier
+                            .aspectRatio(ratio = picIndexList[index].coverWidth.toFloat() / picIndexList[index].coverHeight.toFloat())
+                    ) {
+                        AsyncImage(
+                            model = picIndexList[index].coverUrl(), contentDescription = null,
+                        )
+                    }
+                }
+            }
+//            VerticalScrollbar(
+//                modifier = Modifier.align(Alignment.CenterEnd).fillMaxHeight(),
+//                adapter = rememberScrollbarAdapter(
+//                    scrollState = state
+//                )
+//            )
+
+
         }
     }
 }
