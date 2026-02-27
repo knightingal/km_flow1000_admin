@@ -117,25 +117,52 @@ fun LazyStaggeredGridCustomScrollUsingLazyLayoutScrollScopeSample() {
     val scope = rememberCoroutineScope()
 
     Column(Modifier.verticalScroll(rememberScrollState())) {
-        Button(
-            onClick = {
-                scope.launch {
-                    state.customScroll {
-                        snapToItem(40, 20) // teleport to item 40
-                        val distance = calculateDistanceTo(50).toFloat()
-                        var previousValue = 0f
-                        animate(
-                            0f,
-                            distance,
-                            animationSpec = tween(5_000),
-                        ) { currentValue, _ ->
-                            previousValue += scrollBy(currentValue - previousValue)
+        Row {
+            Button(
+                modifier = Modifier.padding(2.dp),
+                onClick = {
+                    scope.launch {
+                        state.customScroll {
+                            snapToItem(40, 20) // teleport to item 40
+                            val distance = calculateDistanceTo(50).toFloat()
+                            var previousValue = 0f
+                            animate(
+                                0f,
+                                distance,
+                                animationSpec = tween(5_000),
+                            ) { currentValue, _ ->
+                                previousValue += scrollBy(currentValue - previousValue)
+                            }
                         }
                     }
                 }
+            ) {
+                Text("Scroll To Item 50")
             }
-        ) {
-            Text("Scroll To Item 50")
+            Button(
+                modifier = Modifier.padding(2.dp),
+                onClick = {
+                    scope.launch {
+                        state.customScroll {
+                            snapToItem(0, 0) // teleport to item 40
+                        }
+                    }
+                }
+            ) {
+                Text("Scroll To Item 0")
+            }
+            Button(
+                modifier = Modifier.padding(2.dp),
+                onClick = {
+                    scope.launch {
+                        state.customScroll {
+                            scrollBy((45 + 4).toFloat())
+                        }
+                    }
+                }
+            ) {
+                Text("Scroll +50 offset")
+            }
         }
         LazyHorizontalStaggeredGrid(
             state = state,
