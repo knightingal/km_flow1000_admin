@@ -2,8 +2,10 @@ package org.nanking.km_flow1000_admin
 
 import androidx.compose.animation.core.animate
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.MutatePriority
 import androidx.compose.foundation.VerticalScrollbar
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.ScrollScope
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.layout.LazyLayoutScrollScope
@@ -110,7 +112,12 @@ fun LazyPagePreview() {
 fun LazyStaggeredGridCustomScrollUsingLazyLayoutScrollScopeSample() {
     suspend fun LazyStaggeredGridState.customScroll(
         block: suspend LazyLayoutScrollScope.() -> Unit
-    ) = scroll { block.invoke(LazyLayoutScrollScope(this@customScroll, this)) }
+    ) {
+        val block1: suspend ScrollScope.() -> Unit = {
+            LazyLayoutScrollScope(this@customScroll, this).block()
+        }
+        scroll(scrollPriority = MutatePriority.Default, block1)
+    }
 
     val itemsList = (0..100).toList()
     val state = rememberLazyStaggeredGridState()
