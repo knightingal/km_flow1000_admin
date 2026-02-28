@@ -28,6 +28,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.Modifier.Companion
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
@@ -122,6 +124,7 @@ fun LazyStaggeredGridCustomScrollUsingLazyLayoutScrollScopeSample() {
     val itemsList = (0..100).toList()
     val state = rememberLazyStaggeredGridState()
     val scope = rememberCoroutineScope()
+    val currentDensity = LocalDensity.current
 
     Column(Modifier.verticalScroll(rememberScrollState())) {
         Row {
@@ -169,6 +172,22 @@ fun LazyStaggeredGridCustomScrollUsingLazyLayoutScrollScopeSample() {
                 }
             ) {
                 Text("Scroll +50 offset")
+            }
+            Button(
+                modifier = Modifier.padding(2.dp),
+                onClick = {
+                    scope.launch {
+                        val nowOffset = state.scrollIndicatorState!!.scrollOffset
+                        val targetOffset = with(currentDensity) {
+                             50.dp.toPx() - nowOffset
+                        }
+                        state.customScroll {
+                            scrollBy(targetOffset)
+                        }
+                    }
+                }
+            ) {
+                Text("Scroll 50dp offset")
             }
         }
         LazyHorizontalStaggeredGrid(
