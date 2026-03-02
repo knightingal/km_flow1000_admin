@@ -18,7 +18,7 @@ fun App() {
         Scaffold { it ->
             it.hashCode()
             NavHost(
-                navController, startDestination = "lazySample",
+                navController, startDestination = "lazyScrollable",
                 enterTransition = { slideInHorizontally() },
                 exitTransition = { slideOutHorizontally(targetOffsetX = { -it }) },
             ) {
@@ -26,6 +26,7 @@ fun App() {
                 composable("lazyPage") { LazyPage(navController) }
                 composable("greeting") { GreetingApp() }
                 composable("lazySample") { LazyStaggeredGridCustomScrollUsingLazyLayoutScrollScopeSample() }
+                composable("lazyScrollable") { LazyScrollable() }
             }
         }
     }

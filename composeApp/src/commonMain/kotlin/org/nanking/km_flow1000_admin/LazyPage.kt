@@ -7,6 +7,7 @@ import androidx.compose.foundation.VerticalScrollbar
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.ScrollScope
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.layout.LazyLayoutScrollScope
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -201,5 +202,43 @@ fun LazyStaggeredGridCustomScrollUsingLazyLayoutScrollScopeSample() {
                 }
             }
         }
+    }
+}
+
+@Composable
+fun LazyScrollable() {
+    Box(
+        modifier = Modifier.fillMaxSize()
+            .background(color = Color(180, 180, 180))
+            .padding(10.dp)
+    ) {
+
+        val state = rememberLazyListState()
+
+        LazyColumn(Modifier.fillMaxSize().padding(end = 12.dp), state) {
+            items(1000) { x ->
+                TextBox("Item #$x")
+                Spacer(modifier = Modifier.height(5.dp))
+            }
+        }
+        VerticalScrollbar(
+            modifier = Modifier.align(Alignment.CenterEnd).fillMaxHeight(),
+            adapter = rememberScrollbarAdapter(
+                scrollState = state
+            )
+        )
+    }
+}
+
+@Composable
+fun TextBox(text: String = "Item") {
+    Box(
+        modifier = Modifier.height(32.dp)
+            .fillMaxWidth()
+            .background(color = Color(0, 0, 0, 20))
+            .padding(start = 10.dp),
+        contentAlignment = Alignment.CenterStart
+    ) {
+        Text(text = text)
     }
 }
