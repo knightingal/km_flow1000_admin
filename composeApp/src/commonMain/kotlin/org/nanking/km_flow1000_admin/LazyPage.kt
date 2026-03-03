@@ -50,10 +50,7 @@ class LazyViewModel : ViewModel() {
 suspend fun LazyStaggeredGridState.customScroll(
     block: suspend LazyLayoutScrollScope.() -> Unit
 ) {
-    val block1: suspend ScrollScope.() -> Unit = {
-        LazyLayoutScrollScope(this@customScroll, this).block()
-    }
-    scroll(scrollPriority = MutatePriority.Default, block1)
+    scroll { block.invoke(LazyLayoutScrollScope(this@customScroll, this)) }
 }
 
 @Composable
