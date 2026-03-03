@@ -8,7 +8,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.ScrollScope
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.layout.LazyLayoutScrollScope
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.lazy.staggeredgrid.LazyHorizontalStaggeredGrid
@@ -20,6 +19,7 @@ import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.rememberScrollbarAdapter
+import androidx.compose.foundation.v2.ScrollbarAdapter
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
@@ -27,10 +27,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.Modifier.Companion
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
@@ -46,6 +44,16 @@ fun colorByIndex(index: Int): Color {
     return colors[index % colors.size]
 }
 class LazyViewModel : ViewModel() {
+}
+
+
+suspend fun LazyStaggeredGridState.customScroll(
+    block: suspend LazyLayoutScrollScope.() -> Unit
+) {
+    val block1: suspend ScrollScope.() -> Unit = {
+        LazyLayoutScrollScope(this@customScroll, this).block()
+    }
+    scroll(scrollPriority = MutatePriority.Default, block1)
 }
 
 @Composable
@@ -70,7 +78,7 @@ fun LazyPage(
             Text("back!")
         }
         Box(modifier = Modifier.fillMaxSize()) {
-            val state = rememberLazyStaggeredGridState()
+            val state: LazyStaggeredGridState = rememberLazyStaggeredGridState()
             LazyVerticalStaggeredGrid(
                 state = state,
                 columns = StaggeredGridCells.Fixed(3),
@@ -89,17 +97,42 @@ fun LazyPage(
                     }
                 }
             }
-//            VerticalScrollbar(
-//                modifier = Modifier.align(Alignment.CenterEnd).fillMaxHeight(),
-//                adapter = rememberScrollbarAdapter(
-//                    scrollState = state
-//                )
-//            )
-
-
+            VerticalScrollbar(
+                modifier = Modifier.align(Alignment.CenterEnd).fillMaxHeight(),
+                adapter = rememberScrollbarAdapter(
+                    lazyStaggeredGridState = state
+                )
+            )
         }
     }
 }
+
+@Composable
+fun rememberScrollbarAdapter(
+    lazyStaggeredGridState: LazyStaggeredGridState,
+): ScrollbarAdapter = remember(lazyStaggeredGridState) {
+    ScrollbarAdapter(lazyStaggeredGridState)
+}
+
+
+fun ScrollbarAdapter(
+    scrollState: LazyStaggeredGridState
+): ScrollbarAdapter = object : ScrollbarAdapter {
+    override val scrollOffset: Double
+        get() = scrollState.scrollIndicatorState!!.scrollOffset.toDouble()
+    override val contentSize: Double
+        get() = scrollState.scrollIndicatorState!!.contentSize.toDouble()
+    override val viewportSize: Double
+        get() = scrollState.scrollIndicatorState!!.viewportSize.toDouble()
+
+    override suspend fun scrollTo(scrollOffset: Double) {
+        val targetOffset = scrollOffset - this.scrollOffset
+        scrollState.customScroll {
+            scrollBy(targetOffset.toFloat())
+        }
+    }
+}
+
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
