@@ -16,7 +16,7 @@ import io.ktor.client.engine.okhttp.*
 
 class RocketComponent {
     companion object {
-        const val FLOW_1000_INDEX_URL = "http://127.0.0.1:8000/local1000/picIndexAjax?album=1000"
+        const val FLOW_1000_INDEX_URL = "http://192.168.2.12:8000/local1000/picIndexAjax?album=1000"
         val json = Json { ignoreUnknownKeys = true }
         val logger = getLogger("RocketComponent")
     }
