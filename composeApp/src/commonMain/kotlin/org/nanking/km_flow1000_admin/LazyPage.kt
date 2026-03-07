@@ -3,7 +3,6 @@ package org.nanking.km_flow1000_admin
 import androidx.compose.animation.core.animate
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.MutatePriority
-import androidx.compose.foundation.VerticalScrollbar
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.ScrollScope
 import androidx.compose.foundation.layout.*
@@ -18,8 +17,6 @@ import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.rememberScrollbarAdapter
-import androidx.compose.foundation.v2.ScrollbarAdapter
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
@@ -75,9 +72,9 @@ fun LazyPage(
             Text("back!")
         }
         Box(modifier = Modifier.fillMaxSize()) {
-            val state: LazyStaggeredGridState = rememberLazyStaggeredGridState()
+            val lazyStaggeredGridState: LazyStaggeredGridState = rememberLazyStaggeredGridState()
             LazyVerticalStaggeredGrid(
-                state = state,
+                state = lazyStaggeredGridState,
                 columns = StaggeredGridCells.Fixed(3),
                 verticalItemSpacing = 4.dp,
                 horizontalArrangement = Arrangement.spacedBy(4.dp),
@@ -94,41 +91,14 @@ fun LazyPage(
                     }
                 }
             }
-            VerticalScrollbar(
+            PlatformVerticalScrollbar(
                 modifier = Modifier.align(Alignment.CenterEnd).fillMaxHeight(),
-                adapter = rememberScrollbarAdapter(
-                    lazyStaggeredGridState = state
-                )
+                lazyStaggeredGridState = lazyStaggeredGridState
             )
         }
     }
 }
 
-@Composable
-fun rememberScrollbarAdapter(
-    lazyStaggeredGridState: LazyStaggeredGridState,
-): ScrollbarAdapter = remember(lazyStaggeredGridState) {
-    ScrollbarAdapter(lazyStaggeredGridState)
-}
-
-
-fun ScrollbarAdapter(
-    scrollState: LazyStaggeredGridState
-): ScrollbarAdapter = object : ScrollbarAdapter {
-    override val scrollOffset: Double
-        get() = scrollState.scrollIndicatorState!!.scrollOffset.toDouble()
-    override val contentSize: Double
-        get() = scrollState.scrollIndicatorState!!.contentSize.toDouble()
-    override val viewportSize: Double
-        get() = scrollState.scrollIndicatorState!!.viewportSize.toDouble()
-
-    override suspend fun scrollTo(scrollOffset: Double) {
-        val targetOffset = scrollOffset - this.scrollOffset
-        scrollState.customScroll {
-            scrollBy(targetOffset.toFloat())
-        }
-    }
-}
 
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
@@ -251,12 +221,12 @@ fun LazyScrollable() {
                 Spacer(modifier = Modifier.height(5.dp))
             }
         }
-        VerticalScrollbar(
-            modifier = Modifier.align(Alignment.CenterEnd).fillMaxHeight(),
-            adapter = rememberScrollbarAdapter(
-                scrollState = state
-            )
-        )
+//        VerticalScrollbar(
+//            modifier = Modifier.align(Alignment.CenterEnd).fillMaxHeight(),
+//            adapter = rememberScrollbarAdapter(
+//                scrollState = state
+//            )
+//        )
     }
 }
 
