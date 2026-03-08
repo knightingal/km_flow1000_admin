@@ -18,11 +18,12 @@ fun App() {
         Scaffold { it ->
             it.hashCode()
             NavHost(
-                navController, startDestination = "lazyPage",
+                navController, startDestination = "flow1000Home",
                 enterTransition = { slideInHorizontally() },
                 exitTransition = { slideOutHorizontally(targetOffsetX = { -it }) },
             ) {
                 composable("home") { Home(navController) }
+                composable("flow1000Home") { Flow1000Home(navController) }
                 composable("lazyPage") { LazyPage(navController) }
                 composable("greeting") { GreetingApp() }
                 composable("lazySample") { LazyStaggeredGridCustomScrollUsingLazyLayoutScrollScopeSample() }
