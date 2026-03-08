@@ -24,3 +24,40 @@ class PicIndexItem(
 ){
     fun coverUrl(): String = "http://192.168.2.12:3002/linux1000/source/$name/${cover.replace(".bin", "")}"
 }
+
+@Serializable
+class AlbumConfig(
+    val id: Long,
+    val name: String,
+    val encrypted: Boolean,
+    val encryptedPath: String?,
+    val sourcePath: String,
+    val baseUrl: String?,
+    val coverSection: Flow1000Section,
+) {
+    fun coverUrl(): String = "http://192.168.2.12:3002/linux1000/$sourcePath/${coverSection.dirName}/${coverSection.cover.replace(".bin", "")}"
+
+}
+
+@Serializable
+class Flow1000Section(
+    val id: Long,
+    val name: String,
+    val dirName: String,
+    val createTime: String,
+    val cover: String,
+    val album: String,
+    val coverWidth: Int,
+    val coverHeight: Int,
+    val images: List<Flow1000Img>
+) {
+}
+
+@Serializable
+class Flow1000Img(
+    val id: Long,
+    val name: String,
+    val inCover: Int,
+    val width: Int,
+    val height: Int
+)

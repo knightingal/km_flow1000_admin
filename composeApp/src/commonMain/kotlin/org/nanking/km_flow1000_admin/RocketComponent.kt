@@ -17,6 +17,7 @@ import io.ktor.client.engine.okhttp.*
 class RocketComponent {
     companion object {
         const val FLOW_1000_INDEX_URL = "http://192.168.2.12:8000/local1000/picIndexAjax?album=1000"
+        const val FLOW_1000_COVER_LIST_URL = "http://192.168.2.12:8000/local1000/albumConfig/list"
         val json = Json { ignoreUnknownKeys = true }
         val logger = getLogger("RocketComponent")
     }
@@ -29,6 +30,12 @@ class RocketComponent {
                 ignoreUnknownKeys = true
             })
         }
+    }
+
+    suspend fun fetchAlbumConfigList(): List<AlbumConfig> {
+        val responseBody: String = httpClient.get(FLOW_1000_COVER_LIST_URL).body()
+        logger.d { "Fetching album config list: $responseBody" }
+        return json.decodeFromString<List<AlbumConfig>>(responseBody)
     }
 
     suspend fun fetchPicIndex(): List<PicIndexItem> {
