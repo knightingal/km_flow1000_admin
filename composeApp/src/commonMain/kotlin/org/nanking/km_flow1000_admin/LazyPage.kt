@@ -221,12 +221,6 @@ fun LazyScrollable() {
                 Spacer(modifier = Modifier.height(5.dp))
             }
         }
-//        VerticalScrollbar(
-//            modifier = Modifier.align(Alignment.CenterEnd).fillMaxHeight(),
-//            adapter = rememberScrollbarAdapter(
-//                scrollState = state
-//            )
-//        )
     }
 }
 
