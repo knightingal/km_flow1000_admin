@@ -54,17 +54,9 @@ fun Flow1000Home(navController: NavHostController) {
             modifier = Modifier.fillMaxSize(),
         ) {
             items(albumConfigList.size) { index ->
-                Box(
-                    modifier = Modifier.aspectRatio(
-                        ratio = albumConfigList[index].coverSection.coverWidth.toFloat()
-                                / albumConfigList[index].coverSection.coverHeight.toFloat()
-                    )
-                ) {
-                    val coverUrl = albumConfigList[index].coverUrl()
-                    logger.i { "Display Cover URL: $coverUrl" }
-//                    AsyncImage(model = coverUrl, contentDescription = null)
-                    AlbumCoverCard(albumConfig = albumConfigList[index])
-                }
+                val coverUrl = albumConfigList[index].coverUrl()
+                logger.i { "Display Cover URL: $coverUrl" }
+                AlbumCoverCard(albumConfig = albumConfigList[index])
             }
         }
         PlatformVerticalScrollbar(
@@ -84,7 +76,14 @@ fun AlbumCoverCard(modifier: Modifier = Modifier, albumConfig: AlbumConfig) {
         ), modifier = modifier
     ) {
         Column() {
-            AsyncImage(model = albumConfig.coverUrl(), contentDescription = null)
+            Box(
+                modifier = Modifier.aspectRatio(
+                    ratio = albumConfig.coverSection.coverWidth.toFloat()
+                            / albumConfig.coverSection.coverHeight.toFloat()
+                )
+            ) {
+                AsyncImage(model = albumConfig.coverUrl(), contentDescription = null)
+            }
             Text(albumConfig.name)
 
         }

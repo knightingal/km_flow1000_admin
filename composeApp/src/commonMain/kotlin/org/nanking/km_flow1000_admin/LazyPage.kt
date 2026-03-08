@@ -2,6 +2,7 @@ package org.nanking.km_flow1000_admin
 
 import androidx.compose.animation.core.animate
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.MutatePriority
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.ScrollScope
@@ -19,6 +20,8 @@ import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridS
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardColors
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
@@ -81,14 +84,7 @@ fun LazyPage(
                 modifier = Modifier.fillMaxSize()
             ) {
                 items(picIndexList.size) { index ->
-                    Box(
-                        Modifier
-                            .aspectRatio(ratio = picIndexList[index].coverWidth.toFloat() / picIndexList[index].coverHeight.toFloat())
-                    ) {
-                        AsyncImage(
-                            model = picIndexList[index].coverUrl(), contentDescription = null,
-                        )
-                    }
+                    SectionCoverCard(picIndexItem = picIndexList[index])
                 }
             }
             PlatformVerticalScrollbar(
@@ -99,6 +95,29 @@ fun LazyPage(
     }
 }
 
+@Composable
+fun SectionCoverCard(modifier: Modifier = Modifier, picIndexItem: PicIndexItem) {
+    Card(
+        border = BorderStroke(2.dp, Color.Blue), colors = CardColors(
+            contentColor = Color.Red, containerColor = Color.Black,
+            disabledContainerColor = Color.LightGray,
+            disabledContentColor = Color.LightGray,
+        ), modifier = modifier
+    ) {
+        Column() {
+            Box(
+                modifier = Modifier.aspectRatio(
+                    ratio = picIndexItem.coverWidth.toFloat()
+                            / picIndexItem.coverHeight.toFloat()
+                )
+            ) {
+                AsyncImage(model = picIndexItem.coverUrl(), contentDescription = null)
+            }
+            Text(picIndexItem.name)
+
+        }
+    }
+}
 
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
