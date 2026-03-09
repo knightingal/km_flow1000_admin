@@ -56,6 +56,7 @@ suspend fun LazyStaggeredGridState.customScroll(
 @Composable
 fun LazyPage(
     navController: NavHostController,
+    pageId: String,
     viewModel: LazyViewModel = viewModel { LazyViewModel() }
 ) {
     val rocketComponent = RocketComponent()
@@ -123,7 +124,7 @@ fun SectionCoverCard(modifier: Modifier = Modifier, picIndexItem: PicIndexItem) 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
 fun LazyPagePreview() {
-    LazyPage(navController = rememberNavController())
+    LazyPage(navController = rememberNavController(), "0")
 }
 
 

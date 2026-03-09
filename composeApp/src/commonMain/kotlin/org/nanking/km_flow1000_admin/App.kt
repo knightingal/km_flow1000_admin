@@ -9,6 +9,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class LazyParam(val pageId: String)
 
 @Composable
 @Preview
@@ -24,7 +29,9 @@ fun App() {
             ) {
                 composable("home") { Home(navController) }
                 composable("flow1000Home") { Flow1000Home(navController) }
-                composable("lazyPage") { LazyPage(navController) }
+                composable<LazyParam> { backStackEntry->
+                    val lazyParam = backStackEntry.toRoute<LazyParam>()
+                    LazyPage(navController, lazyParam.pageId) }
                 composable("greeting") { GreetingApp() }
                 composable("lazySample") { LazyStaggeredGridCustomScrollUsingLazyLayoutScrollScopeSample() }
                 composable("lazyScrollable") { LazyScrollable() }
