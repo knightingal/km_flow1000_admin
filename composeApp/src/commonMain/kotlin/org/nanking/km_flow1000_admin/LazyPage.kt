@@ -74,7 +74,7 @@ fun LazyPage(
     ) {
         Button(onClick = {
             navController.previousBackStackEntry?.savedStateHandle["showContent"] = "1"
-            navController.popBackStack(HomeParam("0"), inclusive = true, saveState = false)
+            navController.popBackStack()
         }) {
             Text("back!")
         }
