@@ -15,6 +15,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class LazyParam(val pageId: String)
 
+@Serializable
+data class HomeParam(val pageId: String)
+
 @Composable
 @Preview
 fun App() {
@@ -23,11 +26,15 @@ fun App() {
         Scaffold { it ->
             it.hashCode()
             NavHost(
-                navController, startDestination = "flow1000Home",
+                navController, startDestination = HomeParam("0"),
                 enterTransition = { slideInHorizontally() },
                 exitTransition = { slideOutHorizontally(targetOffsetX = { -it }) },
             ) {
-                composable("home") { Home(navController) }
+//                composable("home") { Home(navController) }
+                composable<HomeParam> {backStackEntry->
+                    val homeParam = backStackEntry.toRoute<HomeParam>()
+                    Home(navController, homeParam.pageId)
+                }
                 composable("flow1000Home") { Flow1000Home(navController) }
                 composable<LazyParam> { backStackEntry->
                     val lazyParam = backStackEntry.toRoute<LazyParam>()

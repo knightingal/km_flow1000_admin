@@ -72,7 +72,10 @@ fun LazyPage(
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Button(onClick = { navController.popBackStack() }) {
+        Button(onClick = {
+            navController.previousBackStackEntry?.savedStateHandle["showContent"] = "1"
+            navController.popBackStack(HomeParam("0"), inclusive = true, saveState = false)
+        }) {
             Text("back!")
         }
         Box(modifier = Modifier.fillMaxSize()) {
