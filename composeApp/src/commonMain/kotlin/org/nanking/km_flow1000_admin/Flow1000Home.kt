@@ -64,7 +64,9 @@ fun Flow1000Home(navController: NavHostController) {
             items(albumConfigList.size) { index ->
                 val coverUrl = albumConfigList[index].cover
                 logger.i { "Display Cover URL: $coverUrl" }
-                AlbumCoverCard(albumConfig = albumConfigList[index])
+                AlbumCoverCard(albumConfig = albumConfigList[index]) {
+                    navController.navigate(HomeParam("1"))
+                }
             }
         }
         PlatformVerticalScrollbar(
@@ -75,7 +77,11 @@ fun Flow1000Home(navController: NavHostController) {
 }
 
 @Composable
-fun AlbumCoverCard(modifier: Modifier = Modifier, albumConfig: AlbumConfigCover<*>) {
+fun AlbumCoverCard(
+    modifier: Modifier = Modifier,
+    albumConfig: AlbumConfigCover<*>,
+    onClick: () -> Unit = {}
+) {
     Card(
         border = BorderStroke(2.dp, MaterialTheme.colorScheme.primary),
         colors = CardColors(
@@ -83,7 +89,8 @@ fun AlbumCoverCard(modifier: Modifier = Modifier, albumConfig: AlbumConfigCover<
             containerColor = MaterialTheme.colorScheme.surface,
             disabledContainerColor = Color.LightGray,
             disabledContentColor = Color.LightGray,
-        ), modifier = Modifier.wrapContentSize()
+        ), modifier = Modifier.wrapContentSize(),
+        onClick = onClick
     ) {
         Column() {
             Box(
