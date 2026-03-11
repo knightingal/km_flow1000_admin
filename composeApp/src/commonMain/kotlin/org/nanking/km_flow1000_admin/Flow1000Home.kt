@@ -1,6 +1,7 @@
 package org.nanking.km_flow1000_admin
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -8,7 +9,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
@@ -29,6 +32,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import coil3.compose.AsyncImage
+import km_flow1000_admin.composeapp.generated.resources.Res
+import km_flow1000_admin.composeapp.generated.resources.ai20220605211354_b127a
+import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.painterResource
 
 @Composable
 fun Flow1000Home(navController: NavHostController) {
@@ -44,6 +51,7 @@ fun Flow1000Home(navController: NavHostController) {
             .background(MaterialTheme.colorScheme.primaryContainer)
             .systemBarsPadding()
             .fillMaxSize()
+            .padding(4.dp)
     ) {
         val lazyStaggeredGridState = rememberLazyStaggeredGridState()
         LazyVerticalStaggeredGrid(
@@ -54,7 +62,7 @@ fun Flow1000Home(navController: NavHostController) {
             modifier = Modifier.fillMaxSize(),
         ) {
             items(albumConfigList.size) { index ->
-                val coverUrl = albumConfigList[index].coverUrl()
+                val coverUrl = albumConfigList[index].cover
                 logger.i { "Display Cover URL: $coverUrl" }
                 AlbumCoverCard(albumConfig = albumConfigList[index])
             }
@@ -67,24 +75,33 @@ fun Flow1000Home(navController: NavHostController) {
 }
 
 @Composable
-fun AlbumCoverCard(modifier: Modifier = Modifier, albumConfig: AlbumConfig) {
+fun AlbumCoverCard(modifier: Modifier = Modifier, albumConfig: AlbumConfigCover<*>) {
     Card(
-        border = BorderStroke(2.dp, Color.Blue), colors = CardColors(
-            contentColor = Color.Red, containerColor = Color.Black,
+        border = BorderStroke(2.dp, MaterialTheme.colorScheme.primary),
+        colors = CardColors(
+            contentColor = MaterialTheme.colorScheme.onSurface,
+            containerColor = MaterialTheme.colorScheme.surface,
             disabledContainerColor = Color.LightGray,
             disabledContentColor = Color.LightGray,
-        ), modifier = modifier
+        ), modifier = Modifier.wrapContentSize()
     ) {
         Column() {
             Box(
                 modifier = Modifier.aspectRatio(
-                    ratio = albumConfig.coverSection.coverWidth.toFloat()
-                            / albumConfig.coverSection.coverHeight.toFloat()
+                    ratio = albumConfig.width.toFloat()
+                            / albumConfig.height.toFloat()
                 )
             ) {
-                AsyncImage(model = albumConfig.coverUrl(), contentDescription = null)
+                if (albumConfig.cover is String) {
+                    AsyncImage(model = albumConfig.cover, contentDescription = null)
+                } else if (albumConfig.cover is DrawableResource) {
+                    Image(
+                        painter = painterResource(albumConfig.cover as DrawableResource),
+                        contentDescription = null,
+                    )
+                }
             }
-            Text(albumConfig.name)
+            Text(albumConfig.name, modifier = Modifier.padding(16.dp))
 
         }
     }
@@ -95,19 +112,15 @@ fun AlbumCoverCard(modifier: Modifier = Modifier, albumConfig: AlbumConfig) {
 fun AlbumCoverCardPreview() {
     AlbumCoverCard(
         modifier = Modifier,
-        albumConfig = AlbumConfig(
-            0, "1803", false, null, "1803", null,
-            Flow1000Section(
-                0,
-                "",
-                "diranme",
-                "",
-                "coverfilename",
-                "",
-                4220,
-                2815,
-                listOf()
-            )
-        )
+        albumConfig = object : AlbumConfigCover<DrawableResource> {
+            override val width: Int
+                get() = 1216
+            override val height: Int
+                get() = 1371
+            override val cover: DrawableResource
+                get() = Res.drawable.ai20220605211354_b127a
+            override val name: String
+                get() = "AI20220605211354"
+        }
     )
 }
