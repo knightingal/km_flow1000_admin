@@ -26,7 +26,7 @@ fun App() {
         Scaffold { it ->
             it.hashCode()
             NavHost(
-                navController, startDestination = HomeParam("0"),
+                navController, startDestination = "flow1000Home",
                 enterTransition = { slideInHorizontally() },
                 exitTransition = { slideOutHorizontally(targetOffsetX = { -it }) },
             ) {
