@@ -56,7 +56,7 @@ fun Flow1000Home(navController: NavHostController) {
         val lazyStaggeredGridState = rememberLazyStaggeredGridState()
         LazyVerticalStaggeredGrid(
             state = lazyStaggeredGridState,
-            columns = StaggeredGridCells.Fixed(3),
+            columns = StaggeredGridCells.Fixed(2),
             verticalItemSpacing = 4.dp,
             horizontalArrangement = Arrangement.spacedBy(4.dp),
             modifier = Modifier.fillMaxSize(),
