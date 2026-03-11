@@ -25,17 +25,27 @@ class PicIndexItem(
     fun coverUrl(): String = "http://192.168.2.12:3002/linux1000/source/$name/${cover.replace(".bin", "")}"
 }
 
+interface AlbumConfigCover<T> {
+    val width: Int
+    val height: Int
+    val cover: T
+    val name: String
+}
+
 @Serializable
 class AlbumConfig(
     val id: Long,
-    val name: String,
+    override val name: String,
     val encrypted: Boolean,
     val encryptedPath: String?,
     val sourcePath: String,
     val baseUrl: String?,
     val coverSection: Flow1000Section,
-) {
-    fun coverUrl(): String = "http://192.168.2.12:3002/linux1000/$sourcePath/${coverSection.dirName}/${coverSection.cover.replace(".bin", "")}"
+) : AlbumConfigCover<String>{
+
+    override val width: Int = coverSection.coverWidth
+    override val height: Int = coverSection.coverHeight
+    override val cover: String = "http://192.168.2.12:3002/linux1000/$sourcePath/${coverSection.dirName}/${coverSection.cover.replace(".bin", "")}"
 
 }
 
