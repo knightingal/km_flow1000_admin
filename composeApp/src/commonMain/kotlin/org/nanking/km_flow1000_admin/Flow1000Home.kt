@@ -92,26 +92,23 @@ fun AlbumCoverCard(
         ), modifier = Modifier.wrapContentSize(),
         onClick = onClick
     ) {
-        Column() {
-            Box(
-                modifier = Modifier.aspectRatio(
-                    ratio = albumConfig.width.toFloat()
-                            / albumConfig.height.toFloat()
+        Box(
+            modifier = Modifier.aspectRatio(
+                ratio = albumConfig.width.toFloat()
+                        / albumConfig.height.toFloat()
+            )
+        ) {
+            if (albumConfig.cover is String) {
+                AsyncImage(model = albumConfig.cover, contentDescription = null)
+            } else if (albumConfig.cover is DrawableResource) {
+                Image(
+                    modifier = Modifier.fillMaxSize(),
+                    painter = painterResource(albumConfig.cover as DrawableResource),
+                    contentDescription = null,
                 )
-            ) {
-                if (albumConfig.cover is String) {
-                    AsyncImage(model = albumConfig.cover, contentDescription = null)
-                } else if (albumConfig.cover is DrawableResource) {
-                    Image(
-                        modifier = Modifier.fillMaxSize(),
-                        painter = painterResource(albumConfig.cover as DrawableResource),
-                        contentDescription = null,
-                    )
-                }
             }
-            Text(albumConfig.name, modifier = Modifier.padding(16.dp))
-
         }
+        Text(albumConfig.name, modifier = Modifier.padding(16.dp))
     }
 }
 
