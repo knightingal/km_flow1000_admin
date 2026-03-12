@@ -115,7 +115,7 @@ fun SectionCoverCard(modifier: Modifier = Modifier, picIndexItem: PicIndexItem) 
                             / picIndexItem.coverHeight.toFloat()
                 )
             ) {
-                AsyncImage(model = picIndexItem.coverUrl(), contentDescription = null)
+                AsyncImage(model = picIndexItem.cover, contentDescription = null)
             }
             Text(picIndexItem.name)
 

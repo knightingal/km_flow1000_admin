@@ -17,12 +17,16 @@ class RocketLaunch (
 
 @Serializable
 class PicIndexItem(
-    val name: String,
+    override val name: String,
     val coverWidth: Int,
     val coverHeight: Int,
-    val cover: String,
-){
-    fun coverUrl(): String = "http://192.168.2.12:3002/linux1000/source/$name/${cover.replace(".bin", "")}"
+): AlbumConfigCover<String>
+{
+    override val width: Int = coverWidth
+    override val height: Int = coverHeight
+
+    override var cover: String = ""
+        get() = "http://192.168.2.12:3002/linux1000/source/$name/${field.replace(".bin", "")}"
 }
 
 interface AlbumConfigCover<T> {
