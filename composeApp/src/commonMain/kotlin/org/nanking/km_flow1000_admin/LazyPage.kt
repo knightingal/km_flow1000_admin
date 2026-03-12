@@ -73,7 +73,7 @@ fun LazyPage(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Button(onClick = {
-            navController.previousBackStackEntry?.savedStateHandle["showContent"] = "1"
+            navController.previousBackStackEntry?.savedStateHandle["showContent"] = "response content"
             navController.popBackStack()
         }) {
             Text("back!")

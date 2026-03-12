@@ -33,7 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import coil3.compose.AsyncImage
 import km_flow1000_admin.composeapp.generated.resources.Res
-import km_flow1000_admin.composeapp.generated.resources.ai20220605211354_b127a
+import km_flow1000_admin.composeapp.generated.resources.fc6_nightly_wind_down
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 
@@ -103,6 +103,7 @@ fun AlbumCoverCard(
                     AsyncImage(model = albumConfig.cover, contentDescription = null)
                 } else if (albumConfig.cover is DrawableResource) {
                     Image(
+                        modifier = Modifier.fillMaxSize(),
                         painter = painterResource(albumConfig.cover as DrawableResource),
                         contentDescription = null,
                     )
@@ -121,11 +122,11 @@ fun AlbumCoverCardPreview() {
         modifier = Modifier,
         albumConfig = object : AlbumConfigCover<DrawableResource> {
             override val width: Int
-                get() = 1216
+                get() = 640
             override val height: Int
-                get() = 1371
+                get() = 426
             override val cover: DrawableResource
-                get() = Res.drawable.ai20220605211354_b127a
+                get() = Res.drawable.fc6_nightly_wind_down
             override val name: String
                 get() = "AI20220605211354"
         }
