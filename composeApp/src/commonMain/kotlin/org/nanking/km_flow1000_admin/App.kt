@@ -36,6 +36,7 @@ fun App() {
                     Home(navController, homeParam.pageId)
                 }
                 composable("flow1000Home") { Flow1000Home(navController) }
+                composable("flow1000AlbumPage") { Flow1000AlbumPage(navController) }
                 composable<LazyParam> { backStackEntry->
                     val lazyParam = backStackEntry.toRoute<LazyParam>()
                     LazyPage(navController, lazyParam.pageId) }

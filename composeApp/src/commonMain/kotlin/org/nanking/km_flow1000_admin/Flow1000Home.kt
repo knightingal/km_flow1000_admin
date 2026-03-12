@@ -65,7 +65,7 @@ fun Flow1000Home(navController: NavHostController) {
                 val coverUrl = albumConfigList[index].cover
                 logger.i { "Display Cover URL: $coverUrl" }
                 AlbumCoverCard(albumConfig = albumConfigList[index]) {
-                    navController.navigate(HomeParam("1"))
+                    navController.navigate("flow1000AlbumPage")
                 }
             }
         }
