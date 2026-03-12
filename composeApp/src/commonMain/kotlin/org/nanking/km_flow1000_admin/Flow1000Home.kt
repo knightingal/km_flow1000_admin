@@ -77,6 +77,44 @@ fun Flow1000Home(navController: NavHostController) {
 }
 
 @Composable
+fun Flow1000AlbumPage(navController: NavHostController) {
+    val logger = getLogger("Flow1000AlbumPage")
+    val rocketComponent = RocketComponent()
+    var pinIndexList by remember { mutableStateOf(listOf<PicIndexItem>()) }
+    LaunchedEffect(true) {
+        pinIndexList = rocketComponent.fetchPicIndex()
+    }
+    Box(
+        modifier = Modifier
+            .background(MaterialTheme.colorScheme.primaryContainer)
+            .systemBarsPadding()
+            .fillMaxSize()
+            .padding(4.dp)
+    ) {
+        val lazyStaggeredGridState = rememberLazyStaggeredGridState()
+        LazyVerticalStaggeredGrid(
+            state = lazyStaggeredGridState,
+            columns = StaggeredGridCells.Fixed(2),
+            verticalItemSpacing = 4.dp,
+            horizontalArrangement = Arrangement.spacedBy(4.dp),
+            modifier = Modifier.fillMaxSize(),
+        ) {
+            items(pinIndexList.size) { index ->
+                val coverUrl = pinIndexList[index].cover
+                logger.i { "Display Cover URL: $coverUrl" }
+                AlbumCoverCard(albumConfig = pinIndexList[index]) {
+                }
+            }
+        }
+        PlatformVerticalScrollbar(
+            modifier = Modifier.align(Alignment.CenterEnd).fillMaxHeight(),
+            lazyStaggeredGridState = lazyStaggeredGridState
+        )
+    }
+
+}
+
+@Composable
 fun AlbumCoverCard(
     modifier: Modifier = Modifier,
     albumConfig: AlbumConfigCover<*>,
