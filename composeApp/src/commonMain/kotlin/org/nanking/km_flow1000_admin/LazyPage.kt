@@ -63,7 +63,7 @@ fun LazyPage(
     var picIndexList by remember { mutableStateOf(listOf<PicIndexItem>()) }
 
     LaunchedEffect(true) {
-        picIndexList = rocketComponent.fetchPicIndex()
+        picIndexList = rocketComponent.fetchPicIndex("1000")
     }
     Column(
         modifier = Modifier

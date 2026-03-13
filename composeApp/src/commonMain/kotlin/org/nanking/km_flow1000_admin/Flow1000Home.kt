@@ -82,7 +82,7 @@ fun Flow1000AlbumPage(navController: NavHostController, albumConfig: AlbumParam)
     val rocketComponent = RocketComponent()
     var pinIndexList by remember { mutableStateOf(listOf<PicIndexItem>()) }
     LaunchedEffect(true) {
-        pinIndexList = rocketComponent.fetchPicIndex()
+        pinIndexList = rocketComponent.fetchPicIndex(albumConfig.name)
     }
     Box(
         modifier = Modifier
