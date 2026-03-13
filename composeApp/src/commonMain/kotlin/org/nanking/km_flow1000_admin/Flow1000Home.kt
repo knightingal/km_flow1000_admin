@@ -102,7 +102,9 @@ fun Flow1000AlbumPage(navController: NavHostController, albumConfig: AlbumParam)
             items(pinIndexList.size) { index ->
                 val coverUrl = pinIndexList[index].cover
                 logger.i { "Display Cover URL: $coverUrl" }
-                AlbumCoverCard(albumConfig = pinIndexList[index]) {
+                val picIndex = pinIndexList[index]
+                picIndex.albumSourcePath = albumConfig.albumSourcePath
+                AlbumCoverCard(albumConfig = picIndex) {
                 }
             }
         }

@@ -22,11 +22,12 @@ class PicIndexItem(
     val coverHeight: Int,
 ): AlbumConfigCover<String>
 {
+    var albumSourcePath: String? = null
     override val width: Int = coverWidth
     override val height: Int = coverHeight
 
     override var cover: String = ""
-        get() = "http://192.168.2.12:3002/linux1000/source/$name/${field.replace(".bin", "")}"
+        get() = "http://192.168.2.12:3002/linux1000/${albumSourcePath}/$name/${field.replace(".bin", "")}"
 }
 
 interface AlbumConfigCover<T> {
