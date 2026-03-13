@@ -18,6 +18,10 @@ data class LazyParam(val pageId: String)
 @Serializable
 data class HomeParam(val pageId: String)
 
+@Serializable
+data class AlbumParam(val name: String, val albumSourcePath: String)
+
+
 @Composable
 @Preview
 fun App() {
@@ -36,7 +40,10 @@ fun App() {
                     Home(navController, homeParam.pageId)
                 }
                 composable("flow1000Home") { Flow1000Home(navController) }
-                composable("flow1000AlbumPage") { Flow1000AlbumPage(navController) }
+                composable<AlbumParam> { backStackEntry->
+                    val albumConfig = backStackEntry.toRoute<AlbumParam>()
+                    Flow1000AlbumPage(navController, albumConfig)
+                }
                 composable<LazyParam> { backStackEntry->
                     val lazyParam = backStackEntry.toRoute<LazyParam>()
                     LazyPage(navController, lazyParam.pageId) }

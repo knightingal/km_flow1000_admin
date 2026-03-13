@@ -5,7 +5,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -65,7 +64,8 @@ fun Flow1000Home(navController: NavHostController) {
                 val coverUrl = albumConfigList[index].cover
                 logger.i { "Display Cover URL: $coverUrl" }
                 AlbumCoverCard(albumConfig = albumConfigList[index]) {
-                    navController.navigate("flow1000AlbumPage")
+                    val albumConfig = albumConfigList[index]
+                    navController.navigate(AlbumParam(albumConfig.name, albumConfig.sourcePath))
                 }
             }
         }
@@ -77,7 +77,7 @@ fun Flow1000Home(navController: NavHostController) {
 }
 
 @Composable
-fun Flow1000AlbumPage(navController: NavHostController) {
+fun Flow1000AlbumPage(navController: NavHostController, albumConfig: AlbumParam) {
     val logger = getLogger("Flow1000AlbumPage")
     val rocketComponent = RocketComponent()
     var pinIndexList by remember { mutableStateOf(listOf<PicIndexItem>()) }
