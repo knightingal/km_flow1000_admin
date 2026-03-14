@@ -27,6 +27,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.key
+import androidx.compose.ui.input.key.onKeyEvent
+import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -35,6 +39,7 @@ import km_flow1000_admin.composeapp.generated.resources.Res
 import km_flow1000_admin.composeapp.generated.resources.fc6_nightly_wind_down
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
+import androidx.compose.ui.input.key.key
 
 @Composable
 fun Flow1000Home(navController: NavHostController) {
@@ -90,6 +95,20 @@ fun Flow1000AlbumPage(navController: NavHostController, albumConfig: AlbumParam)
             .systemBarsPadding()
             .fillMaxSize()
             .padding(4.dp)
+            .onKeyEvent {
+                if (it.key == Key.Backspace) {
+                    logger.i { "Backspace pressed" }
+                    navController.popBackStack()
+                }
+                return@onKeyEvent true
+            }
+            .onPreviewKeyEvent {
+                if (it.key == Key.Backspace) {
+                    logger.i { "Backspace pressed" }
+                    navController.popBackStack()
+                }
+                return@onPreviewKeyEvent true
+            }
     ) {
         val lazyStaggeredGridState = rememberLazyStaggeredGridState()
         LazyVerticalStaggeredGrid(
