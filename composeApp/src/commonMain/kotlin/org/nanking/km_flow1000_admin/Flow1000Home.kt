@@ -40,11 +40,33 @@ import km_flow1000_admin.composeapp.generated.resources.fc6_nightly_wind_down
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 import androidx.compose.ui.input.key.key
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
+
+
+class Flow1000HomeViewModel : ViewModel() {
+    private var _albumConfigList = MutableStateFlow(listOf<AlbumConfig>())
+    val albumConfigList: StateFlow<List<AlbumConfig>> get() = _albumConfigList
+    init {
+        viewModelScope.launch {
+            val fetchResult = RocketComponent().fetchAlbumConfigList()
+            _albumConfigList.value = fetchResult
+        }
+    }
+
+}
 
 @Composable
 fun Flow1000Home(navController: NavHostController) {
 
     val logger = getLogger("Flow1000Home")
+//    val albumConfigList by viewModel.albumConfigList.collectAsStateWithLifecycle()
     val rocketComponent = RocketComponent()
     var albumConfigList by remember { mutableStateOf(listOf<AlbumConfig>()) }
     LaunchedEffect(true) {
