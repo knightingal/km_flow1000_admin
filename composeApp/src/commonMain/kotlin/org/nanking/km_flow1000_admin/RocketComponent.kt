@@ -33,15 +33,16 @@ class RocketComponent {
     }
 
     suspend fun fetchAlbumConfigList(): List<AlbumConfig> {
+        logger.d { "Fetching AlbumConfigList" }
         val responseBody: String = httpClient.get(FLOW_1000_COVER_LIST_URL).body()
-        logger.d { "Fetching album config list: $responseBody" }
+//        logger.d { "Fetching album config list: $responseBody" }
         return json.decodeFromString<List<AlbumConfig>>(responseBody)
     }
 
     suspend fun fetchPicIndex(albumName: String): List<PicIndexItem> {
         logger.d { "Fetching picIndex" }
         val responseBody: String = httpClient.get(String.format(FLOW_1000_INDEX_URL, albumName)).body()
-        logger.d { responseBody }
+//        logger.d { responseBody }
         return json.decodeFromString<List<PicIndexItem>>(responseBody)
     }
 
