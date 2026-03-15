@@ -39,7 +39,7 @@ fun App() {
                     val homeParam = backStackEntry.toRoute<HomeParam>()
                     Home(navController, homeParam.pageId)
                 }
-                composable("flow1000Home") { Flow1000Home(navController) }
+                composable("flow1000Home") { Flow1000Home(navController, viewModel = flow1000HomeViewModel) }
                 composable<AlbumParam> { backStackEntry->
                     val albumConfig = backStackEntry.toRoute<AlbumParam>()
                     Flow1000AlbumPage(navController, albumConfig)

@@ -45,6 +45,7 @@ import km_flow1000_admin.composeapp.generated.resources.fc6_nightly_wind_down
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -63,16 +64,18 @@ class Flow1000HomeViewModel : ViewModel() {
 
 }
 
+val flow1000HomeViewModel = Flow1000HomeViewModel()
+
 @Composable
-fun Flow1000Home(navController: NavHostController) {
+fun Flow1000Home(navController: NavHostController, viewModel: Flow1000HomeViewModel) {
 
     val logger = getLogger("Flow1000Home")
-//    val albumConfigList by viewModel.albumConfigList.collectAsStateWithLifecycle()
-    val rocketComponent = RocketComponent()
-    var albumConfigList by remember { mutableStateOf(listOf<AlbumConfig>()) }
-    LaunchedEffect(true) {
-        albumConfigList = rocketComponent.fetchAlbumConfigList()
-    }
+    val albumConfigList by viewModel.albumConfigList.collectAsStateWithLifecycle()
+//    val rocketComponent = RocketComponent()
+//    var albumConfigList by remember { mutableStateOf(listOf<AlbumConfig>()) }
+//    LaunchedEffect(true) {
+//        albumConfigList = rocketComponent.fetchAlbumConfigList()
+//    }
     Box(
         modifier = Modifier
             .background(MaterialTheme.colorScheme.primaryContainer)
