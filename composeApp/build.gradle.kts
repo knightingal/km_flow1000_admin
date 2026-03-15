@@ -58,6 +58,7 @@ kotlin {
             implementation("io.ktor:ktor-client-okhttp:3.4.0")
             implementation("io.coil-kt.coil3:coil-compose:3.3.0")
             implementation("io.coil-kt.coil3:coil-network-okhttp:3.3.0")
+            implementation("org.jetbrains.compose.material:material-icons-core:1.7.3")
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
