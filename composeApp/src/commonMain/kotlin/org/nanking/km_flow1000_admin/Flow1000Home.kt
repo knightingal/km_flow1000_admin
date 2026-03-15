@@ -5,6 +5,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,9 +15,15 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -111,48 +118,53 @@ fun Flow1000AlbumPage(navController: NavHostController, albumConfig: AlbumParam)
     LaunchedEffect(true) {
         pinIndexList = rocketComponent.fetchPicIndex(albumConfig.name)
     }
-    Box(
-        modifier = Modifier
-            .background(MaterialTheme.colorScheme.primaryContainer)
-            .systemBarsPadding()
-            .fillMaxSize()
-            .padding(4.dp)
-            .onKeyEvent {
-                if (it.key == Key.Backspace) {
-                    logger.i { "Backspace pressed" }
-                    navController.popBackStack()
+        Scaffold(
+//            floatingActionButton = {
+//                FloatingActionButton() {
+//                    Icon(
+//                        Icons.Filled.Favorite, contentDescription = "add"
+//                    )
+//                }
+//            }
+        ) { it ->
+            it.hashCode()
+
+            Column {
+
+                Button(onClick = { navController.popBackStack() }) {
+                    Text("Back")
                 }
-                return@onKeyEvent true
-            }
-            .onPreviewKeyEvent {
-                if (it.key == Key.Backspace) {
-                    logger.i { "Backspace pressed" }
-                    navController.popBackStack()
+                Box(
+                    modifier = Modifier
+                        .background(MaterialTheme.colorScheme.primaryContainer)
+                        .systemBarsPadding()
+                        .fillMaxSize()
+                        .padding(4.dp)
+                ) {
+                    val lazyStaggeredGridState = rememberLazyStaggeredGridState()
+                    LazyVerticalStaggeredGrid(
+                        state = lazyStaggeredGridState,
+                        columns = StaggeredGridCells.Fixed(2),
+                        verticalItemSpacing = 4.dp,
+                        horizontalArrangement = Arrangement.spacedBy(4.dp),
+                        modifier = Modifier.fillMaxSize(),
+                    ) {
+                        items(pinIndexList.size) { index ->
+                            val coverUrl = pinIndexList[index].cover
+                            logger.i { "Display Cover URL: $coverUrl" }
+                            val picIndex = pinIndexList[index]
+                            picIndex.albumSourcePath = albumConfig.albumSourcePath
+                            AlbumCoverCard(albumConfig = picIndex) {
+                            }
+                        }
+                    }
+                    PlatformVerticalScrollbar(
+                        modifier = Modifier.align(Alignment.CenterEnd).fillMaxHeight(),
+                        lazyStaggeredGridState = lazyStaggeredGridState
+                    )
+
                 }
-                return@onPreviewKeyEvent true
             }
-    ) {
-        val lazyStaggeredGridState = rememberLazyStaggeredGridState()
-        LazyVerticalStaggeredGrid(
-            state = lazyStaggeredGridState,
-            columns = StaggeredGridCells.Fixed(2),
-            verticalItemSpacing = 4.dp,
-            horizontalArrangement = Arrangement.spacedBy(4.dp),
-            modifier = Modifier.fillMaxSize(),
-        ) {
-            items(pinIndexList.size) { index ->
-                val coverUrl = pinIndexList[index].cover
-                logger.i { "Display Cover URL: $coverUrl" }
-                val picIndex = pinIndexList[index]
-                picIndex.albumSourcePath = albumConfig.albumSourcePath
-                AlbumCoverCard(albumConfig = picIndex) {
-                }
-            }
-        }
-        PlatformVerticalScrollbar(
-            modifier = Modifier.align(Alignment.CenterEnd).fillMaxHeight(),
-            lazyStaggeredGridState = lazyStaggeredGridState
-        )
     }
 
 }
