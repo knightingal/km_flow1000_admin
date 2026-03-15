@@ -16,15 +16,21 @@ import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -110,6 +116,7 @@ fun Flow1000Home(navController: NavHostController) {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Flow1000AlbumPage(navController: NavHostController, albumConfig: AlbumParam) {
     val logger = getLogger("Flow1000AlbumPage")
@@ -119,27 +126,29 @@ fun Flow1000AlbumPage(navController: NavHostController, albumConfig: AlbumParam)
         pinIndexList = rocketComponent.fetchPicIndex(albumConfig.name)
     }
         Scaffold(
-//            floatingActionButton = {
-//                FloatingActionButton() {
-//                    Icon(
-//                        Icons.Filled.Favorite, contentDescription = "add"
-//                    )
-//                }
-//            }
+            topBar = {
+                TopAppBar(
+                    navigationIcon = {
+                        IconButton(onClick = { navController.popBackStack() }) {
+                            Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null)
+                        }
+                    },
+                    colors = topAppBarColors(
+                        containerColor = MaterialTheme.colorScheme.primaryContainer,
+                        titleContentColor = MaterialTheme.colorScheme.primary,
+                    ),
+                    title = {
+                        Text(albumConfig.name)
+                    }
+                )
+            },
         ) { it ->
-            it.hashCode()
-
-            Column {
-
-                Button(onClick = { navController.popBackStack() }) {
-                    Text("Back")
-                }
                 Box(
                     modifier = Modifier
                         .background(MaterialTheme.colorScheme.primaryContainer)
                         .systemBarsPadding()
                         .fillMaxSize()
-                        .padding(4.dp)
+                        .padding(top = it.calculateTopPadding(), )
                 ) {
                     val lazyStaggeredGridState = rememberLazyStaggeredGridState()
                     LazyVerticalStaggeredGrid(
@@ -147,7 +156,7 @@ fun Flow1000AlbumPage(navController: NavHostController, albumConfig: AlbumParam)
                         columns = StaggeredGridCells.Fixed(2),
                         verticalItemSpacing = 4.dp,
                         horizontalArrangement = Arrangement.spacedBy(4.dp),
-                        modifier = Modifier.fillMaxSize(),
+                        modifier = Modifier.fillMaxSize().padding(horizontal = 4.dp, vertical = 0.dp),
                     ) {
                         items(pinIndexList.size) { index ->
                             val coverUrl = pinIndexList[index].cover
@@ -164,7 +173,6 @@ fun Flow1000AlbumPage(navController: NavHostController, albumConfig: AlbumParam)
                     )
 
                 }
-            }
     }
 
 }
