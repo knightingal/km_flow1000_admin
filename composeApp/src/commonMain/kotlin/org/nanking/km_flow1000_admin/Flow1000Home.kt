@@ -173,6 +173,11 @@ fun Flow1000AlbumPage(navController: NavHostController, albumConfig: AlbumParam)
                     )
 
                 }
+        floatingActionButton = {
+            IconButton(onClick = { navController.popBackStack() }) {
+                Icon(Icons.Filled.Add, contentDescription = null)
+            }
+        }
     }
 
 }
