@@ -18,6 +18,7 @@ class RocketComponent {
     companion object {
         const val FLOW_1000_INDEX_URL = "http://192.168.2.12:8000/local1000/picIndexAjax?album=%s"
         const val FLOW_1000_COVER_LIST_URL = "http://192.168.2.12:8000/local1000/albumConfig/list"
+        const val FLOW_1000_SECTION_CONTENT_URL = "http://192.168.2.12:8000/local1000/picDetailAjax?id=%d"
         val json = Json { ignoreUnknownKeys = true }
         val logger = getLogger("RocketComponent")
     }
@@ -35,16 +36,21 @@ class RocketComponent {
     suspend fun fetchAlbumConfigList(): List<AlbumConfig> {
         logger.d { "Fetching AlbumConfigList" }
         val responseBody: String = httpClient.get(FLOW_1000_COVER_LIST_URL).body()
-//        logger.d { "Fetching album config list: $responseBody" }
         return json.decodeFromString<List<AlbumConfig>>(responseBody)
     }
 
     suspend fun fetchPicIndex(albumName: String): List<PicIndexItem> {
         logger.d { "Fetching picIndex" }
         val responseBody: String = httpClient.get(String.format(FLOW_1000_INDEX_URL, albumName)).body()
-//        logger.d { responseBody }
         return json.decodeFromString<List<PicIndexItem>>(responseBody)
     }
+
+    suspend fun fetchSectionContent(id: Long): SectionDetail {
+        logger.d { "Fetching section content" }
+        val response: SectionDetail = httpClient.get(String.format(FLOW_1000_SECTION_CONTENT_URL, id)).body()
+        return response
+    }
+
 
     @OptIn(ExperimentalTime::class)
     private suspend fun getDateOfLastSuccessfulLaunch(): String {
