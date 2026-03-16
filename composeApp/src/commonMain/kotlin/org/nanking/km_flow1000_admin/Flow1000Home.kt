@@ -71,11 +71,6 @@ fun Flow1000Home(navController: NavHostController, viewModel: Flow1000HomeViewMo
 
     val logger = getLogger("Flow1000Home")
     val albumConfigList by viewModel.albumConfigList.collectAsStateWithLifecycle()
-//    val rocketComponent = RocketComponent()
-//    var albumConfigList by remember { mutableStateOf(listOf<AlbumConfig>()) }
-//    LaunchedEffect(true) {
-//        albumConfigList = rocketComponent.fetchAlbumConfigList()
-//    }
     Box(
         modifier = Modifier
             .background(MaterialTheme.colorScheme.primaryContainer)
