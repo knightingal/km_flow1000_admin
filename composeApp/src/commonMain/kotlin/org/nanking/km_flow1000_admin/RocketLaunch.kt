@@ -18,12 +18,18 @@ class RocketLaunch (
 @Serializable
 class SectionDetail (
     val dirName: String,
-    val picPath: Int,
-    val pics: List<Flow1000Img>,
+    val pics: List<ImgInSectionDetail>,
     val album: String,
     val title: String,
-    val timeStamp: String,
     val clientStatus: String,
+)
+
+@Serializable
+class ImgInSectionDetail(
+    val id: Long,
+    val name: String,
+    val width: Int,
+    val height: Int
 )
 
 
