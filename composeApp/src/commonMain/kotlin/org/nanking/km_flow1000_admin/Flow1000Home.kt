@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
@@ -99,6 +101,68 @@ fun Flow1000Home(navController: NavHostController, viewModel: Flow1000HomeViewMo
             modifier = Modifier.align(Alignment.CenterEnd).fillMaxHeight(),
             lazyStaggeredGridState = lazyStaggeredGridState
         )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun Flow1000SectionPage(navController: NavHostController) {
+    val logger = getLogger("Flow1000SectionPage")
+    val rocketComponent = RocketComponent()
+    var sectionDetail by remember { mutableStateOf<SectionDetail?>(null) }
+    LaunchedEffect(true) {
+        sectionDetail = rocketComponent.fetchSectionContent(1L)
+    }
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                navigationIcon = {
+                    IconButton(onClick = { navController.popBackStack() }) {
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null)
+                    }
+                },
+                colors = topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    titleContentColor = MaterialTheme.colorScheme.primary,
+                ),
+                title = {
+                    Text(sectionDetail?.title ?: "", color = MaterialTheme.colorScheme.onPrimaryContainer)
+                }
+            )
+        },
+        floatingActionButton = {
+            IconButton(onClick = { navController.popBackStack() }) {
+                Icon(Icons.Filled.Add, contentDescription = null)
+            }
+        }
+    ) {
+        Box(
+            modifier = Modifier
+                .background(MaterialTheme.colorScheme.primaryContainer)
+                .systemBarsPadding()
+                .fillMaxSize()
+                .padding(top = it.calculateTopPadding())
+        ) {
+            val lazyStaggeredGridState = rememberLazyListState()
+            LazyColumn(
+                state = lazyStaggeredGridState,
+                modifier = Modifier.fillMaxSize().padding(horizontal = 4.dp, vertical = 0.dp),
+            ) {
+                items(sectionDetail?.pics?.size ?: 0) { index ->
+                    Text(sectionDetail!!.pics[index].name)
+//                    val coverUrl = pinIndexList[index].cover
+//                    logger.i { "Display Cover URL: $coverUrl" }
+//                    val picIndex = pinIndexList[index]
+//                    picIndex.albumSourcePath = albumConfig.albumSourcePath
+//                    AlbumCoverCard(albumConfig = picIndex) {
+//                    }
+                }
+            }
+//            PlatformVerticalScrollbar(
+//                modifier = Modifier.align(Alignment.CenterEnd).fillMaxHeight(),
+//                lazyStaggeredGridState
+//            )
+        }
     }
 }
 
