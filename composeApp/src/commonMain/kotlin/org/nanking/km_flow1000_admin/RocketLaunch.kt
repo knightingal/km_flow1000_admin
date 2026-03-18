@@ -27,10 +27,16 @@ class SectionDetail (
 @Serializable
 class ImgInSectionDetail(
     val id: Long,
-    val name: String,
-    val width: Int,
-    val height: Int
-)
+    override val name: String,
+    override val width: Int,
+    override val height: Int
+): AlbumConfigCover<String> {
+
+    var albumSourcePath: String? = null
+    var sectionDir: String? = null
+    override var cover: String = ""
+        get() = "http://192.168.2.12:3002/linux1000/${albumSourcePath}/$sectionDir/${name.replace(".bin", "")}"
+}
 
 
 @Serializable
