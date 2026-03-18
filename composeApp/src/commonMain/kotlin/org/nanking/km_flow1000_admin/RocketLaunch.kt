@@ -41,6 +41,7 @@ class ImgInSectionDetail(
 
 @Serializable
 class PicIndexItem(
+    val index: Long,
     override val name: String,
     val coverWidth: Int,
     val coverHeight: Int,
