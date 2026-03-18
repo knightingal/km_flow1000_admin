@@ -111,7 +111,7 @@ fun Flow1000SectionPage(navController: NavHostController, sectionParam: SectionP
     val rocketComponent = RocketComponent()
     var sectionDetail by remember { mutableStateOf<SectionDetail?>(null) }
     LaunchedEffect(true) {
-        sectionDetail = rocketComponent.fetchSectionContent(1L)
+        sectionDetail = rocketComponent.fetchSectionContent(sectionParam.id)
     }
     Scaffold(
         topBar = {
@@ -149,13 +149,11 @@ fun Flow1000SectionPage(navController: NavHostController, sectionParam: SectionP
                 modifier = Modifier.fillMaxSize().padding(horizontal = 4.dp, vertical = 0.dp),
             ) {
                 items(sectionDetail?.pics?.size ?: 0) { index ->
-                    Text(sectionDetail!!.pics[index].name)
-//                    val coverUrl = pinIndexList[index].cover
-//                    logger.i { "Display Cover URL: $coverUrl" }
-//                    val picIndex = pinIndexList[index]
-//                    picIndex.albumSourcePath = albumConfig.albumSourcePath
-//                    AlbumCoverCard(albumConfig = picIndex) {
-//                    }
+                    val pic = sectionDetail!!.pics[index]
+                    pic.sectionDir = sectionDetail!!.dirName
+                    pic.albumSourcePath = sectionParam.albumSourcePath
+                    AlbumCoverCard(albumConfig = pic) {
+                    }
                 }
             }
 //            PlatformVerticalScrollbar(
@@ -214,10 +212,9 @@ fun Flow1000AlbumPage(navController: NavHostController, albumConfig: AlbumParam)
                 modifier = Modifier.fillMaxSize().padding(horizontal = 4.dp, vertical = 0.dp),
             ) {
                 items(pinIndexList.size) { index ->
-                    val coverUrl = pinIndexList[index].cover
-                    logger.i { "Display Cover URL: $coverUrl" }
                     val picIndex = pinIndexList[index]
                     picIndex.albumSourcePath = albumConfig.albumSourcePath
+                    logger.i { "Display Cover URL: ${picIndex.cover}" }
                     AlbumCoverCard(albumConfig = picIndex) {
                         navController.navigate(SectionParam(picIndex.name, picIndex.index, albumSourcePath = albumConfig.albumSourcePath))
                     }
