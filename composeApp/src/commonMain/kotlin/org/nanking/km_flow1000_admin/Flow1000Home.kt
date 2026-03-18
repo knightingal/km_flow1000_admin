@@ -106,7 +106,7 @@ fun Flow1000Home(navController: NavHostController, viewModel: Flow1000HomeViewMo
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Flow1000SectionPage(navController: NavHostController) {
+fun Flow1000SectionPage(navController: NavHostController, sectionParam: SectionParam) {
     val logger = getLogger("Flow1000SectionPage")
     val rocketComponent = RocketComponent()
     var sectionDetail by remember { mutableStateOf<SectionDetail?>(null) }
@@ -219,6 +219,7 @@ fun Flow1000AlbumPage(navController: NavHostController, albumConfig: AlbumParam)
                     val picIndex = pinIndexList[index]
                     picIndex.albumSourcePath = albumConfig.albumSourcePath
                     AlbumCoverCard(albumConfig = picIndex) {
+                        navController.navigate(SectionParam(picIndex.name, picIndex.index, albumSourcePath = albumConfig.albumSourcePath))
                     }
                 }
             }
