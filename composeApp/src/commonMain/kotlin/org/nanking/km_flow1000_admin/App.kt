@@ -21,6 +21,8 @@ data class HomeParam(val pageId: String)
 @Serializable
 data class AlbumParam(val name: String, val albumSourcePath: String)
 
+@Serializable
+data class SectionParam(val name: String, val id: Long, val albumSourcePath: String)
 
 @Composable
 @Preview
