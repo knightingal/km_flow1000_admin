@@ -251,7 +251,10 @@ fun AlbumCoverCard(
             )
         ) {
             if (albumConfig.cover is String) {
-                AsyncImage(model = albumConfig.cover, contentDescription = null)
+                AsyncImage(
+                    modifier = Modifier.fillMaxSize(),
+                    model = albumConfig.cover, contentDescription = null
+                )
             } else if (albumConfig.cover is DrawableResource) {
                 Image(
                     modifier = Modifier.fillMaxSize(),
