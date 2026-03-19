@@ -24,6 +24,8 @@ data class AlbumParam(val name: String, val albumSourcePath: String)
 @Serializable
 data class SectionParam(val name: String, val id: Long, val albumSourcePath: String)
 
+val flow1000HomeViewModel = Flow1000HomeViewModel()
+
 @Composable
 @Preview
 fun App() {

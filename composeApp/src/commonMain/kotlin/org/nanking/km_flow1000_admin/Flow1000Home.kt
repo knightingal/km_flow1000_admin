@@ -63,10 +63,8 @@ class Flow1000HomeViewModel : ViewModel() {
             _albumConfigList.value = fetchResult
         }
     }
-
 }
 
-val flow1000HomeViewModel = Flow1000HomeViewModel()
 
 @Composable
 fun Flow1000Home(navController: NavHostController, viewModel: Flow1000HomeViewModel) {
