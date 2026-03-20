@@ -154,8 +154,7 @@ fun Flow1000SectionPage(navController: NavHostController, sectionParam: SectionP
                     val pic = sectionDetail!!.pics[index]
                     pic.sectionDir = sectionDetail!!.dirName
                     pic.albumSourcePath = sectionParam.albumSourcePath
-                    AlbumCoverCard(albumConfig = pic) {
-                    }
+                    FitSizeImageCard(albumConfig = pic)
                 }
             }
             PlatformVerticalScrollbar(
