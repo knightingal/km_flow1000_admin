@@ -2,6 +2,7 @@ package org.nanking.km_flow1000_admin
 
 import android.os.Build
 import android.util.Log
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.staggeredgrid.LazyStaggeredGridState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -43,5 +44,12 @@ class AndroidLogger(val tag: String) : Logger {
 actual fun PlatformVerticalScrollbar(
     modifier: Modifier,
     lazyStaggeredGridState: LazyStaggeredGridState
+) {
+}
+
+@Composable
+actual fun PlatformVerticalScrollbar(
+    modifier: Modifier,
+    scrollState: LazyListState
 ) {
 }

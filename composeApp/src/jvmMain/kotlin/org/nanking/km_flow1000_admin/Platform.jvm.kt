@@ -1,7 +1,9 @@
 package org.nanking.km_flow1000_admin
 
 import androidx.compose.foundation.VerticalScrollbar
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.staggeredgrid.LazyStaggeredGridState
+import androidx.compose.foundation.rememberScrollbarAdapter
 import androidx.compose.foundation.v2.ScrollbarAdapter
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -55,6 +57,16 @@ actual fun PlatformVerticalScrollbar(modifier: Modifier, lazyStaggeredGridState:
         modifier = modifier,
         adapter = rememberScrollbarAdapter(
             lazyStaggeredGridState = lazyStaggeredGridState
+        )
+    )
+}
+
+@Composable
+actual fun PlatformVerticalScrollbar(modifier: Modifier, scrollState: LazyListState) {
+    VerticalScrollbar(
+        modifier = modifier,
+        adapter = rememberScrollbarAdapter(
+            scrollState = scrollState,
         )
     )
 }

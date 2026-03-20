@@ -1,5 +1,6 @@
 package org.nanking.km_flow1000_admin
 
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.staggeredgrid.LazyStaggeredGridState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -23,3 +24,6 @@ interface Logger {
 
 @Composable
 expect fun PlatformVerticalScrollbar(modifier: Modifier, lazyStaggeredGridState: LazyStaggeredGridState): Unit
+
+@Composable
+expect fun PlatformVerticalScrollbar(modifier: Modifier, scrollState: LazyListState): Unit
