@@ -158,10 +158,10 @@ fun Flow1000SectionPage(navController: NavHostController, sectionParam: SectionP
                     }
                 }
             }
-//            PlatformVerticalScrollbar(
-//                modifier = Modifier.align(Alignment.CenterEnd).fillMaxHeight(),
-//                lazyStaggeredGridState
-//            )
+            PlatformVerticalScrollbar(
+                modifier = Modifier.align(Alignment.CenterEnd).fillMaxHeight(),
+                lazyStaggeredGridState
+            )
         }
     }
 }
