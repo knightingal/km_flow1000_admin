@@ -279,7 +279,6 @@ fun FitSizeImageCard(
 
 @Composable
 fun AlbumCoverCard(
-    modifier: Modifier = Modifier,
     albumConfig: AlbumConfigCover<*>,
     onClick: () -> Unit = {}
 ) {
@@ -320,7 +319,40 @@ fun AlbumCoverCard(
 @Preview
 fun AlbumCoverCardPreview() {
     AlbumCoverCard(
-        modifier = Modifier,
+        albumConfig = object : AlbumConfigCover<DrawableResource> {
+            override val width: Int
+                get() = 640
+            override val height: Int
+                get() = 426
+            override val cover: DrawableResource
+                get() = Res.drawable.fc6_nightly_wind_down
+            override val name: String
+                get() = "AI20220605211354"
+        }
+    )
+}
+
+@Composable
+@Preview(widthDp = 360)
+fun FitSizeImageCardPreviewSmaller() {
+    FitSizeImageCard(
+        albumConfig = object : AlbumConfigCover<DrawableResource> {
+            override val width: Int
+                get() = 640
+            override val height: Int
+                get() = 426
+            override val cover: DrawableResource
+                get() = Res.drawable.fc6_nightly_wind_down
+            override val name: String
+                get() = "AI20220605211354"
+        }
+    )
+}
+
+@Composable
+@Preview(widthDp = 800, heightDp = 600)
+fun FitSizeImageCardPreviewBigger() {
+    FitSizeImageCard(
         albumConfig = object : AlbumConfigCover<DrawableResource> {
             override val width: Int
                 get() = 640
