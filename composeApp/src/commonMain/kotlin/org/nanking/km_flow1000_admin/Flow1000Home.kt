@@ -75,17 +75,18 @@ fun Flow1000Home(navController: NavHostController, viewModel: Flow1000HomeViewMo
 
     val logger = getLogger("Flow1000Home")
     val albumConfigList by viewModel.albumConfigList.collectAsStateWithLifecycle()
-    Box(
+    BoxWithConstraints(
         modifier = Modifier
             .background(MaterialTheme.colorScheme.primaryContainer)
             .systemBarsPadding()
             .fillMaxSize()
             .padding(4.dp)
     ) {
+        val columnCount = if (maxWidth < 960.dp) 2 else 4
         val lazyStaggeredGridState = rememberLazyStaggeredGridState()
         LazyVerticalStaggeredGrid(
             state = lazyStaggeredGridState,
-            columns = StaggeredGridCells.Fixed(2),
+            columns = StaggeredGridCells.Fixed(columnCount),
             verticalItemSpacing = 4.dp,
             horizontalArrangement = Arrangement.spacedBy(4.dp),
             modifier = Modifier.fillMaxSize(),
@@ -154,6 +155,7 @@ fun Flow1000SectionPage(navController: NavHostController, sectionParam: SectionP
                     val pic = sectionDetail!!.pics[index]
                     pic.sectionDir = sectionDetail!!.dirName
                     pic.albumSourcePath = sectionParam.albumSourcePath
+                    logger.i { "Display Pics: ${pic.cover}" }
                     FitSizeImageCard(albumConfig = pic)
                 }
             }
@@ -197,17 +199,18 @@ fun Flow1000AlbumPage(navController: NavHostController, albumConfig: AlbumParam)
             }
         }
     ) {
-        Box(
+        BoxWithConstraints (
             modifier = Modifier
                 .background(MaterialTheme.colorScheme.primaryContainer)
                 .systemBarsPadding()
                 .fillMaxSize()
                 .padding(top = it.calculateTopPadding())
         ) {
+            val columnCount = if (maxWidth < 960.dp) 2 else 4
             val lazyStaggeredGridState = rememberLazyStaggeredGridState()
             LazyVerticalStaggeredGrid(
                 state = lazyStaggeredGridState,
-                columns = StaggeredGridCells.Fixed(2),
+                columns = StaggeredGridCells.Fixed(columnCount),
                 verticalItemSpacing = 4.dp,
                 horizontalArrangement = Arrangement.spacedBy(4.dp),
                 modifier = Modifier.fillMaxSize().padding(horizontal = 4.dp, vertical = 0.dp),
