@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -149,7 +150,8 @@ fun Flow1000SectionPage(navController: NavHostController, sectionParam: SectionP
             val lazyStaggeredGridState = rememberLazyListState()
             LazyColumn(
                 state = lazyStaggeredGridState,
-                modifier = Modifier.fillMaxSize().padding(horizontal = 4.dp, vertical = 0.dp),
+                contentPadding = PaddingValues(top = 2.dp, bottom = 2.dp),
+                modifier = Modifier.fillMaxSize().padding(horizontal = 4.dp),
             ) {
                 items(sectionDetail?.pics?.size ?: 0) { index ->
                     val pic = sectionDetail!!.pics[index]
@@ -211,6 +213,7 @@ fun Flow1000AlbumPage(navController: NavHostController, albumConfig: AlbumParam)
             LazyVerticalStaggeredGrid(
                 state = lazyStaggeredGridState,
                 columns = StaggeredGridCells.Fixed(columnCount),
+                contentPadding = PaddingValues(top = 4.dp, bottom = 4.dp),
                 verticalItemSpacing = 4.dp,
                 horizontalArrangement = Arrangement.spacedBy(4.dp),
                 modifier = Modifier.fillMaxSize().padding(horizontal = 4.dp, vertical = 0.dp),
@@ -236,7 +239,7 @@ fun Flow1000AlbumPage(navController: NavHostController, albumConfig: AlbumParam)
 fun FitSizeImageCard(
     albumConfig: AlbumConfigCover<*>,
 ) {
-    BoxWithConstraints(modifier = Modifier.fillMaxWidth().wrapContentHeight(), contentAlignment = Alignment.Center) {
+    BoxWithConstraints(modifier = Modifier.fillMaxWidth().wrapContentHeight().padding(top = 2.dp, bottom = 2.dp), contentAlignment = Alignment.Center) {
         val maxWidth = constraints.maxWidth
         var targetWidth: Int
 
