@@ -30,7 +30,7 @@ class ImgInSectionDetail(
     override val name: String,
     override val width: Int,
     override val height: Int
-): AlbumConfigCover<String> {
+): CardCover<String> {
 
     var albumSourcePath: String? = null
     var sectionDir: String? = null
@@ -45,7 +45,7 @@ class PicIndexItem(
     override val name: String,
     val coverWidth: Int,
     val coverHeight: Int,
-): AlbumConfigCover<String>
+): CardCover<String>
 {
     var albumSourcePath: String? = null
     override val width: Int = coverWidth
@@ -55,7 +55,7 @@ class PicIndexItem(
         get() = "http://192.168.2.12:3002/linux1000/${albumSourcePath}/$name/${field.replace(".bin", "")}"
 }
 
-interface AlbumConfigCover<T> {
+interface CardCover<T> {
     val width: Int
     val height: Int
     val cover: T
@@ -71,7 +71,7 @@ class AlbumConfig(
     val sourcePath: String,
     val baseUrl: String?,
     val coverSection: Flow1000Section,
-) : AlbumConfigCover<String>{
+) : CardCover<String>{
 
     override val width: Int = coverSection.coverWidth
     override val height: Int = coverSection.coverHeight

@@ -237,7 +237,7 @@ fun Flow1000AlbumPage(navController: NavHostController, albumConfig: AlbumParam)
 
 @Composable
 fun FitSizeImageCard(
-    albumConfig: AlbumConfigCover<*>,
+    albumConfig: CardCover<*>,
 ) {
     BoxWithConstraints(modifier = Modifier.fillMaxWidth().wrapContentHeight().padding(top = 2.dp, bottom = 2.dp), contentAlignment = Alignment.Center) {
         val maxWidth = constraints.maxWidth
@@ -284,7 +284,7 @@ fun FitSizeImageCard(
 
 @Composable
 fun AlbumCoverCard(
-    albumConfig: AlbumConfigCover<*>,
+    albumConfig: CardCover<*>,
     onClick: () -> Unit = {}
 ) {
     Card(
@@ -324,7 +324,7 @@ fun AlbumCoverCard(
 @Preview
 fun AlbumCoverCardPreview() {
     AlbumCoverCard(
-        albumConfig = object : AlbumConfigCover<DrawableResource> {
+        albumConfig = object : CardCover<DrawableResource> {
             override val width: Int
                 get() = 640
             override val height: Int
@@ -341,7 +341,7 @@ fun AlbumCoverCardPreview() {
 @Preview(widthDp = 360)
 fun FitSizeImageCardPreviewSmaller() {
     FitSizeImageCard(
-        albumConfig = object : AlbumConfigCover<DrawableResource> {
+        albumConfig = object : CardCover<DrawableResource> {
             override val width: Int
                 get() = 640
             override val height: Int
@@ -358,7 +358,7 @@ fun FitSizeImageCardPreviewSmaller() {
 @Preview(widthDp = 800, heightDp = 600)
 fun FitSizeImageCardPreviewBigger() {
     FitSizeImageCard(
-        albumConfig = object : AlbumConfigCover<DrawableResource> {
+        albumConfig = object : CardCover<DrawableResource> {
             override val width: Int
                 get() = 640
             override val height: Int
