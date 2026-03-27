@@ -93,7 +93,7 @@ fun Flow1000Home(navController: NavHostController, viewModel: Flow1000HomeViewMo
             modifier = Modifier.fillMaxSize(),
         ) {
             items(albumConfigList.size) { index ->
-                val coverUrl = albumConfigList[index].cover
+                val coverUrl = albumConfigList[index].coverUri
                 logger.i { "Display Cover URL: $coverUrl" }
                 AlbumCoverCard(albumConfig = albumConfigList[index]) {
                     val albumConfig = albumConfigList[index]
@@ -157,7 +157,7 @@ fun Flow1000SectionPage(navController: NavHostController, sectionParam: SectionP
                     val pic = sectionDetail!!.pics[index]
                     pic.sectionDir = sectionDetail!!.dirName
                     pic.albumSourcePath = sectionParam.albumSourcePath
-                    logger.i { "Display Pics: ${pic.cover}" }
+                    logger.i { "Display Pics: ${pic.coverUri}" }
                     FitSizeImageCard(albumConfig = pic)
                 }
             }
@@ -264,15 +264,15 @@ fun FitSizeImageCard(
                             / albumConfig.height.toFloat()
                 )
             ) {
-                if (albumConfig.cover is String) {
+                if (albumConfig.coverUri is String) {
                     AsyncImage(
                         modifier = Modifier.fillMaxSize(),
-                        model = albumConfig.cover, contentDescription = null
+                        model = albumConfig.coverUri, contentDescription = null
                     )
-                } else if (albumConfig.cover is DrawableResource) {
+                } else if (albumConfig.coverUri is DrawableResource) {
                     Image(
                         modifier = Modifier.fillMaxSize(),
-                        painter = painterResource(albumConfig.cover as DrawableResource),
+                        painter = painterResource(albumConfig.coverUri as DrawableResource),
                         contentDescription = null,
                     )
                 }
@@ -303,15 +303,15 @@ fun AlbumCoverCard(
                         / albumConfig.height.toFloat()
             )
         ) {
-            if (albumConfig.cover is String) {
+            if (albumConfig.coverUri is String) {
                 AsyncImage(
                     modifier = Modifier.fillMaxSize(),
-                    model = albumConfig.cover, contentDescription = null
+                    model = albumConfig.coverUri, contentDescription = null
                 )
-            } else if (albumConfig.cover is DrawableResource) {
+            } else if (albumConfig.coverUri is DrawableResource) {
                 Image(
                     modifier = Modifier.fillMaxSize(),
-                    painter = painterResource(albumConfig.cover as DrawableResource),
+                    painter = painterResource(albumConfig.coverUri as DrawableResource),
                     contentDescription = null,
                 )
             }
@@ -329,7 +329,7 @@ fun AlbumCoverCardPreview() {
                 get() = 640
             override val height: Int
                 get() = 426
-            override val cover: DrawableResource
+            override val coverUri: DrawableResource
                 get() = Res.drawable.fc6_nightly_wind_down
             override val name: String
                 get() = "AI20220605211354"
@@ -346,7 +346,7 @@ fun FitSizeImageCardPreviewSmaller() {
                 get() = 640
             override val height: Int
                 get() = 426
-            override val cover: DrawableResource
+            override val coverUri: DrawableResource
                 get() = Res.drawable.fc6_nightly_wind_down
             override val name: String
                 get() = "AI20220605211354"
@@ -363,7 +363,7 @@ fun FitSizeImageCardPreviewBigger() {
                 get() = 640
             override val height: Int
                 get() = 426
-            override val cover: DrawableResource
+            override val coverUri: DrawableResource
                 get() = Res.drawable.fc6_nightly_wind_down
             override val name: String
                 get() = "AI20220605211354"
