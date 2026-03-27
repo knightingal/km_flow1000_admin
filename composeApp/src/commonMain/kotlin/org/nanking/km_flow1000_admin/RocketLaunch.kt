@@ -34,8 +34,8 @@ class ImgInSectionDetail(
 
     var albumSourcePath: String? = null
     var sectionDir: String? = null
-    override var cover: String = ""
-        get() = "http://192.168.2.12:3002/linux1000/${albumSourcePath}/$sectionDir/${name.replace(".bin", "")}"
+    override val cover: String
+        get() = "http://192.168.2.12:8082/linux1000/${albumSourcePath}/$sectionDir/${name.replace(".bin", "")}"
 }
 
 
@@ -52,7 +52,7 @@ class PicIndexItem(
     override val height: Int = coverHeight
 
     override var cover: String = ""
-        get() = "http://192.168.2.12:3002/linux1000/${albumSourcePath}/$name/${field.replace(".bin", "")}"
+        get() = "http://192.168.2.12:8082/linux1000/${albumSourcePath}/$name/${field.replace(".bin", "")}"
 }
 
 interface CardCover<T> {
@@ -75,7 +75,7 @@ class AlbumConfig(
 
     override val width: Int = coverSection.coverWidth
     override val height: Int = coverSection.coverHeight
-    override val cover: String = "http://192.168.2.12:3002/linux1000/$sourcePath/${coverSection.dirName}/${coverSection.cover.replace(".bin", "")}"
+    override val cover: String = "http://192.168.2.12:8082/linux1000/$sourcePath/${coverSection.dirName}/${coverSection.cover.replace(".bin", "")}"
 
 }
 
