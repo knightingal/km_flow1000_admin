@@ -241,12 +241,11 @@ fun FitSizeImageCard(
 ) {
     BoxWithConstraints(modifier = Modifier.fillMaxWidth().wrapContentHeight().padding(top = 2.dp, bottom = 2.dp), contentAlignment = Alignment.Center) {
         val maxWidth = constraints.maxWidth
-        var targetWidth: Int
 
-        if (maxWidth > albumConfig.width) {
-            targetWidth = albumConfig.width
+        val targetWidth: Int = if (maxWidth > albumConfig.width) {
+            albumConfig.width
         } else {
-            targetWidth = maxWidth
+            maxWidth
         }
 
         Card(
