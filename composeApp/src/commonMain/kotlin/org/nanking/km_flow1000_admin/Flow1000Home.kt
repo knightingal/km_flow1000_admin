@@ -95,7 +95,7 @@ fun Flow1000Home(navController: NavHostController, viewModel: Flow1000HomeViewMo
             items(albumConfigList.size) { index ->
                 val coverUrl = albumConfigList[index].coverUri
                 logger.i { "Display Cover URL: $coverUrl" }
-                AlbumCoverCard(albumConfig = albumConfigList[index]) {
+                AlbumCoverCard(albumCover = albumConfigList[index]) {
                     val albumConfig = albumConfigList[index]
                     navController.navigate(AlbumParam(albumConfig.name, albumConfig.sourcePath))
                 }
@@ -158,7 +158,7 @@ fun Flow1000SectionPage(navController: NavHostController, sectionParam: SectionP
                     pic.sectionDir = sectionDetail!!.dirName
                     pic.albumSourcePath = sectionParam.albumSourcePath
                     logger.i { "Display Pics: ${pic.coverUri}" }
-                    FitSizeImageCard(albumConfig = pic)
+                    FitSizeImageCard(cardCover = pic)
                 }
             }
             PlatformVerticalScrollbar(
@@ -222,7 +222,7 @@ fun Flow1000AlbumPage(navController: NavHostController, albumConfig: AlbumParam)
                     val picIndex = pinIndexList[index]
                     picIndex.albumSourcePath = albumConfig.albumSourcePath
                     logger.i { "Display Cover URL: ${picIndex.coverUri}" }
-                    AlbumCoverCard(albumConfig = picIndex) {
+                    AlbumCoverCard(albumCover = picIndex) {
                         navController.navigate(SectionParam(picIndex.name, picIndex.index, albumSourcePath = albumConfig.albumSourcePath))
                     }
                 }
@@ -237,13 +237,13 @@ fun Flow1000AlbumPage(navController: NavHostController, albumConfig: AlbumParam)
 
 @Composable
 fun FitSizeImageCard(
-    albumConfig: CardCover<*>,
+    cardCover: CardCover<*>,
 ) {
     BoxWithConstraints(modifier = Modifier.fillMaxWidth().wrapContentHeight().padding(top = 2.dp, bottom = 2.dp), contentAlignment = Alignment.Center) {
         val maxWidth = constraints.maxWidth
 
-        val targetWidth: Int = if (maxWidth > albumConfig.width) {
-            albumConfig.width
+        val targetWidth: Int = if (maxWidth > cardCover.width) {
+            cardCover.width
         } else {
             maxWidth
         }
@@ -257,7 +257,7 @@ fun FitSizeImageCard(
                 disabledContentColor = Color.LightGray,
             ), modifier = Modifier.width(targetWidth.dp).wrapContentSize(),
         ) {
-            ImageContentInCard(albumConfig)
+            ImageContentInCard(cardCover)
         }
     }
 }
@@ -265,7 +265,7 @@ fun FitSizeImageCard(
 
 @Composable
 fun AlbumCoverCard(
-    albumConfig: CardCover<*>,
+    albumCover: CardCover<*>,
     onClick: () -> Unit = {}
 ) {
     Card(
@@ -278,30 +278,30 @@ fun AlbumCoverCard(
         ), modifier = Modifier.fillMaxWidth().wrapContentSize(),
         onClick = onClick
     ) {
-        ImageContentInCard(albumConfig)
-        Text(albumConfig.name, modifier = Modifier.padding(16.dp))
+        ImageContentInCard(albumCover)
+        Text(albumCover.name, modifier = Modifier.padding(16.dp))
     }
 }
 
 @Composable
 fun ImageContentInCard(
-    albumConfig: CardCover<*>,
+    cardCover: CardCover<*>,
 ) {
     Box(
         modifier = Modifier.fillMaxWidth().aspectRatio(
-            ratio = albumConfig.width.toFloat()
-                    / albumConfig.height.toFloat()
+            ratio = cardCover.width.toFloat()
+                    / cardCover.height.toFloat()
         )
     ) {
-        if (albumConfig.coverUri is String) {
+        if (cardCover.coverUri is String) {
             AsyncImage(
                 modifier = Modifier.fillMaxSize(),
-                model = albumConfig.coverUri, contentDescription = null
+                model = cardCover.coverUri, contentDescription = null
             )
-        } else if (albumConfig.coverUri is DrawableResource) {
+        } else if (cardCover.coverUri is DrawableResource) {
             Image(
                 modifier = Modifier.fillMaxSize(),
-                painter = painterResource(albumConfig.coverUri as DrawableResource),
+                painter = painterResource(cardCover.coverUri as DrawableResource),
                 contentDescription = null,
             )
         }
@@ -313,7 +313,7 @@ fun ImageContentInCard(
 @Preview
 fun AlbumCoverCardPreview() {
     AlbumCoverCard(
-        albumConfig = object : CardCover<DrawableResource> {
+        albumCover = object : CardCover<DrawableResource> {
             override val width: Int
                 get() = 640
             override val height: Int
@@ -330,7 +330,7 @@ fun AlbumCoverCardPreview() {
 @Preview(widthDp = 360)
 fun FitSizeImageCardPreviewSmaller() {
     FitSizeImageCard(
-        albumConfig = object : CardCover<DrawableResource> {
+        cardCover = object : CardCover<DrawableResource> {
             override val width: Int
                 get() = 640
             override val height: Int
@@ -347,7 +347,7 @@ fun FitSizeImageCardPreviewSmaller() {
 @Preview(widthDp = 800, heightDp = 600)
 fun FitSizeImageCardPreviewBigger() {
     FitSizeImageCard(
-        albumConfig = object : CardCover<DrawableResource> {
+        cardCover = object : CardCover<DrawableResource> {
             override val width: Int
                 get() = 640
             override val height: Int
