@@ -293,7 +293,7 @@ fun AlbumCoverCard(
             containerColor = MaterialTheme.colorScheme.surface,
             disabledContainerColor = Color.LightGray,
             disabledContentColor = Color.LightGray,
-        ), modifier = Modifier.wrapContentSize(),
+        ), modifier = Modifier.fillMaxWidth().wrapContentSize(),
         onClick = onClick
     ) {
         Box(
