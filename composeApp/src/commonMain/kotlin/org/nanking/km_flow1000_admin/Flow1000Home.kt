@@ -320,6 +320,32 @@ fun AlbumCoverCard(
 }
 
 @Composable
+fun ImageContentInCard(
+    albumConfig: CardCover<*>,
+) {
+    Box(
+        modifier = Modifier.fillMaxWidth().aspectRatio(
+            ratio = albumConfig.width.toFloat()
+                    / albumConfig.height.toFloat()
+        )
+    ) {
+        if (albumConfig.coverUri is String) {
+            AsyncImage(
+                modifier = Modifier.fillMaxSize(),
+                model = albumConfig.coverUri, contentDescription = null
+            )
+        } else if (albumConfig.coverUri is DrawableResource) {
+            Image(
+                modifier = Modifier.fillMaxSize(),
+                painter = painterResource(albumConfig.coverUri as DrawableResource),
+                contentDescription = null,
+            )
+        }
+    }
+}
+
+
+@Composable
 @Preview
 fun AlbumCoverCardPreview() {
     AlbumCoverCard(
