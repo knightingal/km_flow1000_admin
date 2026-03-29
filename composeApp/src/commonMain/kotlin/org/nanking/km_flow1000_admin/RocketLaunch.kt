@@ -40,6 +40,9 @@ class ImgInSectionDetail(
         }"
 }
 
+enum class ClientStatus {
+    NONE, PENDING, LOCAL
+}
 
 @Serializable
 class PicIndexItem(
@@ -48,6 +51,7 @@ class PicIndexItem(
     val coverWidth: Int,
     val coverHeight: Int,
     val cover: String,
+    val clientStatus: ClientStatus,
 ): CardCover<String>
 {
     var albumSourcePath: String? = null
