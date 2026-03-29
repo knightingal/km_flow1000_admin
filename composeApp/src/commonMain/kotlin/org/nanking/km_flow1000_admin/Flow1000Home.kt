@@ -257,25 +257,7 @@ fun FitSizeImageCard(
                 disabledContentColor = Color.LightGray,
             ), modifier = Modifier.width(targetWidth.dp).wrapContentSize(),
         ) {
-            Box(
-                modifier = Modifier.width(targetWidth.dp).aspectRatio(
-                    ratio = albumConfig.width.toFloat()
-                            / albumConfig.height.toFloat()
-                )
-            ) {
-                if (albumConfig.coverUri is String) {
-                    AsyncImage(
-                        modifier = Modifier.fillMaxSize(),
-                        model = albumConfig.coverUri, contentDescription = null
-                    )
-                } else if (albumConfig.coverUri is DrawableResource) {
-                    Image(
-                        modifier = Modifier.fillMaxSize(),
-                        painter = painterResource(albumConfig.coverUri as DrawableResource),
-                        contentDescription = null,
-                    )
-                }
-            }
+            ImageContentInCard(albumConfig)
         }
     }
 }
@@ -296,25 +278,7 @@ fun AlbumCoverCard(
         ), modifier = Modifier.fillMaxWidth().wrapContentSize(),
         onClick = onClick
     ) {
-        Box(
-            modifier = Modifier.aspectRatio(
-                ratio = albumConfig.width.toFloat()
-                        / albumConfig.height.toFloat()
-            )
-        ) {
-            if (albumConfig.coverUri is String) {
-                AsyncImage(
-                    modifier = Modifier.fillMaxSize(),
-                    model = albumConfig.coverUri, contentDescription = null
-                )
-            } else if (albumConfig.coverUri is DrawableResource) {
-                Image(
-                    modifier = Modifier.fillMaxSize(),
-                    painter = painterResource(albumConfig.coverUri as DrawableResource),
-                    contentDescription = null,
-                )
-            }
-        }
+        ImageContentInCard(albumConfig)
         Text(albumConfig.name, modifier = Modifier.padding(16.dp))
     }
 }
