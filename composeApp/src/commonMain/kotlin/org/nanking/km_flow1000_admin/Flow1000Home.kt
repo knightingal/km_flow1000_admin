@@ -255,7 +255,7 @@ fun FitSizeImageCard(
                 containerColor = MaterialTheme.colorScheme.surface,
                 disabledContainerColor = Color.LightGray,
                 disabledContentColor = Color.LightGray,
-            ), modifier = Modifier.wrapContentSize(),
+            ), modifier = Modifier.width(targetWidth.dp).wrapContentSize(),
         ) {
             Box(
                 modifier = Modifier.width(targetWidth.dp).aspectRatio(
