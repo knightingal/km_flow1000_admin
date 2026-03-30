@@ -1,5 +1,6 @@
 package org.nanking.km_flow1000_admin
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -24,6 +25,11 @@ import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridS
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.outlined.Favorite
+import androidx.compose.material.icons.outlined.FavoriteBorder
+import androidx.compose.material.icons.outlined.Star
+import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -222,7 +228,23 @@ fun Flow1000AlbumPage(navController: NavHostController, albumConfig: AlbumParam)
                     val picIndex = pinIndexList[index]
                     picIndex.albumSourcePath = albumConfig.albumSourcePath
                     logger.i { "Display Cover URL: ${picIndex.coverUri}" }
-                    AlbumCoverCard(albumCover = picIndex) {
+                    AlbumCoverCard(albumCover = picIndex, appendContent = {
+                        IconButton(onClick = {
+                            // TODO: subscribe this section
+                        }) {
+                            val iconVec = if (picIndex.clientStatus == ClientStatus.NONE)
+                                Icons.Outlined.FavoriteBorder
+                            else
+                                Icons.Outlined.Favorite
+
+                            Icon(
+                                iconVec,
+                                contentDescription = null,
+                                modifier = Modifier.padding(start = 4.dp),
+                                tint = MaterialTheme.colorScheme.onPrimaryContainer
+                            )
+                        }
+                    }) {
                         navController.navigate(SectionParam(picIndex.name, picIndex.index, albumSourcePath = albumConfig.albumSourcePath))
                     }
                 }
@@ -266,7 +288,8 @@ fun FitSizeImageCard(
 @Composable
 fun AlbumCoverCard(
     albumCover: CardCover<*>,
-    onClick: () -> Unit = {}
+    appendContent: @Composable () -> Unit = {},
+    onClick: () -> Unit = {},
 ) {
     Card(
         border = BorderStroke(2.dp, MaterialTheme.colorScheme.primary),
@@ -280,6 +303,7 @@ fun AlbumCoverCard(
     ) {
         ImageContentInCard(albumCover)
         Text(albumCover.name, modifier = Modifier.padding(16.dp))
+        appendContent()
     }
 }
 
