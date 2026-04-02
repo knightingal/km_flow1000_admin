@@ -60,6 +60,7 @@ import org.jetbrains.compose.resources.painterResource
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -177,7 +178,11 @@ fun Flow1000SectionPage(navController: NavHostController, sectionParam: SectionP
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Flow1000AlbumPage(navController: NavHostController, albumConfig: AlbumParam) {
+fun Flow1000AlbumPage(
+        navController: NavHostController,
+        albumConfig: AlbumParam,
+        viewModel: Flow1000AlbumPageViewModel = viewModel { Flow1000AlbumPageViewModel() }
+) {
     val logger = getLogger("Flow1000AlbumPage")
     val rocketComponent = RocketComponent()
     var pinIndexList by remember { mutableStateOf(listOf<PicIndexItem>()) }
@@ -230,7 +235,7 @@ fun Flow1000AlbumPage(navController: NavHostController, albumConfig: AlbumParam)
                     logger.i { "Display Cover URL: ${picIndex.coverUri}" }
                     AlbumCoverCard(albumCover = picIndex, appendContent = {
                         IconButton(onClick = {
-                            // TODO: subscribe this section
+                            viewModel.downloadSectionById(picIndex.index)
                         }) {
                             val iconVec = if (picIndex.clientStatus == ClientStatus.NONE)
                                 Icons.Outlined.FavoriteBorder
