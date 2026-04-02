@@ -20,3 +20,14 @@ class MainViewModel : ViewModel() {
         }
     }
 }
+
+class Flow1000AlbumPageViewModel : ViewModel() {
+
+    val rocketComponent = RocketComponent()
+    fun downloadSectionById(id: Long) {
+        viewModelScope.launch {
+            rocketComponent.downloadSectionById(id)
+        }
+    }
+
+}
