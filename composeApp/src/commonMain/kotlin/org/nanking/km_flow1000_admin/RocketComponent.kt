@@ -12,6 +12,7 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import kotlin.time.ExperimentalTime
 import io.ktor.client.engine.okhttp.*
+import io.ktor.client.request.post
 
 
 class RocketComponent {
@@ -19,6 +20,7 @@ class RocketComponent {
         const val FLOW_1000_INDEX_URL = "http://192.168.2.12:8000/local1000/picIndexAjax?album=%s"
         const val FLOW_1000_COVER_LIST_URL = "http://192.168.2.12:8000/local1000/albumConfig/list"
         const val FLOW_1000_SECTION_CONTENT_URL = "http://192.168.2.12:8000/local1000/picDetailAjax?id=%d"
+        const val FLOW_1000_SECTION_DOWNLOAD_URL = "http://192.168.2.12:8000/local1000/downloadSection?id=%d"
         val json = Json { ignoreUnknownKeys = true }
         val logger = getLogger("RocketComponent")
     }
@@ -49,6 +51,12 @@ class RocketComponent {
         logger.d { "Fetching section content" }
         val response: SectionDetail = httpClient.get(String.format(FLOW_1000_SECTION_CONTENT_URL, id)).body()
         return response
+    }
+
+    suspend fun downloadSectionById(id: Long) {
+        logger.d { "Download section by id $id" }
+        val response = httpClient.post (String.format(FLOW_1000_SECTION_DOWNLOAD_URL, id))
+        logger.d { "Download section response ${response.status.value}" }
     }
 
 
