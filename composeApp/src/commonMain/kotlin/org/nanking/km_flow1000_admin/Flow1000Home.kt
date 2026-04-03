@@ -45,6 +45,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -61,6 +62,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -184,6 +186,7 @@ fun Flow1000AlbumPage(
         viewModel: Flow1000AlbumPageViewModel = viewModel { Flow1000AlbumPageViewModel() }
 ) {
     val logger = getLogger("Flow1000AlbumPage")
+    val scope = rememberCoroutineScope()
     val rocketComponent = RocketComponent()
     var pinIndexList by remember { mutableStateOf(listOf<PicIndexItem>()) }
     LaunchedEffect(true) {
@@ -235,7 +238,9 @@ fun Flow1000AlbumPage(
                     logger.i { "Display Cover URL: ${picIndex.coverUri}" }
                     AlbumCoverCard(albumCover = picIndex, appendContent = {
                         IconButton(onClick = {
-                            viewModel.downloadSectionById(picIndex.index)
+                            scope.launch(Dispatchers.IO) {
+                                rocketComponent.downloadSectionById(picIndex.index)
+                            }
                         }) {
                             val iconVec = if (picIndex.clientStatus == ClientStatus.NONE)
                                 Icons.Outlined.FavoriteBorder
