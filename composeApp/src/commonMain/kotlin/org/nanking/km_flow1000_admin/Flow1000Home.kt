@@ -71,6 +71,7 @@ import kotlinx.coroutines.launch
 class Flow1000HomeViewModel : ViewModel() {
     private var _albumConfigList = MutableStateFlow(listOf<AlbumConfig>())
     val albumConfigList: StateFlow<List<AlbumConfig>> get() = _albumConfigList
+
     init {
         viewModelScope.launch {
             val fetchResult = RocketComponent().fetchAlbumConfigList()
@@ -181,9 +182,9 @@ fun Flow1000SectionPage(navController: NavHostController, sectionParam: SectionP
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Flow1000AlbumPage(
-        navController: NavHostController,
-        albumConfig: AlbumParam,
-        viewModel: Flow1000AlbumPageViewModel = viewModel()
+    navController: NavHostController,
+    albumConfig: AlbumParam,
+    viewModel: Flow1000AlbumPageViewModel = viewModel()
 ) {
     val logger = getLogger("Flow1000AlbumPage")
     val scope = rememberCoroutineScope()
@@ -215,7 +216,7 @@ fun Flow1000AlbumPage(
             }
         }
     ) {
-        BoxWithConstraints (
+        BoxWithConstraints(
             modifier = Modifier
                 .background(MaterialTheme.colorScheme.primaryContainer)
                 .systemBarsPadding()
@@ -255,7 +256,13 @@ fun Flow1000AlbumPage(
                             )
                         }
                     }) {
-                        navController.navigate(SectionParam(picIndex.name, picIndex.index, albumSourcePath = albumConfig.albumSourcePath))
+                        navController.navigate(
+                            route = SectionParam(
+                                picIndex.name,
+                                id = picIndex.index,
+                                albumSourcePath = albumConfig.albumSourcePath
+                            )
+                        )
                     }
                 }
             }
@@ -271,7 +278,13 @@ fun Flow1000AlbumPage(
 fun FitSizeImageCard(
     cardCover: CardCover<*>,
 ) {
-    BoxWithConstraints(modifier = Modifier.fillMaxWidth().wrapContentHeight().padding(top = 2.dp, bottom = 2.dp), contentAlignment = Alignment.Center) {
+    BoxWithConstraints(
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight()
+            .padding(top = 2.dp, bottom = 2.dp),
+        contentAlignment = Alignment.Center
+    ) {
         val maxWidth = constraints.maxWidth
 
         val targetWidth: Int = if (maxWidth > cardCover.width) {
@@ -287,7 +300,8 @@ fun FitSizeImageCard(
                 containerColor = MaterialTheme.colorScheme.surface,
                 disabledContainerColor = Color.LightGray,
                 disabledContentColor = Color.LightGray,
-            ), modifier = Modifier.width(targetWidth.dp).wrapContentSize(),
+            ),
+            modifier = Modifier.width(targetWidth.dp).wrapContentSize(),
         ) {
             ImageContentInCard(cardCover)
         }
