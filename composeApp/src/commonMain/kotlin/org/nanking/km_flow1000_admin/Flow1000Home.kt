@@ -184,7 +184,7 @@ fun Flow1000SectionPage(navController: NavHostController, sectionParam: SectionP
 fun Flow1000AlbumPage(
     navController: NavHostController,
     albumConfig: AlbumParam,
-    viewModel: Flow1000AlbumPageViewModel = viewModel()
+    viewModel: Flow1000AlbumPageViewModel = viewModel { Flow1000AlbumPageViewModel() }
 ) {
     val logger = getLogger("Flow1000AlbumPage")
     val scope = rememberCoroutineScope()
