@@ -17,10 +17,10 @@ import io.ktor.client.request.post
 
 class RocketComponent {
     companion object {
-        const val FLOW_1000_INDEX_URL = "http://192.168.2.12:8000/local1000/picIndexAjax?album=%s"
-        const val FLOW_1000_COVER_LIST_URL = "http://192.168.2.12:8000/local1000/albumConfig/list"
-        const val FLOW_1000_SECTION_CONTENT_URL = "http://192.168.2.12:8000/local1000/picDetailAjax?id=%d"
-        const val FLOW_1000_SECTION_DOWNLOAD_URL = "http://192.168.2.12:8000/local1000/downloadSection?id=%d"
+        const val FLOW_1000_INDEX_URL = "http://$API_SERVER/local1000/picIndexAjax?album=%s"
+        const val FLOW_1000_COVER_LIST_URL = "http://$API_SERVER/local1000/albumConfig/list"
+        const val FLOW_1000_SECTION_CONTENT_URL = "http://$API_SERVER/local1000/picDetailAjax?id=%d"
+        const val FLOW_1000_SECTION_DOWNLOAD_URL = "http://$API_SERVER/local1000/downloadSection?id=%d"
         val json = Json { ignoreUnknownKeys = true }
         val logger = getLogger("RocketComponent")
     }
