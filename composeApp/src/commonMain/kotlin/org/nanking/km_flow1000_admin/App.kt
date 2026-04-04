@@ -6,6 +6,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -24,8 +25,6 @@ data class AlbumParam(val name: String, val albumSourcePath: String)
 @Serializable
 data class SectionParam(val name: String, val id: Long, val albumSourcePath: String)
 
-val flow1000HomeViewModel = Flow1000HomeViewModel()
-
 @Composable
 @Preview
 fun App() {
@@ -43,7 +42,7 @@ fun App() {
                     val homeParam = backStackEntry.toRoute<HomeParam>()
                     Home(navController, homeParam.pageId)
                 }
-                composable("flow1000Home") { Flow1000Home(navController, viewModel = flow1000HomeViewModel) }
+                composable("flow1000Home") { Flow1000Home(navController, viewModel = viewModel { Flow1000HomeViewModel() }) }
                 composable<SectionParam> { backStackEntry->
                     val sectionParam = backStackEntry.toRoute<SectionParam>()
                     Flow1000SectionPage(navController, sectionParam)
