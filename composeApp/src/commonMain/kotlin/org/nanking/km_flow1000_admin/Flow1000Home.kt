@@ -241,6 +241,7 @@ fun Flow1000AlbumPage(
                         IconButton(onClick = {
                             scope.launch(Dispatchers.IO) {
                                 rocketComponent.downloadSectionById(picIndex.index)
+                                pinIndexList = rocketComponent.fetchPicIndex(albumConfig.name)
                             }
                         }) {
                             val iconVec = if (picIndex.clientStatus == ClientStatus.NONE)
