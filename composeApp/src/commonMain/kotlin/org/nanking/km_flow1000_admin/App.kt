@@ -37,7 +37,6 @@ fun App() {
                 enterTransition = { slideInHorizontally() },
                 exitTransition = { slideOutHorizontally(targetOffsetX = { -it }) },
             ) {
-//                composable("home") { Home(navController) }
                 composable<HomeParam> {backStackEntry->
                     val homeParam = backStackEntry.toRoute<HomeParam>()
                     Home(navController, homeParam.pageId)
