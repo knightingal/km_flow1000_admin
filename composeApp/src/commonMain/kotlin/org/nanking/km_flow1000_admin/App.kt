@@ -13,6 +13,12 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import kotlinx.serialization.Serializable
 
+const val IMAGE_SERVER = "192.168.2.12:8082"
+
+const val API_SERVER = "192.168.2.12:8000"
+
+
+
 @Serializable
 data class LazyParam(val pageId: String)
 
