@@ -127,6 +127,11 @@ fun Flow1000SectionPage(navController: NavHostController, sectionParam: SectionP
     LaunchedEffect(true) {
         sectionDetail = rocketComponent.fetchSectionContent(sectionParam.id)
     }
+
+    val iconVec = if (sectionDetail?.clientStatus == ClientStatus.NONE)
+        Icons.Outlined.FavoriteBorder
+    else
+        Icons.Outlined.Favorite
     Scaffold(
         topBar = {
             TopAppBar(
@@ -146,7 +151,7 @@ fun Flow1000SectionPage(navController: NavHostController, sectionParam: SectionP
         },
         floatingActionButton = {
             IconButton(onClick = { navController.popBackStack() }) {
-                Icon(Icons.Filled.Add, contentDescription = null)
+                Icon(iconVec, contentDescription = null)
             }
         }
     ) {
