@@ -121,6 +121,7 @@ fun Flow1000Home(navController: NavHostController, viewModel: Flow1000HomeViewMo
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Flow1000SectionPage(navController: NavHostController, sectionParam: SectionParam) {
+    val scope = rememberCoroutineScope()
     val logger = getLogger("Flow1000SectionPage")
     val rocketComponent = RocketComponent()
     var sectionDetail by remember { mutableStateOf<SectionDetail?>(null) }
@@ -150,7 +151,14 @@ fun Flow1000SectionPage(navController: NavHostController, sectionParam: SectionP
             )
         },
         floatingActionButton = {
-            IconButton(onClick = { navController.popBackStack() }) {
+            IconButton(onClick = {
+                if (sectionDetail?.clientStatus == ClientStatus.NONE) {
+                    scope.launch(Dispatchers.IO) {
+                        rocketComponent.downloadSectionById(sectionParam.id)
+                        sectionDetail = rocketComponent.fetchSectionContent(sectionParam.id)
+                    }
+                }
+            }) {
                 Icon(iconVec, contentDescription = null)
             }
         }
