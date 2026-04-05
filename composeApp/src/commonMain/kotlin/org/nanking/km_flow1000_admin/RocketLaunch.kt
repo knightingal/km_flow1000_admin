@@ -21,7 +21,7 @@ class SectionDetail (
     val pics: List<ImgInSectionDetail>,
     val album: String,
     val title: String,
-    val clientStatus: String,
+    val clientStatus: ClientStatus,
 )
 
 @Serializable
