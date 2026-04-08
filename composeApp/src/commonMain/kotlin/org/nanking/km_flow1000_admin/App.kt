@@ -1,5 +1,6 @@
 package org.nanking.km_flow1000_admin
 
+import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.material3.MaterialTheme
@@ -35,34 +36,45 @@ data class SectionParam(val name: String, val id: Long, val albumSourcePath: Str
 @Preview
 fun App() {
     MaterialTheme {
-        val navController = rememberNavController()
-        Scaffold { it ->
-            it.hashCode()
-            NavHost(
-                navController, startDestination = "flow1000Home",
-                enterTransition = { slideInHorizontally() },
-                exitTransition = { slideOutHorizontally(targetOffsetX = { -it }) },
-            ) {
-                composable<HomeParam> {backStackEntry->
-                    val homeParam = backStackEntry.toRoute<HomeParam>()
-                    Home(navController, homeParam.pageId)
+        SharedTransitionLayout {
+            val navController = rememberNavController()
+            Scaffold { it ->
+                it.hashCode()
+                NavHost(
+                    navController, startDestination = "flow1000Home",
+//                  enterTransition = { slideInHorizontally() },
+//                  exitTransition = { slideOutHorizontally(targetOffsetX = { -it }) },
+                ) {
+                    composable<HomeParam> {backStackEntry->
+                        val homeParam = backStackEntry.toRoute<HomeParam>()
+                        Home(navController, homeParam.pageId)
+                    }
+                    composable("flow1000Home") { Flow1000Home(navController, viewModel = viewModel { Flow1000HomeViewModel() }) }
+                    composable<SectionParam> { backStackEntry->
+                        val sectionParam = backStackEntry.toRoute<SectionParam>()
+                        Flow1000SectionPage(
+                            navController,
+                            sectionParam,
+                            sharedTransitionScope = this@SharedTransitionLayout,
+                            animatedContentScope = this@composable
+                        )
+                    }
+                    composable<AlbumParam> { backStackEntry->
+                        val albumConfig = backStackEntry.toRoute<AlbumParam>()
+                        Flow1000AlbumPage(navController, albumConfig,
+                            sharedTransitionScope = this@SharedTransitionLayout,
+                            animatedContentScope = this@composable
+                            )
+                    }
+                    composable<LazyParam> { backStackEntry->
+                        val lazyParam = backStackEntry.toRoute<LazyParam>()
+                        LazyPage(navController, lazyParam.pageId) }
+                    composable("greeting") { GreetingApp() }
+                    composable("lazySample") { LazyStaggeredGridCustomScrollUsingLazyLayoutScrollScopeSample() }
+                    composable("lazyScrollable") { LazyScrollable() }
                 }
-                composable("flow1000Home") { Flow1000Home(navController, viewModel = viewModel { Flow1000HomeViewModel() }) }
-                composable<SectionParam> { backStackEntry->
-                    val sectionParam = backStackEntry.toRoute<SectionParam>()
-                    Flow1000SectionPage(navController, sectionParam)
-                }
-                composable<AlbumParam> { backStackEntry->
-                    val albumConfig = backStackEntry.toRoute<AlbumParam>()
-                    Flow1000AlbumPage(navController, albumConfig)
-                }
-                composable<LazyParam> { backStackEntry->
-                    val lazyParam = backStackEntry.toRoute<LazyParam>()
-                    LazyPage(navController, lazyParam.pageId) }
-                composable("greeting") { GreetingApp() }
-                composable("lazySample") { LazyStaggeredGridCustomScrollUsingLazyLayoutScrollScopeSample() }
-                composable("lazyScrollable") { LazyScrollable() }
             }
+
         }
     }
 

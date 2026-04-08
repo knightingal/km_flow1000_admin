@@ -3,6 +3,8 @@ package org.nanking.km_flow1000_admin
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -116,7 +118,10 @@ fun Flow1000Home(navController: NavHostController, viewModel: Flow1000HomeViewMo
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Flow1000SectionPage(navController: NavHostController, sectionParam: SectionParam) {
+fun Flow1000SectionPage(navController: NavHostController, sectionParam: SectionParam,
+                        sharedTransitionScope: SharedTransitionScope,
+                        animatedContentScope: AnimatedContentScope,
+                        ) {
     val scope = rememberCoroutineScope()
     val logger = getLogger("Flow1000SectionPage")
     val rocketComponent = RocketComponent()
@@ -177,7 +182,10 @@ fun Flow1000SectionPage(navController: NavHostController, sectionParam: SectionP
                     pic.sectionDir = sectionDetail!!.dirName
                     pic.albumSourcePath = sectionParam.albumSourcePath
                     logger.i { "Display Pics: ${pic.coverUri}" }
-                    FitSizeImageCard(cardCover = pic)
+                    FitSizeImageCard(cardCover = pic,
+                        sharedTransitionScope = if (index == 0) sharedTransitionScope else null,
+                        animatedContentScope = if (index == 0) animatedContentScope else null,
+                    )
                 }
             }
             PlatformVerticalScrollbar(
@@ -193,6 +201,8 @@ fun Flow1000SectionPage(navController: NavHostController, sectionParam: SectionP
 fun Flow1000AlbumPage(
     navController: NavHostController,
     albumConfig: AlbumParam,
+    sharedTransitionScope: SharedTransitionScope,
+    animatedContentScope: AnimatedContentScope,
     viewModel: Flow1000AlbumPageViewModel = viewModel { Flow1000AlbumPageViewModel() }
 ) {
     val logger = getLogger("Flow1000AlbumPage")
@@ -246,7 +256,10 @@ fun Flow1000AlbumPage(
                     val picIndex = pinIndexList[index]
                     picIndex.albumSourcePath = albumConfig.albumSourcePath
                     logger.i { "Display Cover URL: ${picIndex.coverUri}" }
-                    AlbumCoverCard(albumCover = picIndex, appendContent = {
+                    AlbumCoverCard(albumCover = picIndex,
+                        sharedTransitionScope = sharedTransitionScope,
+                        animatedContentScope = animatedContentScope,
+                        appendContent = {
                         IconButton(onClick = {
                             scope.launch(Dispatchers.IO) {
                                 rocketComponent.downloadSectionById(picIndex.index)
@@ -287,6 +300,8 @@ fun Flow1000AlbumPage(
 @Composable
 fun FitSizeImageCard(
     cardCover: CardCover<*>,
+    sharedTransitionScope: SharedTransitionScope? = null,
+    animatedContentScope: AnimatedContentScope? = null,
 ) {
     BoxWithConstraints(
         modifier = Modifier
@@ -313,7 +328,7 @@ fun FitSizeImageCard(
             ),
             modifier = Modifier.width(targetWidth.dp).wrapContentSize(),
         ) {
-            ImageContentInCard(cardCover)
+            ImageContentInCard(cardCover, sharedTransitionScope, animatedContentScope)
         }
     }
 }
@@ -322,6 +337,8 @@ fun FitSizeImageCard(
 @Composable
 fun AlbumCoverCard(
     albumCover: CardCover<*>,
+    sharedTransitionScope: SharedTransitionScope? = null,
+    animatedContentScope: AnimatedContentScope? = null,
     appendContent: @Composable () -> Unit = {},
     onClick: () -> Unit = {},
 ) {
@@ -335,7 +352,7 @@ fun AlbumCoverCard(
         ), modifier = Modifier.fillMaxWidth().wrapContentSize(),
         onClick = onClick
     ) {
-        ImageContentInCard(albumCover)
+        ImageContentInCard(albumCover, sharedTransitionScope, animatedContentScope)
         Text(albumCover.name, modifier = Modifier.padding(16.dp))
         appendContent()
     }
@@ -344,6 +361,8 @@ fun AlbumCoverCard(
 @Composable
 fun ImageContentInCard(
     cardCover: CardCover<*>,
+    sharedTransitionScope: SharedTransitionScope? = null,
+    animatedContentScope: AnimatedContentScope? = null,
 ) {
     Box(
         modifier = Modifier.fillMaxWidth().aspectRatio(
@@ -352,13 +371,30 @@ fun ImageContentInCard(
         )
     ) {
         if (cardCover.coverUri is String) {
-            AsyncImage(
-                modifier = Modifier.fillMaxSize(),
-                model = cardCover.coverUri, contentDescription = null
-            )
+            if (sharedTransitionScope != null) {
+                with(sharedTransitionScope) {
+                    AsyncImage(
+                        modifier = Modifier
+                            .sharedElement(
+                                sharedContentState = sharedTransitionScope.rememberSharedContentState(cardCover.coverUri as String),
+                                animatedVisibilityScope = animatedContentScope!!
+                            )
+                            .fillMaxSize(),
+                        model = cardCover.coverUri, contentDescription = null
+                    )
+                }
+
+            } else {
+                AsyncImage(
+                    modifier = Modifier
+                        .fillMaxSize(),
+                    model = cardCover.coverUri, contentDescription = null
+                )
+            }
         } else if (cardCover.coverUri is DrawableResource) {
             Image(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .fillMaxSize(),
                 painter = painterResource(cardCover.coverUri as DrawableResource),
                 contentDescription = null,
             )
