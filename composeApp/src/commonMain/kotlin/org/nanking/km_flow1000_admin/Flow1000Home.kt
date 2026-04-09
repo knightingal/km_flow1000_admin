@@ -318,17 +318,40 @@ fun FitSizeImageCard(
             maxWidth
         }
 
-        Card(
-            border = BorderStroke(2.dp, MaterialTheme.colorScheme.primary),
-            colors = CardColors(
-                contentColor = MaterialTheme.colorScheme.onSurface,
-                containerColor = MaterialTheme.colorScheme.surface,
-                disabledContainerColor = Color.LightGray,
-                disabledContentColor = Color.LightGray,
-            ),
-            modifier = Modifier.width(targetWidth.dp).wrapContentSize(),
-        ) {
-            ImageContentInCard(cardCover, sharedTransitionScope, animatedContentScope)
+        if (sharedTransitionScope != null) {
+            with(sharedTransitionScope) {
+                Card(
+                    border = BorderStroke(2.dp, MaterialTheme.colorScheme.primary),
+                    colors = CardColors(
+                        contentColor = MaterialTheme.colorScheme.onSurface,
+                        containerColor = MaterialTheme.colorScheme.surface,
+                        disabledContainerColor = Color.LightGray,
+                        disabledContentColor = Color.LightGray,
+                    ),
+                    modifier = Modifier
+                        .sharedElement(
+                            sharedContentState = sharedTransitionScope.rememberSharedContentState(cardCover.coverUri as String),
+                            animatedVisibilityScope = animatedContentScope!!
+                        )
+                        .width(targetWidth.dp).wrapContentSize(),
+                ) {
+                    ImageContentInCard(cardCover)
+                }
+
+            }
+        } else {
+            Card(
+                border = BorderStroke(2.dp, MaterialTheme.colorScheme.primary),
+                colors = CardColors(
+                    contentColor = MaterialTheme.colorScheme.onSurface,
+                    containerColor = MaterialTheme.colorScheme.surface,
+                    disabledContainerColor = Color.LightGray,
+                    disabledContentColor = Color.LightGray,
+                ),
+                modifier = Modifier.width(targetWidth.dp).wrapContentSize(),
+            ) {
+                ImageContentInCard(cardCover)
+            }
         }
     }
 }
@@ -342,27 +365,51 @@ fun AlbumCoverCard(
     appendContent: @Composable () -> Unit = {},
     onClick: () -> Unit = {},
 ) {
-    Card(
-        border = BorderStroke(2.dp, MaterialTheme.colorScheme.primary),
-        colors = CardColors(
-            contentColor = MaterialTheme.colorScheme.onSurface,
-            containerColor = MaterialTheme.colorScheme.surface,
-            disabledContainerColor = Color.LightGray,
-            disabledContentColor = Color.LightGray,
-        ), modifier = Modifier.fillMaxWidth().wrapContentSize(),
-        onClick = onClick
-    ) {
-        ImageContentInCard(albumCover, sharedTransitionScope, animatedContentScope)
-        Text(albumCover.name, modifier = Modifier.padding(16.dp))
-        appendContent()
+    if (sharedTransitionScope != null) {
+        with(sharedTransitionScope) {
+            Card(
+                border = BorderStroke(2.dp, MaterialTheme.colorScheme.primary),
+                colors = CardColors(
+                    contentColor = MaterialTheme.colorScheme.onSurface,
+                    containerColor = MaterialTheme.colorScheme.surface,
+                    disabledContainerColor = Color.LightGray,
+                    disabledContentColor = Color.LightGray,
+                ), modifier = Modifier
+                    .sharedElement(
+                        sharedContentState = sharedTransitionScope.rememberSharedContentState(albumCover.coverUri as String),
+                        animatedVisibilityScope = animatedContentScope!!
+                    )
+                    .fillMaxWidth().wrapContentSize(),
+                onClick = onClick
+            ) {
+                ImageContentInCard(albumCover)
+                Text(albumCover.name, modifier = Modifier.padding(16.dp))
+                appendContent()
+            }
+        }
+    } else {
+        Card(
+            border = BorderStroke(2.dp, MaterialTheme.colorScheme.primary),
+            colors = CardColors(
+                contentColor = MaterialTheme.colorScheme.onSurface,
+                containerColor = MaterialTheme.colorScheme.surface,
+                disabledContainerColor = Color.LightGray,
+                disabledContentColor = Color.LightGray,
+            ), modifier = Modifier
+                .fillMaxWidth().wrapContentSize(),
+            onClick = onClick
+        ) {
+            ImageContentInCard(albumCover)
+            Text(albumCover.name, modifier = Modifier.padding(16.dp))
+            appendContent()
+        }
+
     }
 }
 
 @Composable
 fun ImageContentInCard(
     cardCover: CardCover<*>,
-    sharedTransitionScope: SharedTransitionScope? = null,
-    animatedContentScope: AnimatedContentScope? = null,
 ) {
     Box(
         modifier = Modifier.fillMaxWidth().aspectRatio(
@@ -371,26 +418,11 @@ fun ImageContentInCard(
         )
     ) {
         if (cardCover.coverUri is String) {
-            if (sharedTransitionScope != null) {
-                with(sharedTransitionScope) {
-                    AsyncImage(
-                        modifier = Modifier
-                            .sharedElement(
-                                sharedContentState = sharedTransitionScope.rememberSharedContentState(cardCover.coverUri as String),
-                                animatedVisibilityScope = animatedContentScope!!
-                            )
-                            .fillMaxSize(),
-                        model = cardCover.coverUri, contentDescription = null
-                    )
-                }
-
-            } else {
-                AsyncImage(
-                    modifier = Modifier
-                        .fillMaxSize(),
-                    model = cardCover.coverUri, contentDescription = null
-                )
-            }
+            AsyncImage(
+                modifier = Modifier
+                    .fillMaxSize(),
+                model = cardCover.coverUri, contentDescription = null
+            )
         } else if (cardCover.coverUri is DrawableResource) {
             Image(
                 modifier = Modifier
