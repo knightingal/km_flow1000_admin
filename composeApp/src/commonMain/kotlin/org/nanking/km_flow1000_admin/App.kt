@@ -19,7 +19,6 @@ const val IMAGE_SERVER = "192.168.2.12:8082"
 const val API_SERVER = "192.168.2.12:8000"
 
 
-
 @Serializable
 data class LazyParam(val pageId: String)
 
@@ -45,7 +44,7 @@ fun App() {
 //                  enterTransition = { slideInHorizontally() },
 //                  exitTransition = { slideOutHorizontally(targetOffsetX = { -it }) },
                 ) {
-                    composable<HomeParam> {backStackEntry->
+                    composable<HomeParam> { backStackEntry ->
                         val homeParam = backStackEntry.toRoute<HomeParam>()
                         Home(navController, homeParam.pageId)
                     }
@@ -66,16 +65,19 @@ fun App() {
                             animatedContentScope = this@composable
                         )
                     }
-                    composable<AlbumParam> { backStackEntry->
+                    composable<AlbumParam> { backStackEntry ->
                         val albumConfig = backStackEntry.toRoute<AlbumParam>()
-                        Flow1000AlbumPage(navController, albumConfig,
+                        Flow1000AlbumPage(
+                            navController,
+                            albumConfig,
                             sharedTransitionScope = this@SharedTransitionLayout,
                             animatedContentScope = this@composable
-                            )
+                        )
                     }
-                    composable<LazyParam> { backStackEntry->
+                    composable<LazyParam> { backStackEntry ->
                         val lazyParam = backStackEntry.toRoute<LazyParam>()
-                        LazyPage(navController, lazyParam.pageId) }
+                        LazyPage(navController, lazyParam.pageId)
+                    }
                     composable("greeting") { GreetingApp() }
                     composable("lazySample") { LazyStaggeredGridCustomScrollUsingLazyLayoutScrollScopeSample() }
                     composable("lazyScrollable") { LazyScrollable() }

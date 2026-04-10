@@ -80,10 +80,12 @@ class Flow1000HomeViewModel : ViewModel() {
 
 
 @Composable
-fun Flow1000Home(navController: NavHostController,
-                 sharedTransitionScope: SharedTransitionScope,
-                 animatedContentScope: AnimatedContentScope,
-                 viewModel: Flow1000HomeViewModel) {
+fun Flow1000Home(
+    navController: NavHostController,
+    sharedTransitionScope: SharedTransitionScope,
+    animatedContentScope: AnimatedContentScope,
+    viewModel: Flow1000HomeViewModel
+) {
 
     val logger = getLogger("Flow1000Home")
     val albumConfigList by viewModel.albumConfigList.collectAsStateWithLifecycle()
@@ -125,10 +127,11 @@ fun Flow1000Home(navController: NavHostController,
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Flow1000SectionPage(navController: NavHostController, sectionParam: SectionParam,
-                        sharedTransitionScope: SharedTransitionScope,
-                        animatedContentScope: AnimatedContentScope,
-                        ) {
+fun Flow1000SectionPage(
+    navController: NavHostController, sectionParam: SectionParam,
+    sharedTransitionScope: SharedTransitionScope,
+    animatedContentScope: AnimatedContentScope,
+) {
     val scope = rememberCoroutineScope()
     val logger = getLogger("Flow1000SectionPage")
     val rocketComponent = RocketComponent()
@@ -189,7 +192,8 @@ fun Flow1000SectionPage(navController: NavHostController, sectionParam: SectionP
                     pic.sectionDir = sectionDetail!!.dirName
                     pic.albumSourcePath = sectionParam.albumSourcePath
                     logger.i { "Display Pics: ${pic.coverUri}" }
-                    FitSizeImageCard(cardCover = pic,
+                    FitSizeImageCard(
+                        cardCover = pic,
                         sharedTransitionScope = if (index == 0) sharedTransitionScope else null,
                         animatedContentScope = if (index == 0) animatedContentScope else null,
                     )
@@ -263,29 +267,30 @@ fun Flow1000AlbumPage(
                     val picIndex = pinIndexList[index]
                     picIndex.albumSourcePath = albumConfig.albumSourcePath
                     logger.i { "Display Cover URL: ${picIndex.coverUri}" }
-                    AlbumCoverCard(albumCover = picIndex,
+                    AlbumCoverCard(
+                        albumCover = picIndex,
                         sharedTransitionScope = sharedTransitionScope,
                         animatedContentScope = animatedContentScope,
                         appendContent = {
-                        IconButton(onClick = {
-                            scope.launch(Dispatchers.IO) {
-                                rocketComponent.downloadSectionById(picIndex.index)
-                                pinIndexList = rocketComponent.fetchPicIndex(albumConfig.name)
+                            IconButton(onClick = {
+                                scope.launch(Dispatchers.IO) {
+                                    rocketComponent.downloadSectionById(picIndex.index)
+                                    pinIndexList = rocketComponent.fetchPicIndex(albumConfig.name)
+                                }
+                            }) {
+                                val iconVec = if (picIndex.clientStatus == ClientStatus.NONE)
+                                    Icons.Outlined.FavoriteBorder
+                                else
+                                    Icons.Outlined.Favorite
+
+                                Icon(
+                                    iconVec,
+                                    contentDescription = null,
+                                    modifier = Modifier.padding(start = 4.dp),
+                                    tint = MaterialTheme.colorScheme.onPrimaryContainer
+                                )
                             }
                         }) {
-                            val iconVec = if (picIndex.clientStatus == ClientStatus.NONE)
-                                Icons.Outlined.FavoriteBorder
-                            else
-                                Icons.Outlined.Favorite
-
-                            Icon(
-                                iconVec,
-                                contentDescription = null,
-                                modifier = Modifier.padding(start = 4.dp),
-                                tint = MaterialTheme.colorScheme.onPrimaryContainer
-                            )
-                        }
-                    }) {
                         navController.navigate(
                             route = SectionParam(
                                 picIndex.name,
