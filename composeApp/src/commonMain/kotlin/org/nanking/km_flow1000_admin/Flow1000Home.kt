@@ -80,7 +80,10 @@ class Flow1000HomeViewModel : ViewModel() {
 
 
 @Composable
-fun Flow1000Home(navController: NavHostController, viewModel: Flow1000HomeViewModel) {
+fun Flow1000Home(navController: NavHostController,
+                 sharedTransitionScope: SharedTransitionScope,
+                 animatedContentScope: AnimatedContentScope,
+                 viewModel: Flow1000HomeViewModel) {
 
     val logger = getLogger("Flow1000Home")
     val albumConfigList by viewModel.albumConfigList.collectAsStateWithLifecycle()
@@ -103,7 +106,11 @@ fun Flow1000Home(navController: NavHostController, viewModel: Flow1000HomeViewMo
             items(albumConfigList.size) { index ->
                 val coverUrl = albumConfigList[index].coverUri
                 logger.i { "Display Cover URL: $coverUrl" }
-                AlbumCoverCard(albumCover = albumConfigList[index]) {
+                AlbumCoverCard(
+                    albumCover = albumConfigList[index],
+                    sharedTransitionScope = sharedTransitionScope,
+                    animatedContentScope = animatedContentScope,
+                ) {
                     val albumConfig = albumConfigList[index]
                     navController.navigate(AlbumParam(albumConfig.name, albumConfig.sourcePath))
                 }

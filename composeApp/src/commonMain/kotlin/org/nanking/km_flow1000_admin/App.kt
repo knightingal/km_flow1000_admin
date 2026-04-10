@@ -49,8 +49,15 @@ fun App() {
                         val homeParam = backStackEntry.toRoute<HomeParam>()
                         Home(navController, homeParam.pageId)
                     }
-                    composable("flow1000Home") { Flow1000Home(navController, viewModel = viewModel { Flow1000HomeViewModel() }) }
-                    composable<SectionParam> { backStackEntry->
+                    composable("flow1000Home") {
+                        Flow1000Home(
+                            navController,
+                            sharedTransitionScope = this@SharedTransitionLayout,
+                            animatedContentScope = this@composable,
+                            viewModel = viewModel { Flow1000HomeViewModel() }
+                        )
+                    }
+                    composable<SectionParam> { backStackEntry ->
                         val sectionParam = backStackEntry.toRoute<SectionParam>()
                         Flow1000SectionPage(
                             navController,
