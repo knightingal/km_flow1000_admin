@@ -134,10 +134,10 @@ fun Flow1000SectionPage(
 ) {
     val scope = rememberCoroutineScope()
     val logger = getLogger("Flow1000SectionPage")
-    val rocketComponent = Flow1000RequestWrap()
+    val flow1000RequestWrap = Flow1000RequestWrap()
     var sectionDetail by remember { mutableStateOf<SectionDetail?>(null) }
     LaunchedEffect(true) {
-        sectionDetail = rocketComponent.fetchSectionContent(sectionParam.id)
+        sectionDetail = flow1000RequestWrap.fetchSectionContent(sectionParam.id)
     }
 
     val iconVec = if (sectionDetail?.clientStatus == ClientStatus.NONE)
@@ -165,8 +165,8 @@ fun Flow1000SectionPage(
             IconButton(onClick = {
                 if (sectionDetail?.clientStatus == ClientStatus.NONE) {
                     scope.launch(Dispatchers.IO) {
-                        rocketComponent.downloadSectionById(sectionParam.id)
-                        sectionDetail = rocketComponent.fetchSectionContent(sectionParam.id)
+                        flow1000RequestWrap.downloadSectionById(sectionParam.id)
+                        sectionDetail = flow1000RequestWrap.fetchSectionContent(sectionParam.id)
                     }
                 }
             }) {
@@ -218,10 +218,10 @@ fun Flow1000AlbumPage(
 ) {
     val logger = getLogger("Flow1000AlbumPage")
     val scope = rememberCoroutineScope()
-    val rocketComponent = Flow1000RequestWrap()
+    val flow1000RequestWrap = Flow1000RequestWrap()
     var pinIndexList by remember { mutableStateOf(listOf<PicIndexItem>()) }
     LaunchedEffect(true) {
-        pinIndexList = rocketComponent.fetchPicIndex(albumConfig.name)
+        pinIndexList = flow1000RequestWrap.fetchPicIndex(albumConfig.name)
     }
     Scaffold(
         topBar = {
@@ -274,8 +274,8 @@ fun Flow1000AlbumPage(
                         appendContent = {
                             IconButton(onClick = {
                                 scope.launch(Dispatchers.IO) {
-                                    rocketComponent.downloadSectionById(picIndex.index)
-                                    pinIndexList = rocketComponent.fetchPicIndex(albumConfig.name)
+                                    flow1000RequestWrap.downloadSectionById(picIndex.index)
+                                    pinIndexList = flow1000RequestWrap.fetchPicIndex(albumConfig.name)
                                 }
                             }) {
                                 val iconVec = if (picIndex.clientStatus == ClientStatus.NONE)

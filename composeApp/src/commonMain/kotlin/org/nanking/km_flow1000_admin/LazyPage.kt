@@ -59,11 +59,11 @@ fun LazyPage(
     pageId: String,
     viewModel: LazyViewModel = viewModel { LazyViewModel() }
 ) {
-    val rocketComponent = Flow1000RequestWrap()
+    val flow1000RequestWrap = Flow1000RequestWrap()
     var picIndexList by remember { mutableStateOf(listOf<PicIndexItem>()) }
 
     LaunchedEffect(true) {
-        picIndexList = rocketComponent.fetchPicIndex("1000")
+        picIndexList = flow1000RequestWrap.fetchPicIndex("1000")
     }
     Column(
         modifier = Modifier

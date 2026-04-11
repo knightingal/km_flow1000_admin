@@ -23,10 +23,10 @@ class MainViewModel : ViewModel() {
 
 class Flow1000AlbumPageViewModel : ViewModel() {
 
-    val rocketComponent = Flow1000RequestWrap()
+    val flow1000RequestWrap = Flow1000RequestWrap()
     fun downloadSectionById(id: Long) {
         viewModelScope.launch {
-            rocketComponent.downloadSectionById(id)
+            flow1000RequestWrap.downloadSectionById(id)
         }
     }
 
