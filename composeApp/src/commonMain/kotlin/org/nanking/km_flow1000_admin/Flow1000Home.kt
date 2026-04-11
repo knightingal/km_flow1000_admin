@@ -72,7 +72,7 @@ class Flow1000HomeViewModel : ViewModel() {
 
     init {
         viewModelScope.launch {
-            val fetchResult = RocketComponent().fetchAlbumConfigList()
+            val fetchResult = Flow1000RequestWrap().fetchAlbumConfigList()
             _albumConfigList.value = fetchResult
         }
     }
@@ -134,7 +134,7 @@ fun Flow1000SectionPage(
 ) {
     val scope = rememberCoroutineScope()
     val logger = getLogger("Flow1000SectionPage")
-    val rocketComponent = RocketComponent()
+    val rocketComponent = Flow1000RequestWrap()
     var sectionDetail by remember { mutableStateOf<SectionDetail?>(null) }
     LaunchedEffect(true) {
         sectionDetail = rocketComponent.fetchSectionContent(sectionParam.id)
@@ -218,7 +218,7 @@ fun Flow1000AlbumPage(
 ) {
     val logger = getLogger("Flow1000AlbumPage")
     val scope = rememberCoroutineScope()
-    val rocketComponent = RocketComponent()
+    val rocketComponent = Flow1000RequestWrap()
     var pinIndexList by remember { mutableStateOf(listOf<PicIndexItem>()) }
     LaunchedEffect(true) {
         pinIndexList = rocketComponent.fetchPicIndex(albumConfig.name)
