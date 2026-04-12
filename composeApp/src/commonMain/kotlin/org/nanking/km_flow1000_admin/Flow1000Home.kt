@@ -168,6 +168,11 @@ fun Flow1000SectionPage(
                         flow1000RequestWrap.downloadSectionById(sectionParam.id)
                         sectionDetail = flow1000RequestWrap.fetchSectionContent(sectionParam.id)
                     }
+                } else {
+                    scope.launch(Dispatchers.IO) {
+                        flow1000RequestWrap.unsubscribeSectionById(sectionParam.id)
+                        sectionDetail = flow1000RequestWrap.fetchSectionContent(sectionParam.id)
+                    }
                 }
             }) {
                 Icon(iconVec, contentDescription = null)
@@ -274,7 +279,11 @@ fun Flow1000AlbumPage(
                         appendContent = {
                             IconButton(onClick = {
                                 scope.launch(Dispatchers.IO) {
-                                    flow1000RequestWrap.downloadSectionById(picIndex.index)
+                                    if (picIndex.clientStatus == ClientStatus.NONE) {
+                                        flow1000RequestWrap.downloadSectionById(picIndex.index)
+                                    } else {
+                                        flow1000RequestWrap.unsubscribeSectionById(picIndex.index)
+                                    }
                                     pinIndexList = flow1000RequestWrap.fetchPicIndex(albumConfig.name)
                                 }
                             }) {
