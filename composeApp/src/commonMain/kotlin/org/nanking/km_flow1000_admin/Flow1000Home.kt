@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -26,8 +27,10 @@ import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridS
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material.icons.outlined.FavoriteBorder
+import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -277,27 +280,35 @@ fun Flow1000AlbumPage(
                         sharedTransitionScope = sharedTransitionScope,
                         animatedContentScope = animatedContentScope,
                         appendContent = {
-                            IconButton(onClick = {
-                                scope.launch(Dispatchers.IO) {
-                                    if (picIndex.clientStatus == ClientStatus.NONE) {
-                                        flow1000RequestWrap.downloadSectionById(picIndex.index)
-                                    } else {
-                                        flow1000RequestWrap.unsubscribeSectionById(picIndex.index)
+                            Row {
+                                IconButton(onClick = {
+                                    scope.launch(Dispatchers.IO) {
+                                        if (picIndex.clientStatus == ClientStatus.NONE) {
+                                            flow1000RequestWrap.downloadSectionById(picIndex.index)
+                                        } else {
+                                            flow1000RequestWrap.unsubscribeSectionById(picIndex.index)
+                                        }
+                                        pinIndexList = flow1000RequestWrap.fetchPicIndex(albumConfig.name)
                                     }
-                                    pinIndexList = flow1000RequestWrap.fetchPicIndex(albumConfig.name)
+                                }) {
+                                    val iconVec = if (picIndex.clientStatus == ClientStatus.NONE)
+                                        Icons.Outlined.FavoriteBorder
+                                    else
+                                        Icons.Outlined.Favorite
+                                    Icon(
+                                        iconVec,
+                                        contentDescription = null,
+                                        tint = MaterialTheme.colorScheme.onPrimaryContainer
+                                    )
                                 }
-                            }) {
-                                val iconVec = if (picIndex.clientStatus == ClientStatus.NONE)
-                                    Icons.Outlined.FavoriteBorder
-                                else
-                                    Icons.Outlined.Favorite
+                                IconButton(onClick = {}) {
+                                    Icon(
+                                        Icons.Outlined.Delete,
+                                        contentDescription = null,
+                                        tint = MaterialTheme.colorScheme.onPrimaryContainer
+                                    )
+                                }
 
-                                Icon(
-                                    iconVec,
-                                    contentDescription = null,
-                                    modifier = Modifier.padding(start = 4.dp),
-                                    tint = MaterialTheme.colorScheme.onPrimaryContainer
-                                )
                             }
                         }) {
                         navController.navigate(
