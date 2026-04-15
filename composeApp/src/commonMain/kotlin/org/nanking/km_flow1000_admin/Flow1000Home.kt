@@ -301,7 +301,12 @@ fun Flow1000AlbumPage(
                                         tint = MaterialTheme.colorScheme.onPrimaryContainer
                                     )
                                 }
-                                IconButton(onClick = {}) {
+                                IconButton(onClick = {
+                                    scope.launch(Dispatchers.IO) {
+                                        flow1000RequestWrap.deleteSectionById(picIndex.index)
+                                        pinIndexList = flow1000RequestWrap.fetchPicIndex(albumConfig.name)
+                                    }
+                                }) {
                                     Icon(
                                         Icons.Outlined.Delete,
                                         contentDescription = null,
