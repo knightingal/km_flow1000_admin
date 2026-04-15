@@ -4,6 +4,7 @@ import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.request.delete
 import io.ktor.client.request.get
 import io.ktor.client.request.post
 import io.ktor.serialization.kotlinx.json.json
@@ -17,6 +18,7 @@ class Flow1000RequestWrap {
         const val FLOW_1000_SECTION_CONTENT_URL = "http://$API_SERVER/local1000/picDetailAjax?id=%d"
         const val FLOW_1000_SECTION_DOWNLOAD_URL = "http://$API_SERVER/local1000/downloadSection?id=%d"
         const val FLOW_1000_SECTION_UNSUBSCRIBE_URL = "http://$API_SERVER/local1000/unsubscribeSection/%d"
+        const val FLOW_1000_SECTION_URL = "http://$API_SERVER/local1000/section/%d"
         val json = Json { ignoreUnknownKeys = true }
         val logger = getLogger("RocketComponent")
     }
@@ -61,6 +63,13 @@ class Flow1000RequestWrap {
     suspend fun unsubscribeSectionById(id: Long) {
         logger.d { "unsubscribe section by id $id" }
         val response = httpClient.post (String.format(FLOW_1000_SECTION_UNSUBSCRIBE_URL, id))
+        logger.d { "unsubscribe section response ${response.status.value}" }
+    }
+
+    @Suppress("DefaultLocale")
+    suspend fun deleteSectionById(id: Long) {
+        logger.d { "unsubscribe section by id $id" }
+        val response = httpClient.delete(String.format(FLOW_1000_SECTION_URL, id))
         logger.d { "unsubscribe section response ${response.status.value}" }
     }
 }
