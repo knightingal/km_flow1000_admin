@@ -166,16 +166,13 @@ fun Flow1000SectionPage(
         },
         floatingActionButton = {
             IconButton(onClick = {
-                if (sectionDetail?.clientStatus == ClientStatus.NONE) {
-                    scope.launch(Dispatchers.IO) {
+                scope.launch(Dispatchers.IO) {
+                    if (sectionDetail?.clientStatus == ClientStatus.NONE) {
                         flow1000RequestWrap.downloadSectionById(sectionParam.id)
-                        sectionDetail = flow1000RequestWrap.fetchSectionContent(sectionParam.id)
-                    }
-                } else {
-                    scope.launch(Dispatchers.IO) {
+                    } else {
                         flow1000RequestWrap.unsubscribeSectionById(sectionParam.id)
-                        sectionDetail = flow1000RequestWrap.fetchSectionContent(sectionParam.id)
                     }
+                    sectionDetail = flow1000RequestWrap.fetchSectionContent(sectionParam.id)
                 }
             }) {
                 Icon(iconVec, contentDescription = null)
