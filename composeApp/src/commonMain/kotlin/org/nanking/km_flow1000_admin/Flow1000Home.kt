@@ -11,9 +11,11 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.width
@@ -432,7 +434,9 @@ fun AlbumCoverCard(
             ) {
                 ImageContentInCard(albumCover)
                 if (edit) {
-                    TextField(state = TextFieldState(initialText = albumCover.name),  modifier = Modifier.padding(16.dp))
+                    TextField(state = TextFieldState(initialText = albumCover.name),
+                        modifier = Modifier.height(48.dp),
+                    )
                 } else {
                     Text(albumCover.name, modifier = Modifier.padding(16.dp))
                 }
@@ -453,7 +457,10 @@ fun AlbumCoverCard(
         ) {
             ImageContentInCard(albumCover)
             if (edit) {
-                TextField(state = TextFieldState(initialText = albumCover.name))
+                TextField(
+                    state = TextFieldState(initialText = albumCover.name),
+                    modifier = Modifier.height(48.dp),
+                )
             } else {
                 Text(albumCover.name, modifier = Modifier.padding(16.dp))
             }
