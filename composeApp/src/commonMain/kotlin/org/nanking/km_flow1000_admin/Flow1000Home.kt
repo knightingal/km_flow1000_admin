@@ -410,6 +410,7 @@ fun AlbumCoverCard(
     sharedTransitionScope: SharedTransitionScope? = null,
     animatedContentScope: AnimatedContentScope? = null,
     appendContent: @Composable () -> Unit = {},
+    edit: Boolean = false,
     onClick: () -> Unit = {},
 ) {
     if (sharedTransitionScope != null) {
@@ -430,8 +431,11 @@ fun AlbumCoverCard(
                 onClick = onClick
             ) {
                 ImageContentInCard(albumCover)
-                Text(albumCover.name, modifier = Modifier.padding(16.dp))
-//                TextField(state = TextFieldState(initialText = albumCover.name),  modifier = Modifier.padding(16.dp))
+                if (edit) {
+                    TextField(state = TextFieldState(initialText = albumCover.name),  modifier = Modifier.padding(16.dp))
+                } else {
+                    Text(albumCover.name, modifier = Modifier.padding(16.dp))
+                }
                 appendContent()
             }
         }
@@ -448,7 +452,11 @@ fun AlbumCoverCard(
             onClick = onClick
         ) {
             ImageContentInCard(albumCover)
-            Text(albumCover.name, modifier = Modifier.padding(16.dp))
+            if (edit) {
+                TextField(state = TextFieldState(initialText = albumCover.name))
+            } else {
+                Text(albumCover.name, modifier = Modifier.padding(16.dp))
+            }
             appendContent()
         }
 
@@ -497,6 +505,24 @@ fun AlbumCoverCardPreview() {
             override val name: String
                 get() = "AI20220605211354"
         }
+    )
+}
+
+@Composable
+@Preview
+fun AlbumCoverCardEditPreview() {
+    AlbumCoverCard(
+        albumCover = object : CardCover<DrawableResource> {
+            override val width: Int
+                get() = 640
+            override val height: Int
+                get() = 426
+            override val coverUri: DrawableResource
+                get() = Res.drawable.fc6_nightly_wind_down
+            override val name: String
+                get() = "EditAI20220605211354"
+        },
+        edit = true
     )
 }
 
