@@ -44,6 +44,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
@@ -434,11 +435,20 @@ fun AlbumCoverCard(
             ) {
                 ImageContentInCard(albumCover)
                 if (edit) {
-                    TextField(state = TextFieldState(initialText = albumCover.name),
+                    TextField(
+                        colors = TextFieldDefaults.colors(
+                            errorContainerColor = Color.Transparent,
+                            focusedContainerColor = Color.Transparent,
+                            unfocusedContainerColor = Color.Transparent,
+                            disabledContainerColor = Color.Transparent,
+                        ),
+                        state = TextFieldState(initialText = albumCover.name),
                         modifier = Modifier.height(48.dp),
                     )
                 } else {
-                    Text(albumCover.name, modifier = Modifier.padding(16.dp))
+                    Box(modifier = Modifier.height(48.dp), contentAlignment = Alignment.CenterStart ) {
+                        Text(albumCover.name, modifier = Modifier.padding(start = 16.dp, end = 16.dp))
+                    }
                 }
                 appendContent()
             }
@@ -458,11 +468,19 @@ fun AlbumCoverCard(
             ImageContentInCard(albumCover)
             if (edit) {
                 TextField(
+                    colors = TextFieldDefaults.colors(
+                        errorContainerColor = Color.Transparent,
+                        focusedContainerColor = Color.Transparent,
+                        unfocusedContainerColor = Color.Transparent,
+                        disabledContainerColor = Color.Transparent,
+                    ),
                     state = TextFieldState(initialText = albumCover.name),
                     modifier = Modifier.height(48.dp),
                 )
             } else {
-                Text(albumCover.name, modifier = Modifier.padding(16.dp))
+                Box(modifier = Modifier.height(48.dp), contentAlignment = Alignment.CenterStart ) {
+                    Text(albumCover.name, modifier = Modifier.padding(start = 16.dp, end = 16.dp))
+                }
             }
             appendContent()
         }
