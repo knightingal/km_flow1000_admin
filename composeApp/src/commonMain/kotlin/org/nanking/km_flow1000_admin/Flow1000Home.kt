@@ -416,75 +416,46 @@ fun AlbumCoverCard(
     edit: Boolean = false,
     onClick: () -> Unit = {},
 ) {
-    if (sharedTransitionScope != null) {
+    val modifier = if (sharedTransitionScope != null) {
         with(sharedTransitionScope) {
-            Card(
-                border = BorderStroke(2.dp, MaterialTheme.colorScheme.primary),
-                colors = CardColors(
-                    contentColor = MaterialTheme.colorScheme.onSurface,
-                    containerColor = MaterialTheme.colorScheme.surface,
-                    disabledContainerColor = Color.LightGray,
-                    disabledContentColor = Color.LightGray,
-                ), modifier = Modifier
-                    .sharedElement(
-                        sharedContentState = sharedTransitionScope.rememberSharedContentState(albumCover.coverUri as String),
-                        animatedVisibilityScope = animatedContentScope!!
-                    )
-                    .fillMaxWidth().wrapContentSize(),
-                onClick = onClick
-            ) {
-                ImageContentInCard(albumCover)
-                if (edit) {
-                    TextField(
-                        colors = TextFieldDefaults.colors(
-                            errorContainerColor = Color.Transparent,
-                            focusedContainerColor = Color.Transparent,
-                            unfocusedContainerColor = Color.Transparent,
-                            disabledContainerColor = Color.Transparent,
-                        ),
-                        state = TextFieldState(initialText = albumCover.name),
-                        modifier = Modifier.height(48.dp),
-                    )
-                } else {
-                    Box(modifier = Modifier.height(48.dp), contentAlignment = Alignment.CenterStart ) {
-                        Text(albumCover.name, modifier = Modifier.padding(start = 16.dp, end = 16.dp))
-                    }
-                }
-                appendContent()
-            }
+            Modifier.sharedElement(
+                sharedContentState = sharedTransitionScope.rememberSharedContentState(albumCover.coverUri as String),
+                animatedVisibilityScope = animatedContentScope!!
+            )
         }
     } else {
-        Card(
-            border = BorderStroke(2.dp, MaterialTheme.colorScheme.primary),
-            colors = CardColors(
-                contentColor = MaterialTheme.colorScheme.onSurface,
-                containerColor = MaterialTheme.colorScheme.surface,
-                disabledContainerColor = Color.LightGray,
-                disabledContentColor = Color.LightGray,
-            ), modifier = Modifier
-                .fillMaxWidth().wrapContentSize(),
-            onClick = onClick
-        ) {
-            ImageContentInCard(albumCover)
-            if (edit) {
-                TextField(
-                    colors = TextFieldDefaults.colors(
-                        errorContainerColor = Color.Transparent,
-                        focusedContainerColor = Color.Transparent,
-                        unfocusedContainerColor = Color.Transparent,
-                        disabledContainerColor = Color.Transparent,
-                    ),
-                    state = TextFieldState(initialText = albumCover.name),
-                    modifier = Modifier.height(48.dp),
-                )
-            } else {
-                Box(modifier = Modifier.height(48.dp), contentAlignment = Alignment.CenterStart ) {
-                    Text(albumCover.name, modifier = Modifier.padding(start = 16.dp, end = 16.dp))
-                }
-            }
-            appendContent()
-        }
+        Modifier
+    }
 
+    Card(
+        border = BorderStroke(2.dp, MaterialTheme.colorScheme.primary),
+        colors = CardColors(
+            contentColor = MaterialTheme.colorScheme.onSurface,
+            containerColor = MaterialTheme.colorScheme.surface,
+            disabledContainerColor = Color.LightGray,
+            disabledContentColor = Color.LightGray,
+        ), modifier = modifier
+            .fillMaxWidth().wrapContentSize(),
+        onClick = onClick
+    ) {
+        ImageContentInCard(albumCover)
+        if (edit) {
+            TextField(
+                colors = TextFieldDefaults.colors(
+                    errorContainerColor = Color.Transparent,
+                    focusedContainerColor = Color.Transparent,
+                    unfocusedContainerColor = Color.Transparent,
+                    disabledContainerColor = Color.Transparent,
+                ),
+                state = TextFieldState(initialText = albumCover.name),
+                modifier = Modifier.height(48.dp),
+            )
+        } else {
+            Box(modifier = Modifier.height(48.dp), contentAlignment = Alignment.CenterStart ) {
+                Text(albumCover.name, modifier = Modifier.padding(start = 16.dp, end = 16.dp))
+            }
+        }
+        appendContent()
     }
 }
 
