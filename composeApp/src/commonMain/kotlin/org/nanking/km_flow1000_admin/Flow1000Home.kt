@@ -231,8 +231,12 @@ fun Flow1000AlbumPage(
     val scope = rememberCoroutineScope()
     val flow1000RequestWrap = Flow1000RequestWrap()
     var pinIndexList by remember { mutableStateOf(listOf<PicIndexItem>()) }
+    var editList by remember { mutableStateOf(listOf<Boolean>()) }
     LaunchedEffect(true) {
         pinIndexList = flow1000RequestWrap.fetchPicIndex(albumConfig.name)
+        editList = List<Boolean>(pinIndexList.size) {
+            false
+        }
     }
     Scaffold(
         topBar = {
@@ -282,6 +286,7 @@ fun Flow1000AlbumPage(
                         albumCover = picIndex,
                         sharedTransitionScope = sharedTransitionScope,
                         animatedContentScope = animatedContentScope,
+                        edit = editList[index],
                         appendContent = {
                             Row {
                                 IconButton(onClick = {
@@ -317,7 +322,12 @@ fun Flow1000AlbumPage(
                                     )
                                 }
                                 IconButton(onClick = {
-                                    scope.launch(Dispatchers.IO) {
+                                    editList = List(pinIndexList.size) { it ->
+                                        if (it != index) {
+                                            false
+                                        } else {
+                                            !editList[index]
+                                        }
                                     }
                                 }) {
                                     Icon(
@@ -326,9 +336,9 @@ fun Flow1000AlbumPage(
                                         tint = MaterialTheme.colorScheme.onPrimaryContainer
                                     )
                                 }
-
                             }
-                        }) {
+                        }
+                    ) {
                         navController.navigate(
                             route = SectionParam(
                                 picIndex.name,
