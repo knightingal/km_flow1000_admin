@@ -448,12 +448,10 @@ fun AlbumCoverCard(
                     disabledContainerColor = Color.Transparent,
                 ),
                 state = TextFieldState(initialText = albumCover.name),
-                modifier = Modifier.height(48.dp),
+                modifier = Modifier.fillMaxWidth()
             )
         } else {
-            Box(modifier = Modifier.height(48.dp), contentAlignment = Alignment.CenterStart ) {
-                Text(albumCover.name, modifier = Modifier.padding(start = 16.dp, end = 16.dp))
-            }
+            Text(albumCover.name, modifier = Modifier.padding(16.dp))
         }
         appendContent()
     }
