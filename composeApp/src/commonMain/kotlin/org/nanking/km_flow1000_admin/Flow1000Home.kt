@@ -453,10 +453,6 @@ fun AlbumCoverCard(
             OutlinedTextField(
                 readOnly = true,
                 colors = TextFieldDefaults.colors(
-                    errorContainerColor = Color.Transparent,
-                    focusedContainerColor = Color.Transparent,
-                    unfocusedContainerColor = Color.Transparent,
-                    disabledContainerColor = Color.Transparent,
 
                     errorIndicatorColor = Color.Transparent,
                     focusedIndicatorColor = Color.Transparent,
