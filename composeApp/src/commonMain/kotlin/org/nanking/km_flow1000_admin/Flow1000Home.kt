@@ -500,36 +500,41 @@ fun ImageContentInCard(
 @Composable
 @Preview
 fun AlbumCoverCardPreview() {
-    AlbumCoverCard(
-        albumCover = object : CardCover<DrawableResource> {
-            override val width: Int
-                get() = 640
-            override val height: Int
-                get() = 426
-            override val coverUri: DrawableResource
-                get() = Res.drawable.fc6_nightly_wind_down
-            override val name: String
-                get() = "AI20220605211354"
-        }
-    )
+    MySootheTheme {
+        AlbumCoverCard(
+            albumCover = object : CardCover<DrawableResource> {
+                override val width: Int
+                    get() = 640
+                override val height: Int
+                    get() = 426
+                override val coverUri: DrawableResource
+                    get() = Res.drawable.fc6_nightly_wind_down
+                override val name: String
+                    get() = "AI20220605211354"
+            }
+        )
+
+    }
 }
 
 @Composable
 @Preview
 fun AlbumCoverCardEditPreview() {
-    AlbumCoverCard(
-        albumCover = object : CardCover<DrawableResource> {
-            override val width: Int
-                get() = 640
-            override val height: Int
-                get() = 426
-            override val coverUri: DrawableResource
-                get() = Res.drawable.fc6_nightly_wind_down
-            override val name: String
-                get() = "EditAI20220605211354"
-        },
-        edit = true
-    )
+    MySootheTheme {
+        AlbumCoverCard(
+            albumCover = object : CardCover<DrawableResource> {
+                override val width: Int
+                    get() = 640
+                override val height: Int
+                    get() = 426
+                override val coverUri: DrawableResource
+                    get() = Res.drawable.fc6_nightly_wind_down
+                override val name: String
+                    get() = "EditAI20220605211354"
+            },
+            edit = true
+        )
+    }
 }
 
 @Composable
