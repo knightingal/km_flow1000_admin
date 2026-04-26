@@ -33,18 +33,35 @@ class Flow1000RequestWrap {
         }
     }
 
+    /**
+     * Fetches the list of album configurations from the Flow1000 server.
+     *
+     * @return A list of [AlbumConfig] objects representing the available albums.
+     */
     suspend fun fetchAlbumConfigList(): List<AlbumConfig> {
         logger.d { "Fetching AlbumConfigList" }
         val responseBody: String = httpClient.get(FLOW_1000_COVER_LIST_URL).body()
         return json.decodeFromString<List<AlbumConfig>>(responseBody)
     }
 
+    /**
+     * Fetches the picture index for a specific album.
+     *
+     * @param albumName The name of the album to fetch the index for.
+     * @return A list of [PicIndexItem] objects representing the pictures in the album.
+     */
     suspend fun fetchPicIndex(albumName: String): List<PicIndexItem> {
         logger.d { "Fetching picIndex" }
         val responseBody: String = httpClient.get(String.format(FLOW_1000_INDEX_URL, albumName)).body()
         return json.decodeFromString<List<PicIndexItem>>(responseBody)
     }
 
+    /**
+     * Fetches the detailed content of a specific section.
+     *
+     * @param id The ID of the section to fetch.
+     * @return A [SectionDetail] object containing the section's details.
+     */
     @Suppress("DefaultLocale")
     suspend fun fetchSectionContent(id: Long): SectionDetail {
         logger.d { "Fetching section content" }
@@ -52,6 +69,11 @@ class Flow1000RequestWrap {
         return response
     }
 
+    /**
+     * Downloads a section by its ID.
+     *
+     * @param id The ID of the section to download.
+     */
     @Suppress("DefaultLocale")
     suspend fun downloadSectionById(id: Long) {
         logger.d { "Download section by id $id" }
@@ -59,6 +81,11 @@ class Flow1000RequestWrap {
         logger.d { "Download section response ${response.status.value}" }
     }
 
+    /**
+     * Unsubscribes from a section by its ID.
+     *
+     * @param id The ID of the section to unsubscribe from.
+     */
     @Suppress("DefaultLocale")
     suspend fun unsubscribeSectionById(id: Long) {
         logger.d { "unsubscribe section by id $id" }
@@ -66,6 +93,11 @@ class Flow1000RequestWrap {
         logger.d { "unsubscribe section response ${response.status.value}" }
     }
 
+    /**
+     * Deletes a section by its ID.
+     *
+     * @param id The ID of the section to delete.
+     */
     @Suppress("DefaultLocale")
     suspend fun deleteSectionById(id: Long) {
         logger.d { "unsubscribe section by id $id" }
