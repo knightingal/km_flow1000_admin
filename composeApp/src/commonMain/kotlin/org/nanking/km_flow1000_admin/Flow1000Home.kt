@@ -69,6 +69,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.codelab.basiclayouts.ui.theme.MySootheTheme
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -100,7 +101,7 @@ fun Flow1000Home(
     val albumConfigList by viewModel.albumConfigList.collectAsStateWithLifecycle()
     BoxWithConstraints(
         modifier = Modifier
-            .background(MaterialTheme.colorScheme.primaryContainer)
+            .background(MaterialTheme.colorScheme.surface)
             .systemBarsPadding()
             .fillMaxSize()
             .padding(4.dp)
@@ -158,12 +159,16 @@ fun Flow1000SectionPage(
             TopAppBar(
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null)
+                        Icon(
+                            Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.onPrimaryContainer
+                            )
                     }
                 },
                 colors = topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primaryContainer,
-                    titleContentColor = MaterialTheme.colorScheme.primary,
+                    titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
                 ),
                 title = {
                     Text(sectionDetail?.title ?: "", color = MaterialTheme.colorScheme.onPrimaryContainer)
@@ -187,7 +192,7 @@ fun Flow1000SectionPage(
     ) {
         Box(
             modifier = Modifier
-                .background(MaterialTheme.colorScheme.primaryContainer)
+                .background(MaterialTheme.colorScheme.surface)
                 .systemBarsPadding()
                 .fillMaxSize()
                 .padding(top = it.calculateTopPadding())
@@ -243,12 +248,16 @@ fun Flow1000AlbumPage(
             TopAppBar(
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null)
+                        Icon(
+                            Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.onPrimaryContainer
+                        )
                     }
                 },
                 colors = topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primaryContainer,
-                    titleContentColor = MaterialTheme.colorScheme.primary,
+                    titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
                 ),
                 title = {
                     Text(albumConfig.name)
@@ -263,7 +272,7 @@ fun Flow1000AlbumPage(
     ) {
         BoxWithConstraints(
             modifier = Modifier
-                .background(MaterialTheme.colorScheme.primaryContainer)
+                .background(MaterialTheme.colorScheme.surface)
                 .systemBarsPadding()
                 .fillMaxSize()
                 .padding(top = it.calculateTopPadding())
@@ -306,7 +315,7 @@ fun Flow1000AlbumPage(
                                     Icon(
                                         iconVec,
                                         contentDescription = null,
-                                        tint = MaterialTheme.colorScheme.onPrimaryContainer
+                                        tint = MaterialTheme.colorScheme.onSurface
                                     )
                                 }
                                 IconButton(onClick = {
@@ -318,7 +327,7 @@ fun Flow1000AlbumPage(
                                     Icon(
                                         Icons.Outlined.Delete,
                                         contentDescription = null,
-                                        tint = MaterialTheme.colorScheme.onPrimaryContainer
+                                        tint = MaterialTheme.colorScheme.onSurface
                                     )
                                 }
                                 IconButton(onClick = {
@@ -333,7 +342,7 @@ fun Flow1000AlbumPage(
                                     Icon(
                                         Icons.Outlined.Edit,
                                         contentDescription = null,
-                                        tint = MaterialTheme.colorScheme.onPrimaryContainer
+                                        tint = MaterialTheme.colorScheme.onSurface
                                     )
                                 }
                             }
