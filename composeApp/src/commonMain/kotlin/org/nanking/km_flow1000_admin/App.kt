@@ -12,6 +12,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
+import com.codelab.basiclayouts.ui.theme.MySootheTheme
 import kotlinx.serialization.Serializable
 
 const val IMAGE_SERVER = "192.168.2.12:8082"
@@ -34,7 +35,7 @@ data class SectionParam(val name: String, val id: Long, val albumSourcePath: Str
 @Composable
 @Preview
 fun App() {
-    MaterialTheme {
+    MySootheTheme {
         SharedTransitionLayout {
             val navController = rememberNavController()
             Scaffold { it ->
