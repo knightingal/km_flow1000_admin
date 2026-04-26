@@ -193,7 +193,6 @@ fun Flow1000SectionPage(
         Box(
             modifier = Modifier
                 .background(MaterialTheme.colorScheme.surface)
-                .systemBarsPadding()
                 .fillMaxSize()
                 .padding(top = it.calculateTopPadding())
         ) {
@@ -273,7 +272,6 @@ fun Flow1000AlbumPage(
         BoxWithConstraints(
             modifier = Modifier
                 .background(MaterialTheme.colorScheme.surface)
-                .systemBarsPadding()
                 .fillMaxSize()
                 .padding(top = it.calculateTopPadding())
         ) {
