@@ -266,7 +266,7 @@ val unspecified_scheme = ColorFamily(
 )
 
 @Composable
-fun MySootheTheme(
+fun Flow1000Theme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable() () -> Unit
 ) {

@@ -11,11 +11,9 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.width
@@ -41,7 +39,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
@@ -69,7 +66,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.codelab.basiclayouts.ui.theme.MySootheTheme
+import com.codelab.basiclayouts.ui.theme.Flow1000Theme
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -507,7 +504,7 @@ fun ImageContentInCard(
 @Composable
 @Preview
 fun AlbumCoverCardPreview() {
-    MySootheTheme {
+    Flow1000Theme {
         AlbumCoverCard(
             albumCover = object : CardCover<DrawableResource> {
                 override val width: Int
@@ -527,7 +524,7 @@ fun AlbumCoverCardPreview() {
 @Composable
 @Preview
 fun AlbumCoverCardEditPreview() {
-    MySootheTheme {
+    Flow1000Theme {
         AlbumCoverCard(
             albumCover = object : CardCover<DrawableResource> {
                 override val width: Int

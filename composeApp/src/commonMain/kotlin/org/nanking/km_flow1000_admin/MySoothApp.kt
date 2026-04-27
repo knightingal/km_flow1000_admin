@@ -31,7 +31,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.codelab.basiclayouts.ui.theme.MySootheTheme
+import com.codelab.basiclayouts.ui.theme.Flow1000Theme
 import km_flow1000_admin.composeapp.generated.resources.Res
 import km_flow1000_admin.composeapp.generated.resources.ab1_inversions
 import km_flow1000_admin.composeapp.generated.resources.ab2_quick_yoga
@@ -260,12 +260,12 @@ private data class DrawableStringPair(
 @Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
 @Composable
 fun SearchBarPreview() {
-    MySootheTheme { SearchBar(Modifier.padding(8.dp)) }
+    Flow1000Theme { SearchBar(Modifier.padding(8.dp)) }
 }
 @Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
 @Composable
 fun AlignYourBodyElementPreview() {
-    MySootheTheme {
+    Flow1000Theme {
         AlignYourBodyElement(
             text = Res.string.ab1_inversions,
             drawable = Res.drawable.fc1_short_mantras,
@@ -277,7 +277,7 @@ fun AlignYourBodyElementPreview() {
 @Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
 @Composable
 fun FavoriteCollectionCardPreview() {
-    MySootheTheme {
+    Flow1000Theme {
         FavoriteCollectionCard(
             text = Res.string.fc2_nature_meditations,
             drawable = Res.drawable.fc2_nature_meditations,
@@ -289,19 +289,19 @@ fun FavoriteCollectionCardPreview() {
 @Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
 @Composable
 fun FavoriteCollectionsGridPreview() {
-    MySootheTheme { FavoriteCollectionsGrid() }
+    Flow1000Theme { FavoriteCollectionsGrid() }
 }
 
 @Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
 @Composable
 fun AlignYourBodyRowPreview() {
-    MySootheTheme { AlignYourBodyRow() }
+    Flow1000Theme { AlignYourBodyRow() }
 }
 
 @Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
 @Composable
 fun HomeSectionPreview() {
-    MySootheTheme {
+    Flow1000Theme {
         HomeSection(Res.string.align_your_body) {
             AlignYourBodyRow()
         }
@@ -311,19 +311,19 @@ fun HomeSectionPreview() {
 @Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
 @Composable
 fun ScreenContentPreview() {
-    MySootheTheme { HomeScreen() }
+    Flow1000Theme { HomeScreen() }
 }
 
 @Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
 @Composable
 fun BottomNavigationPreview() {
-    MySootheTheme { SootheBottomNavigation(Modifier.padding(top = 24.dp)) }
+    Flow1000Theme { SootheBottomNavigation(Modifier.padding(top = 24.dp)) }
 }
 
 @Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
 @Composable
 fun NavigationRailPreview() {
-    MySootheTheme { SootheNavigationRail() }
+    Flow1000Theme { SootheNavigationRail() }
 }
 
 @Preview(widthDp = 360, heightDp = 640)
