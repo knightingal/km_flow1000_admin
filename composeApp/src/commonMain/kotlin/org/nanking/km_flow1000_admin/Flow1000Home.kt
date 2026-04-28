@@ -54,6 +54,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -168,7 +169,11 @@ fun Flow1000SectionPage(
                     titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
                 ),
                 title = {
-                    Text(sectionDetail?.title ?: "", color = MaterialTheme.colorScheme.onPrimaryContainer)
+                    Text(
+                        sectionDetail?.title ?: "", color = MaterialTheme.colorScheme.onPrimaryContainer,
+                        overflow = TextOverflow.Ellipsis,
+                        maxLines = 1,
+                    )
                 }
             )
         },
