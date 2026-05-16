@@ -75,10 +75,10 @@ class Flow1000RequestWrap {
      * @param id The ID of the section to download.
      */
     @Suppress("DefaultLocale")
-    suspend fun downloadSectionById(id: Long) {
-        logger.d { "Download section by id $id" }
+    suspend fun subscribeSectionById(id: Long) {
+        logger.d { "subscribe section by id $id" }
         val response = httpClient.post (String.format(FLOW_1000_SECTION_DOWNLOAD_URL, id))
-        logger.d { "Download section response ${response.status.value}" }
+        logger.d { "subscribe section response ${response.status.value}" }
     }
 
     /**

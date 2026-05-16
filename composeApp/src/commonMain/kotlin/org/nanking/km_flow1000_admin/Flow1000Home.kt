@@ -181,7 +181,7 @@ fun Flow1000SectionPage(
             IconButton(onClick = {
                 scope.launch(Dispatchers.IO) {
                     if (sectionDetail?.clientStatus == ClientStatus.NONE) {
-                        flow1000RequestWrap.downloadSectionById(sectionParam.id)
+                        flow1000RequestWrap.subscribeSectionById(sectionParam.id)
                     } else {
                         flow1000RequestWrap.unsubscribeSectionById(sectionParam.id)
                     }
@@ -301,7 +301,7 @@ fun Flow1000AlbumPage(
                                 IconButton(onClick = {
                                     scope.launch(Dispatchers.IO) {
                                         if (picIndex.clientStatus == ClientStatus.NONE) {
-                                            flow1000RequestWrap.downloadSectionById(picIndex.index)
+                                            flow1000RequestWrap.subscribeSectionById(picIndex.index)
                                         } else {
                                             flow1000RequestWrap.unsubscribeSectionById(picIndex.index)
                                         }
