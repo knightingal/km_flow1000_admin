@@ -133,96 +133,6 @@ fun Flow1000Home(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun Flow1000SectionPage(
-    navController: NavHostController, sectionParam: Flow1000SectionPageParam,
-    sharedTransitionScope: SharedTransitionScope,
-    animatedContentScope: AnimatedContentScope,
-) {
-    val scope = rememberCoroutineScope()
-    val logger = getLogger("Flow1000SectionPage")
-    val flow1000RequestWrap = Flow1000RequestWrap()
-    var sectionDetail by remember { mutableStateOf<SectionDetail?>(null) }
-    LaunchedEffect(true) {
-        sectionDetail = flow1000RequestWrap.fetchSectionContent(sectionParam.id)
-    }
-
-    val iconVec = if (sectionDetail?.clientStatus == ClientStatus.NONE)
-        Icons.Outlined.FavoriteBorder
-    else
-        Icons.Outlined.Favorite
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                navigationIcon = {
-                    IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(
-                            Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.onPrimaryContainer
-                            )
-                    }
-                },
-                colors = topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-                    titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                ),
-                title = {
-                    Text(
-                        sectionDetail?.title ?: "", color = MaterialTheme.colorScheme.onPrimaryContainer,
-                        overflow = TextOverflow.Ellipsis,
-                        maxLines = 1,
-                    )
-                }
-            )
-        },
-        floatingActionButton = {
-            IconButton(onClick = {
-                scope.launch(Dispatchers.IO) {
-                    if (sectionDetail?.clientStatus == ClientStatus.NONE) {
-                        flow1000RequestWrap.subscribeSectionById(sectionParam.id)
-                    } else {
-                        flow1000RequestWrap.unsubscribeSectionById(sectionParam.id)
-                    }
-                    sectionDetail = flow1000RequestWrap.fetchSectionContent(sectionParam.id)
-                }
-            }) {
-                Icon(iconVec, contentDescription = null)
-            }
-        }
-    ) {
-        Box(
-            modifier = Modifier
-                .background(MaterialTheme.colorScheme.surface)
-                .fillMaxSize()
-                .padding(top = it.calculateTopPadding())
-        ) {
-            val lazyStaggeredGridState = rememberLazyListState()
-            LazyColumn(
-                state = lazyStaggeredGridState,
-                contentPadding = PaddingValues(top = 2.dp, bottom = 2.dp),
-                modifier = Modifier.fillMaxSize().padding(horizontal = 4.dp),
-            ) {
-                items(sectionDetail?.pics?.size ?: 0) { index ->
-                    val pic = sectionDetail!!.pics[index]
-                    pic.sectionDir = sectionDetail!!.dirName
-                    pic.albumSourcePath = sectionParam.albumSourcePath
-                    logger.i { "Display Pics: ${pic.coverUri}" }
-                    FitSizeImageCard(
-                        cardCover = pic,
-                        sharedTransitionScope = if (index == 0) sharedTransitionScope else null,
-                        animatedContentScope = if (index == 0) animatedContentScope else null,
-                    )
-                }
-            }
-            PlatformVerticalScrollbar(
-                modifier = Modifier.align(Alignment.CenterEnd).fillMaxHeight(),
-                lazyStaggeredGridState
-            )
-        }
-    }
-}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -361,6 +271,97 @@ fun Flow1000AlbumPage(
             PlatformVerticalScrollbar(
                 modifier = Modifier.align(Alignment.CenterEnd).fillMaxHeight(),
                 lazyStaggeredGridState = lazyStaggeredGridState
+            )
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun Flow1000SectionPage(
+    navController: NavHostController, sectionParam: Flow1000SectionPageParam,
+    sharedTransitionScope: SharedTransitionScope,
+    animatedContentScope: AnimatedContentScope,
+) {
+    val scope = rememberCoroutineScope()
+    val logger = getLogger("Flow1000SectionPage")
+    val flow1000RequestWrap = Flow1000RequestWrap()
+    var sectionDetail by remember { mutableStateOf<SectionDetail?>(null) }
+    LaunchedEffect(true) {
+        sectionDetail = flow1000RequestWrap.fetchSectionContent(sectionParam.id)
+    }
+
+    val iconVec = if (sectionDetail?.clientStatus == ClientStatus.NONE)
+        Icons.Outlined.FavoriteBorder
+    else
+        Icons.Outlined.Favorite
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                navigationIcon = {
+                    IconButton(onClick = { navController.popBackStack() }) {
+                        Icon(
+                            Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.onPrimaryContainer
+                        )
+                    }
+                },
+                colors = topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                ),
+                title = {
+                    Text(
+                        sectionDetail?.title ?: "", color = MaterialTheme.colorScheme.onPrimaryContainer,
+                        overflow = TextOverflow.Ellipsis,
+                        maxLines = 1,
+                    )
+                }
+            )
+        },
+        floatingActionButton = {
+            IconButton(onClick = {
+                scope.launch(Dispatchers.IO) {
+                    if (sectionDetail?.clientStatus == ClientStatus.NONE) {
+                        flow1000RequestWrap.subscribeSectionById(sectionParam.id)
+                    } else {
+                        flow1000RequestWrap.unsubscribeSectionById(sectionParam.id)
+                    }
+                    sectionDetail = flow1000RequestWrap.fetchSectionContent(sectionParam.id)
+                }
+            }) {
+                Icon(iconVec, contentDescription = null)
+            }
+        }
+    ) {
+        Box(
+            modifier = Modifier
+                .background(MaterialTheme.colorScheme.surface)
+                .fillMaxSize()
+                .padding(top = it.calculateTopPadding())
+        ) {
+            val lazyStaggeredGridState = rememberLazyListState()
+            LazyColumn(
+                state = lazyStaggeredGridState,
+                contentPadding = PaddingValues(top = 2.dp, bottom = 2.dp),
+                modifier = Modifier.fillMaxSize().padding(horizontal = 4.dp),
+            ) {
+                items(sectionDetail?.pics?.size ?: 0) { index ->
+                    val pic = sectionDetail!!.pics[index]
+                    pic.sectionDir = sectionDetail!!.dirName
+                    pic.albumSourcePath = sectionParam.albumSourcePath
+                    logger.i { "Display Pics: ${pic.coverUri}" }
+                    FitSizeImageCard(
+                        cardCover = pic,
+                        sharedTransitionScope = if (index == 0) sharedTransitionScope else null,
+                        animatedContentScope = if (index == 0) animatedContentScope else null,
+                    )
+                }
+            }
+            PlatformVerticalScrollbar(
+                modifier = Modifier.align(Alignment.CenterEnd).fillMaxHeight(),
+                lazyStaggeredGridState
             )
         }
     }
