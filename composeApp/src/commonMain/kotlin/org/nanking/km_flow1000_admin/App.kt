@@ -24,10 +24,10 @@ data class LazyParam(val pageId: String)
 data class HomeParam(val pageId: String)
 
 @Serializable
-data class AlbumParam(val name: String, val albumSourcePath: String)
+data class Flow1000AlbumPageParam(val name: String, val albumSourcePath: String)
 
 @Serializable
-data class SectionParam(val name: String, val id: Long, val albumSourcePath: String)
+data class Flow1000SectionPageParam(val name: String, val id: Long, val albumSourcePath: String)
 
 @Composable
 @Preview
@@ -54,20 +54,20 @@ fun App() {
                             viewModel = viewModel { Flow1000HomeViewModel() }
                         )
                     }
-                    composable<SectionParam> { backStackEntry ->
-                        val sectionParam = backStackEntry.toRoute<SectionParam>()
-                        Flow1000SectionPage(
+                    composable<Flow1000AlbumPageParam> { backStackEntry ->
+                        val albumConfig = backStackEntry.toRoute<Flow1000AlbumPageParam>()
+                        Flow1000AlbumPage(
                             navController,
-                            sectionParam,
+                            albumConfig,
                             sharedTransitionScope = this@SharedTransitionLayout,
                             animatedContentScope = this@composable
                         )
                     }
-                    composable<AlbumParam> { backStackEntry ->
-                        val albumConfig = backStackEntry.toRoute<AlbumParam>()
-                        Flow1000AlbumPage(
+                    composable<Flow1000SectionPageParam> { backStackEntry ->
+                        val sectionParam = backStackEntry.toRoute<Flow1000SectionPageParam>()
+                        Flow1000SectionPage(
                             navController,
-                            albumConfig,
+                            sectionParam,
                             sharedTransitionScope = this@SharedTransitionLayout,
                             animatedContentScope = this@composable
                         )

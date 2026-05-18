@@ -122,7 +122,7 @@ fun Flow1000Home(
                     animatedContentScope = animatedContentScope,
                 ) {
                     val albumConfig = albumConfigList[index]
-                    navController.navigate(AlbumParam(albumConfig.name, albumConfig.sourcePath))
+                    navController.navigate(Flow1000AlbumPageParam(albumConfig.name, albumConfig.sourcePath))
                 }
             }
         }
@@ -136,7 +136,7 @@ fun Flow1000Home(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Flow1000SectionPage(
-    navController: NavHostController, sectionParam: SectionParam,
+    navController: NavHostController, sectionParam: Flow1000SectionPageParam,
     sharedTransitionScope: SharedTransitionScope,
     animatedContentScope: AnimatedContentScope,
 ) {
@@ -228,7 +228,7 @@ fun Flow1000SectionPage(
 @Composable
 fun Flow1000AlbumPage(
     navController: NavHostController,
-    albumConfig: AlbumParam,
+    albumConfig: Flow1000AlbumPageParam,
     sharedTransitionScope: SharedTransitionScope,
     animatedContentScope: AnimatedContentScope,
     viewModel: Flow1000AlbumPageViewModel = viewModel { Flow1000AlbumPageViewModel() }
@@ -349,7 +349,7 @@ fun Flow1000AlbumPage(
                         }
                     ) {
                         navController.navigate(
-                            route = SectionParam(
+                            route = Flow1000SectionPageParam(
                                 picIndex.name,
                                 id = picIndex.index,
                                 albumSourcePath = albumConfig.albumSourcePath
