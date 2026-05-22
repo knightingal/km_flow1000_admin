@@ -39,13 +39,7 @@ fun App() {
                 it.hashCode()
                 NavHost(
                     navController, startDestination = "flow1000Home",
-//                  enterTransition = { slideInHorizontally() },
-//                  exitTransition = { slideOutHorizontally(targetOffsetX = { -it }) },
                 ) {
-                    composable<HomeParam> { backStackEntry ->
-                        val homeParam = backStackEntry.toRoute<HomeParam>()
-                        Home(navController, homeParam.pageId)
-                    }
                     composable("flow1000Home") {
                         Flow1000Home(
                             navController,
@@ -76,7 +70,6 @@ fun App() {
                         val lazyParam = backStackEntry.toRoute<LazyParam>()
                         LazyPage(navController, lazyParam.pageId)
                     }
-                    composable("greeting") { GreetingApp() }
                     composable("lazySample") { LazyStaggeredGridCustomScrollUsingLazyLayoutScrollScopeSample() }
                     composable("lazyScrollable") { LazyScrollable() }
                 }
