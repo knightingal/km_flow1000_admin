@@ -24,7 +24,7 @@ class ImgInSectionDetail(
     var sectionDir: String? = null
     override val coverUri: String
         get() = "http://$IMAGE_SERVER/linux1000/${albumSourcePath}/$sectionDir/${
-            name.replace(".bin", "").replace(".avif", ".avif.png")
+            replaceImgNameWithPng(name)
         }"
 }
 
@@ -48,7 +48,7 @@ class PicIndexItem(
 
     override val coverUri: String
         get() = "http://$IMAGE_SERVER/linux1000/${albumSourcePath}/$name/${
-            cover.replace(".bin", "").replace(".avif", ".avif.png")
+            replaceImgNameWithPng(cover)
         }"
 }
 
@@ -73,7 +73,7 @@ class AlbumConfig(
     override val width: Int = coverSection.coverWidth
     override val height: Int = coverSection.coverHeight
     override val coverUri: String = "http://$IMAGE_SERVER/linux1000/$sourcePath/${coverSection.dirName}/${
-        coverSection.cover.replace(".bin", "").replace(".avif", ".avif.png")
+        replaceImgNameWithPng(coverSection.cover)
     }"
 
 }
@@ -101,4 +101,12 @@ class Flow1000Img(
     val height: Int
 )
 class Flow1000Bean {
+}
+
+fun replaceImgNameWithPng(name: String): String {
+    return name
+        .replace(".bin", "")
+        // for there is bug in image component, it can not load avif image,
+        // so I have to convert avif to png in server side and change the name here
+        .replace(".avif", ".avif.png")
 }
