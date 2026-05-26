@@ -53,12 +53,12 @@ kotlin {
             implementation(libs.ktor.client.content.negotiation)
             implementation(libs.ktor.serialization.kotlinx.json)
             implementation(libs.kotlinx.coroutines.core)
-            implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.7.1")
-            implementation("androidx.lifecycle:lifecycle-runtime-compose:2.9.4")
-            implementation("io.ktor:ktor-client-okhttp:3.4.0")
-            implementation("io.coil-kt.coil3:coil-compose:3.3.0")
-            implementation("io.coil-kt.coil3:coil-network-okhttp:3.3.0")
-            implementation("org.jetbrains.compose.material:material-icons-core:1.7.3")
+            implementation(libs.kotlinx.datetime)
+            implementation(libs.androidx.lifecycle.runtime.compose)
+            implementation(libs.ktor.client.okhttp)
+            implementation(libs.coil.compose)
+            implementation(libs.coil.network.okhttp)
+            implementation(libs.material.icons.core)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -66,9 +66,9 @@ kotlin {
         jvmMain.dependencies {
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutinesSwing)
-            implementation("org.slf4j:slf4j-api:2.0.17")
-            implementation("ch.qos.logback:logback-classic:1.5.15")
-            implementation("ch.qos.logback:logback-core:1.5.15")
+            implementation(libs.slf4j.api)
+            implementation(libs.logback.classic)
+            implementation(libs.logback.core)
         }
     }
 }
@@ -101,8 +101,8 @@ android {
 }
 
 dependencies {
-    implementation("io.ktor:ktor-client-okhttp-jvm:3.4.0")
-    debugImplementation(compose.uiTooling)
+    implementation(libs.ktor.client.okhttp.jvm)
+    debugImplementation(libs.ui.tooling)
 }
 
 compose.desktop {
